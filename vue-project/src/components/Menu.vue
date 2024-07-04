@@ -1,34 +1,32 @@
 <template>
-  <el-menu default-active="2" class="el-menu-vertical-demo" :collapse="false">
-    <el-sub-menu index="1">
+  <el-menu default-active="2" class="el-menu-vertical" :collapse="false" @select="select_callback">
+    <el-menu-item index="1">
+      <el-icon><icon-menu /></el-icon>
+      <template #title>概览</template>
+    </el-menu-item>
+    <el-sub-menu index="2" :disabled="!isOnline">
       <template #title>
         <el-icon>
           <location />
         </el-icon>
-        <span>概览</span>
+        <span>测量</span>
       </template>
       <el-menu-item-group>
-        <template #title><span>Group One</span></template>
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
+        <template #title><span>单节测量</span></template>
+        <el-menu-item index="2-1">EIS测量</el-menu-item>
+        <el-menu-item index="2-2">内阻测量</el-menu-item>
       </el-menu-item-group>
-      <el-menu-item-group title="Group Two">
-        <el-menu-item index="1-3">item three</el-menu-item>
+      <el-menu-item-group>
+        <template #title><span>电池组分析</span></template>
+        <el-menu-item index="2-3">电压均衡</el-menu-item>
+        <el-menu-item index="2-4">动力特性分析</el-menu-item>
       </el-menu-item-group>
-      <el-sub-menu index="1-4">
-        <template #title><span>item four</span></template>
-        <el-menu-item index="1-4-1">item one</el-menu-item>
-      </el-sub-menu>
     </el-sub-menu>
-    <el-menu-item index="2">
-      <el-icon><icon-menu /></el-icon>
-      <template #title>手动测量</template>
-    </el-menu-item>
-    <el-menu-item index="3" disabled>
+    <el-menu-item index="3">
       <el-icon>
         <document />
       </el-icon>
-      <template #title>历史数据</template>
+      <template #title>历史</template>
     </el-menu-item>
     <el-menu-item index="4">
       <el-icon>
@@ -46,11 +44,20 @@ import {
   Location,
   Setting,
 } from '@element-plus/icons-vue'
+
+const props = defineProps({
+  select_callback: Function,
+  isOnline: Boolean,
+})
+
+screenWidth: document.body.clientWidth
 </script>
 
 <style scoped>
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
+.el-menu-vertical {
   height: 100%;
+}
+.el-menu-vertical:not(.el-menu--collapse) {
+  width: 180px;
 }
 </style>
