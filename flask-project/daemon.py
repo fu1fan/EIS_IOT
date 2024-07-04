@@ -1,7 +1,10 @@
 import subprocess, os, time
 
 def update():
+    # 返回上一层目录
+    os.chdir("..")
     os.system("git pull")
+    os.chdir("flask-project")
 
 if __name__ == '__main__':
     try:
