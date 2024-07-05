@@ -55,6 +55,6 @@ jobs:
 
       - name: Push changes
         run: |
-          git remote set-url origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/fu1fan/EIS_IOT.git
-          git push origin deploy --force
-        
+          git push -f origin deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
