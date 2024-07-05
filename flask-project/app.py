@@ -4,9 +4,13 @@ from threading import Thread
 from werkzeug.serving import make_server
 import time
 from queue import Queue
+import os
 
 PORT = 1001
 TOKEN = "123456"
+
+# 切换运行路径到当前目录
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 app = Flask(__name__, static_folder='../vue-project/dist', static_url_path='/')
 server = make_server('0.0.0.0', PORT, app)

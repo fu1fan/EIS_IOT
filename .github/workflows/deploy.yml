@@ -48,7 +48,7 @@ jobs:
         run: |
           git checkout main
           cp -r flask-project deploy/
-          cp -r vue-project/dist deploy/
+          cp -r vue-project/dist deploy/dist
 
       - name: Configure Git
         run: |
@@ -65,3 +65,6 @@ jobs:
           git push -f origin deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Sync
+        run: curl https://eis.zzzing.cn/update?token={{ secrets.SYNC_TOKEN }}

@@ -1,4 +1,5 @@
 import subprocess, os, time
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 def update():
     # 返回上一层目录
