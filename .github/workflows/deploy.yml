@@ -43,13 +43,14 @@ jobs:
           cp -r flask-project deploy/
           cp -r vue-project/dist deploy/
 
-      - name: Commit changes
+      - name: Push to deploy branch
         run: |
-          git config --global user.email "fyf.yf@qq.com"
-          git config --global user.name "fu1fan"
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
           git add .
           git commit -m "Deploy"
           git push -f origin deploy
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+
     
