@@ -24,9 +24,11 @@ jobs:
         run: |
           cd vue-project
           pnpm install
+          cd ..
 
       - name: Build
         run: |
+          cd vue-project
           pnpm build
           cd ..
 
