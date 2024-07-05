@@ -43,13 +43,13 @@ jobs:
         run: |
           git fetch --all
           git checkout deploy
-          git checkout main -- flask-project
+          git checkout main -- flask-project/*
       
       - name: Commit and push changes
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          git add .
+          git add flask-project/*
           git commit -m "Deploy"
           git push -f
         env:
