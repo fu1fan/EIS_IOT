@@ -21,11 +21,12 @@ jobs:
         run: npm install -g pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          cd vue-project
+          pnpm install
 
       - name: Build
         run: |
-          cd vue-project
           pnpm build
           cd ..
 
