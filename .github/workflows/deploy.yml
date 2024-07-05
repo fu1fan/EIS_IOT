@@ -41,8 +41,8 @@ jobs:
       
       - name: Copy flask files to deploy directory
         run: |
-          git chekcout deploy
-          git chekout master -- flask-project/*
+          git checkout deploy
+          git checkout main -- flask-project/*
       
       - name: Commit and push changes
         run: |
