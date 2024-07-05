@@ -9,7 +9,6 @@ import os
 PORT = 1001
 TOKEN = "123456"
 
-# 切换运行路径到当前目录
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 app = Flask(__name__, static_folder='../', static_url_path='/')
@@ -20,7 +19,7 @@ last_h_query = 0
 
 class ResultA:
     status_code = 0x00
-    mode = 0    # 0: 只测电压 1: 电压&100Hz阻抗 2: 电压&70Hz阻抗
+    mode = 0
     voltages = []
     impedances = []
 
@@ -94,9 +93,9 @@ def h_get_task():
     task = task_queue.get()
     message = task.task_mode
     if task.task_mode == "single":
-        message += f"|{task.result.cell_id}|{task.result.freq}"
+        message += "|" + str(task.result.cell_id) + "|" + str(task.result.freq)
     elif task.task_mode == "all":
-        message += f"|{task.result.mode}"
+        message += "|" + str(task.result.mode)
     running_task = task
     return message
 
@@ -222,7 +221,6 @@ def c_get_result():
 if __name__ == '__main__':
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
-    # 捕获ctrl+c信号
     try:
         while(1):
             time.sleep(60)

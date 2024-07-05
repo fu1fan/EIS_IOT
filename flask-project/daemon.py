@@ -21,7 +21,7 @@ if __name__ == '__main__':
         pass
 
     while(1):
-        subprocess.run(["python", "app.py"])
+        subprocess.run(["python3", "app.py"])
         try:
             with open("UPDATE", "r") as f:
                 update()
