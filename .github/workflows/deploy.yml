@@ -18,10 +18,13 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build
-        run: npm run build
+        run: |
+          cd vue-project
+          pnpm build
+          cd ..
 
       - name: Clear deploy branch
         run: |
