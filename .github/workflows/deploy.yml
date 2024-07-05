@@ -34,8 +34,8 @@ jobs:
 
       - name: Clear deploy branch
         run: |
-          git branch -D deploy
-          git checkout -b deploy
+          git branch -D deploy || true
+          git checkout -B deploy
       
       - name: Copy files
         run: |
