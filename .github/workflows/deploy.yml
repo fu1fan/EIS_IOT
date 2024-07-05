@@ -45,6 +45,8 @@ jobs:
 
       - name: Commit changes
         run: |
+          git config --global user.email "fyf.yf@qq.com"
+          git config --global user.name "fu1fan"
           git add .
           git commit -m "Deploy"
           git push -f origin deploy
