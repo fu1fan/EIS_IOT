@@ -8,6 +8,11 @@ def update():
     os.chdir("flask-project")
 
 if __name__ == '__main__':
+    # 检查是否安装werkzeug，否则安装
+    try:
+        import werkzeug
+    except ImportError:
+        os.system("pip install werkzeug")
     try:
         with open("UPDATE", "r") as f:
             update()
