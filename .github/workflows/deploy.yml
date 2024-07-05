@@ -39,8 +39,9 @@ jobs:
           publish_dir: ./vue-project/dist
           publish_branch: deploy
       
-      - name: Copy flask files to deploy directory
+      - name: Copy flask files to deploy branch
         run: |
+          git fetch --all
           git checkout deploy
           git checkout main -- flask-project/*
       
