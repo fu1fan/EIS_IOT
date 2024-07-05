@@ -6,7 +6,7 @@
     :ellipsis="false"
     @select="handleSelect"
 >
-    <el-menu-item class="logo">
+    <el-menu-item class="logo" disabled>
     <img
         style="width: 100px"
         src="/images/logo.png"
@@ -32,5 +32,8 @@ const handleSelect = (key: string, keyPath: string[]) => {
 }
 .logo:hover {
     background-color: transparent !important;
+}
+.logo{
+    opacity: 1;
 }
 </style>

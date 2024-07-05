@@ -19,7 +19,11 @@
       <el-menu-item-group>
         <template #title><span>电池组分析</span></template>
         <el-menu-item index="2-3">电压均衡</el-menu-item>
-        <el-menu-item index="2-4">动力特性分析</el-menu-item>
+        <el-menu-item index="2-4">动力分析</el-menu-item>
+      </el-menu-item-group>
+      <el-menu-item-group>
+        <template #title><span>其他</span></template>
+        <el-menu-item index="2-5">热失控预警（验证）</el-menu-item>
       </el-menu-item-group>
     </el-sub-menu>
     <el-menu-item index="3">

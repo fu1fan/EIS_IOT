@@ -61,6 +61,10 @@ const batteryData = [
   {
     item: "平均电压",
     content: '0'
+  },
+  {
+    item: "电压变化率",
+    content: '0'
   }
 ]
 
@@ -76,22 +80,16 @@ const batteryData = [
         </template>
         <div>
           <el-row gutter=10>
-            <el-col :span="16"><BaseChart :Option="option" width="100%" height="370px" /></el-col>
+            <el-col :span="16">
+              <BaseChart :Option="option" width="100%" height="370px" />
+            </el-col>
             <el-col :span="8">
-              <el-table
-                :data="deviceData"
-                style="width: 100%"
-                :row-class-name="tableRowClassName"
-              >
+              <el-table :data="deviceData" style="width: 100%" :row-class-name="tableRowClassName">
                 <el-table-column prop="item" />
                 <el-table-column prop="content" />
               </el-table>
               <br />
-              <el-table
-                :data="batteryData"
-                style="width: 100%"
-                :row-class-name="tableRowClassName"
-              >
+              <el-table :data="batteryData" style="width: 100%" :row-class-name="tableRowClassName">
                 <el-table-column prop="item" label="项目" />
                 <el-table-column prop="content" label="参数" />
               </el-table>
@@ -131,24 +129,6 @@ const batteryData = [
 </template>
 
 <style lang="scss" scoped>
-.el-row {
-  margin-bottom: 20px;
-}
-
-.el-row:last-child {
-  margin-bottom: 0;
-}
-
-.el-col {
-  margin-right: 0px;
-  border-radius: 4px;
-}
-
-.grid-content {
-  border-radius: 4px;
-  min-height: 36px;
-}
-
 .el-card {
   height: 100%;
 }

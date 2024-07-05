@@ -9,6 +9,7 @@ import BalanceTest from './components/BalanceTest.vue';
 import PowerTest from './components/PowerTest.vue';
 import History from './components/History.vue';
 import Setting from './components/Setting.vue';
+import Thermorunaway from './components/Thermorunaway.vue';
 
 import { reactive, watch, ref, shallowRef } from 'vue'
 // import { isDark } from '~/composables/dark'
@@ -30,7 +31,7 @@ watch(
   }
 )
 
-var view_index = "1"
+let view_index = "1"
 
 const views = {
   "1": Overview,
@@ -38,6 +39,7 @@ const views = {
   "2-2": RMeasure,
   "2-3": BalanceTest,
   "2-4": PowerTest,
+  "2-5": Thermorunaway,
   "3": History,
   "4": Setting,
 }
@@ -52,7 +54,6 @@ const menu_callback = (index) => {
 
 <template>
   <el-watermark :font="font" :content="['2024·共创芯未来', 'by Loong的传人']">
-    <transition name="el-fade-in" setup>
       <div class="common-layout">
         <el-container class="main-view">
           <el-header>
@@ -68,7 +69,6 @@ const menu_callback = (index) => {
           </el-container>
         </el-container>
       </div>
-    </transition>
   </el-watermark>
 </template>
 
