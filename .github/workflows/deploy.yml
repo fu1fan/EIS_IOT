@@ -41,7 +41,8 @@ jobs:
       
       - name: Copy flask files to deploy directory
         run: |
-            cp -R vue-project/* deploy/
+          git chekcout deploy
+          git chekout master -- flask-project/*
       
       - name: Commit and push changes
         run: |
