@@ -50,4 +50,6 @@ jobs:
           git add .
           git commit -m "Deploy"
           git push -f origin deploy
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
