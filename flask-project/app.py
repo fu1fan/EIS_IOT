@@ -12,7 +12,7 @@ TOKEN = "123456"
 # 切换运行路径到当前目录
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-app = Flask(__name__, static_folder='../vue-project/dist', static_url_path='/')
+app = Flask(__name__, static_folder='../', static_url_path='/')
 server = make_server('0.0.0.0', PORT, app)
 
 battery_count = -1
