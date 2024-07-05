@@ -31,10 +31,37 @@ jobs:
           cd vue-project
           pnpm build
           cd ..
+
+      - name: Prepare deploy branch
+        run: |
+          if [ "$(git rev-parse --abbrev-ref HEAD)" = "deploy" ]; then
+            echo "Already on deploy branch. Cleaning up..."
+            git rm -rf .
+          else
+            echo "Not on deploy branch. Switching branches..."
+            git checkout main || git checkout --orphan TEMP_BRANCH
+            git branch -D deploy || true
+            git checkout -b deploy
+          fi
       
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          publish_branch: deploy
+      - name: Copy files
+        run: |
+          git checkout main
+          cp -r flask-project deploy/
+          cp -r vue-project/dist deploy/
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "Deploy to deploy branch" -a || true  # 防止没有更改时出错
+
+      - name: Push changes
+        run: |
+          git push -f origin deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
