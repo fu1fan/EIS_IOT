@@ -54,7 +54,7 @@ jobs:
           git commit -m "Deploy to deploy branch" -a || true  # 防止没有更改时出错
 
       - name: Push changes
-      run: |
-        git remote set-url origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/fu1fan/EIS_IOT.git
-        git push origin deploy --force
+        run: |
+          git remote set-url origin https://${{ secrets.DEPLOY_TOKEN }}@github.com/fu1fan/EIS_IOT.git
+          git push origin deploy --force
         
