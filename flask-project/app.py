@@ -116,6 +116,9 @@ def h_submit_result():
     except ValueError:
         return "0"
     
+    if running_task is None:
+        return "0"
+
     if task_id != running_task.task_id:
         return "0"
     
