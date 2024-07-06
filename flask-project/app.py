@@ -107,7 +107,7 @@ def h_get_task():
 
 @app.route('/api/h/submit_result', methods=['POST'])
 def h_submit_result():
-    global results
+    global results, running_task
     data = request.get_data().decode("ascii").split("|")
 
     try:
