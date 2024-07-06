@@ -28,7 +28,7 @@
 
 #define LTE_UART_INDEX            ( &DRV_UART2 )
 #define LTE_UART_BAUDRATE         ( UART_BAUDRATE_115200 )
-#define LTE_UART_BUFFER_SIZE      ( 128 )
+#define LTE_UART_BUFFER_SIZE      ( 1024 )
 #define LTE_UART_TIMEOUT_COUNT    ( 0x000FFFFF )
 
 void    lte_uart_write_string (const char *string);
