@@ -7,7 +7,9 @@ from queue import Queue
 import os
 
 PORT = 1001
-TOKEN = "123456"
+
+with open("SYNC_TOKEN", "r") as f:
+    TOKEN = f.read().strip()
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -226,6 +228,7 @@ def c_get_result():
 if __name__ == '__main__':
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
+    print("Server started.")
     try:
         while(1):
             time.sleep(1)
