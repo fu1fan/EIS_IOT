@@ -99,9 +99,6 @@ C_INCS += \
 	seekfree_assistant/ \
 	user_code/ \
 	\
-	cmsis/include/ \
-	cmsis/include/dsp \
-	\
 
 LIBS = -lm
 
