@@ -14,7 +14,7 @@ if __name__ == '__main__':
     try:
         import werkzeug
     except ImportError:
-        os.system("pip install werkzeug")
+        os.system(sys.executable + "-m pip install werkzeug")
     try:
         with open("UPDATE", "r") as f:
             update()
