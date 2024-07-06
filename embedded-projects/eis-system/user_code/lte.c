@@ -14,6 +14,11 @@ static uint16_t uart_buffer_len = 0;
 
 uint8_t ip_address[16];
 
+#define LTE_DEBUG
+#define CNT96_MAX 5
+
+uint8_t cnt96 = 0; // 给0x60错误计数，如果连续三次则表明需要重新初始化LTE模块
+
 eis_status_t lte_uart_receive(uint16_t timeout){
 	// 读取到TIMEOUT为止（自动截断）
 	// 如果结尾不为/r/n则报错
@@ -223,7 +228,7 @@ eis_status_t lte_celluar_init(void){
 	return status;
 }
 
-eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t timeout){
+eis_status_t _lte_http_get(const char *url, http_response_t *response, uint16_t timeout){
 	eis_status_t status;
 	status.is_success = 1;
 	status.error_code = 0x00;
@@ -236,6 +241,9 @@ eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t t
 	if (strstr((const char*) uart_buffer, "OK") == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("get debug point 0");
+#endif
 		return status;
 	}
 	lte_uart_printf("AT+HTTPACT=0\r\n", url);
@@ -245,6 +253,9 @@ eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t t
 	if (p == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("get debug point 1");
+#endif
 		return status;
 	}
 	p += 15;
@@ -252,6 +263,9 @@ eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t t
 		if (strstr(p, "OK") == NULL) {
 			status.is_success = 0;
 			status.error_code = 0x60;
+#ifdef LTE_DEBUG
+			ui_console_printf("get debug point 2");
+#endif
 			return status;
 		}
 		status = lte_uart_receive(timeout - RECEIVE_TIMEOUT);
@@ -262,6 +276,9 @@ eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t t
 	if (strstr((const char*) uart_buffer, "+HTTP") == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("get debug point 3");
+#endif
 		return status;
 	}
 	//+HTTPRES: 0,200,10499
@@ -269,6 +286,9 @@ eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t t
 	if (p == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("get debug point 4");
+#endif
 		return status;
 	}
 	p = strstr(p, ",");
@@ -323,7 +343,7 @@ eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t t
 	return status;
 }
 
-eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t content_size, http_response_t *response, uint16_t timeout){
+eis_status_t _lte_http_post(const char *url, const uint8_t *content, uint32_t content_size, http_response_t *response, uint16_t timeout){
 	eis_status_t status;
 	status.is_success = 1;
 	status.error_code = 0x00;
@@ -336,6 +356,9 @@ eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t con
 	if (strstr((const char*) uart_buffer, "OK") == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("post debug point 0");
+#endif
 		return status;
 	}
 	lte_uart_printf("AT+HTTPDATA=%d\r\n", content_size);
@@ -343,7 +366,7 @@ eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t con
 	osal_delay_millisec(100U);
 	lte_uart_clear();
 
-	lte_uart_printf("AT+HTTPACT=1,30\r\n", url); //TODO: 等待时间自动设置
+	lte_uart_printf("AT+HTTPACT=1,30\r\n", url); // TODO: 优化等待时间
 	status = lte_uart_receive(RECEIVE_TIMEOUT);
 	if (!status.is_success) {
 		return status;
@@ -353,13 +376,19 @@ eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t con
 	if (p == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("post debug point 1");
+#endif
 		return status;
 	}
-	p += 18 + content_size;
+	p += 18;
 	if (strstr(p, "+HTTP") == NULL) {
 		if (strstr(p, "OK") == NULL) {
 			status.is_success = 0;
 			status.error_code = 0x60;
+#ifdef LTE_DEBUG
+			ui_console_printf("post debug point 2");
+#endif
 			return status;
 		}
 		status = lte_uart_receive(timeout - RECEIVE_TIMEOUT);
@@ -370,6 +399,9 @@ eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t con
 	if (strstr((const char*) uart_buffer, "+HTTP") == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("post debug point 3");
+#endif
 		return status;
 	}
 	//+HTTPRES: 0,200,10499
@@ -377,6 +409,9 @@ eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t con
 	if (p == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("post debug point 4");
+#endif
 		return status;
 	}
 	p = strstr(p, ",");
@@ -428,6 +463,79 @@ eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t con
 	*(response->content + index)= '\0';
 	response->size = index;
 
+	return status;
+}
+
+eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t timeout, uint8_t retry){
+	eis_status_t status;
+	uint8_t self_cnt96 = 0;
+	for (uint8_t i = 0; i < retry; i++) {
+		status = _lte_http_get(url, response, timeout);
+		if (status.is_success) {
+			cnt96 = 0;
+			break;
+		}
+		if (status.error_code == 0x60) {
+			cnt96++;
+			self_cnt96++;
+			if (cnt96 >= CNT96_MAX) {
+				if (self_cnt96 == 255) {
+					status.error_code = 0x64;
+					return status;
+				}
+				status = lte_module_init();
+				if (!status.is_success) {
+					status.error_code = 0x64;
+					return status;
+				}
+				status = lte_celluar_init();
+				if (!status.is_success) {
+					status.error_code = 0x64;
+					return status;
+				}
+				cnt96 = 0;
+				i -= self_cnt96;
+				self_cnt96 = 255;
+			}
+		}
+	}
+	return status;
+}
+
+eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t content_size, http_response_t *response, uint16_t timeout, uint8_t retry){
+	eis_status_t status;
+	uint8_t self_cnt96 = 0;
+
+	for (uint8_t i = 0; i < retry; i++) {
+		status = _lte_http_post(url, content, content_size, response, timeout);
+		if (status.is_success) {
+			cnt96 = 0;
+			break;
+		}
+		if (status.error_code == 0x60) {
+			cnt96++;
+			self_cnt96++;
+			if (cnt96 >= CNT96_MAX) {
+				if (self_cnt96 == 255) {
+					status.error_code = 0x64;
+					return status;
+				}
+				status = lte_module_init();
+				if (!status.is_success) {
+					status.error_code = 0x64;
+					return status;
+				}
+				status = lte_celluar_init();
+				if (!status.is_success) {
+					status.error_code = 0x64;
+					return status;
+				}
+				cnt96 = 0;
+				i -= self_cnt96;
+				self_cnt96 = 255;
+			}
+		}
+	}
 	return status;
 }
 

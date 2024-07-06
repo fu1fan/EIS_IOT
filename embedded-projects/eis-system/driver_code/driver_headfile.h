@@ -83,6 +83,7 @@ typedef struct{
 	0x61: 缓冲区溢出
 	0x62: 读取内容失败
 	0x63: 传输post数据失败
+	0x64: 模块失效
  */
 
 #endif /* DRIVER_CODE_DRIVER_HEADFILE_H_ */
