@@ -223,7 +223,7 @@ if __name__ == '__main__':
     thread.start()
     try:
         while(1):
-            time.sleep(60)
+            time.sleep(1)
         if not thread.is_alive():
             print("Server stopped.")
     except KeyboardInterrupt:
