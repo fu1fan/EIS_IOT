@@ -17,6 +17,8 @@ server = make_server('0.0.0.0', PORT, app)
 battery_count = -1
 last_h_query = 0
 
+shutdown = False
+
 class ResultA:
     status_code = 0x00
     mode = 0
@@ -49,8 +51,11 @@ def exist_task(task_id):
     return False
 
 def _update():
+    global shutdown
     open("UPDATE", "w")
     time.sleep(1)
+    print("shutting down...")
+    shutdown = True
     server.shutdown()
 
 def _is_online():
@@ -224,8 +229,9 @@ if __name__ == '__main__':
     try:
         while(1):
             time.sleep(1)
-        if not thread.is_alive():
-            print("Server stopped.")
+            if (not thread.is_alive()) or shutdown:
+                print("Server stopped.")
+                break
     except KeyboardInterrupt:
         server.shutdown()
         thread.join()
