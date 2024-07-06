@@ -10,6 +10,7 @@ import PowerTest from './components/PowerTest.vue';
 import History from './components/History.vue';
 import Setting from './components/Setting.vue';
 import Thermorunaway from './components/Thermorunaway.vue';
+import MechanicalDamage from './components/MechanicalDamage.vue';
 
 import { reactive, watch, ref, shallowRef } from 'vue'
 // import { isDark } from '~/composables/dark'
@@ -40,6 +41,7 @@ const views = {
   "2-3": BalanceTest,
   "2-4": PowerTest,
   "2-5": Thermorunaway,
+  "2-6": MechanicalDamage,
   "3": History,
   "4": Setting,
 }
