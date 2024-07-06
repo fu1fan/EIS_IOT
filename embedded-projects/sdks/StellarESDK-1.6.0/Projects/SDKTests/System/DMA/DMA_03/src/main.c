@@ -1,0 +1,162 @@
+/****************************************************************************
+ *
+ * Copyright (c) 2023 STMicroelectronics - All Rights Reserved
+ *
+ * License terms: STMicroelectronics Proprietary in accordance with licensing
+ * terms SLA0098 at www.st.com.
+ *
+ * THIS SOFTWARE IS DISTRIBUTED "AS IS," AND ALL WARRANTIES ARE DISCLAIMED,
+ * INCLUDING MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+ *
+ *****************************************************************************/
+
+#include <test_env.h>
+#include <dma.h>
+#include <mpu.h>
+
+/*===========================================================================*/
+/* DMA-related.                                                              */
+/*===========================================================================*/
+
+#define DMA_BUFFER_SIZE                     128U
+
+volatile bool dma_completed = false;
+
+/* DMA transfer completed callback.*/
+static void dma_callback(void *arg, uint32_t sts) {
+
+    (void)(arg);
+    (void)sts;
+
+    /* Blink USER_LED_B.*/
+    gpio_toggle_pin(USER_LED_B);
+    dma_completed = true;
+}
+
+/* source and destination buffers are allocated in RAM.*/
+uint8_t source[DMA_BUFFER_SIZE];
+uint8_t __attribute__ ((aligned (128))) destination[DMA_BUFFER_SIZE];
+
+/*===========================================================================*/
+/* MPU-related.                                                              */
+/*===========================================================================*/
+
+/* MPU Region0 = RAM, 32B, R/W,, full access, not cacheable.*/
+static mpu_region_config_t mpu_reg0_cfg  = {
+    .enable = MPU_REG_ENABLE,
+    .number = MPU_REG_NUMBER0,
+    .base_address = (uint32_t)(destination),
+    .size = MPU_REG_SIZE_128B,
+    .subregion_disable = MPU_REG_SUBREG_ENABLE_ALL,
+    .type_ext = MPU_REG_TEX_LEVEL4,
+    .access_permission = MPU_REG_FULL_ACCESS,
+    .instruction_disable = MPU_REG_INSTRUCTION_ACCESS_ENABLE,
+    .shareable = MPU_REG_NOT_SHAREABLE,
+    .cacheable = MPU_REG_NOT_CACHEABLE,
+    .bufferable = MPU_REG_NOT_BUFFERABLE,
+};
+
+int main(void)
+{
+    uint8_t i;
+    const dma_descriptor_t *dma_descriptor;
+    uint32_t dma_mode;
+
+    /* Enable interrupts.*/
+    osal_sys_unlock();
+
+    test_env_init((TestInit_t)
+                  (TEST_INIT_CLOCK    |
+                   TEST_INIT_GPIO     |
+                   TEST_INIT_BOARD    |
+                   TEST_INIT_IRQ      |
+                   TEST_INIT_OSAL));
+
+    /* Switch-off user leds.*/
+    USER_LED_SWITCH_OFF(USER_LED_A);
+    USER_LED_SWITCH_OFF(USER_LED_B);
+
+    /* Configure MPU regions.*/
+    mpu_set_region(&mpu_reg0_cfg);
+
+    /* Enable MPU.*/
+    mpu_enable(MPU_CTRL_HFNMI_PRIVDEF_ENABLED);
+
+    /* Initialize DMA buffers in RAM.
+       RAM:    source[i] = i, destination[i] = 0xFF
+       DCache: disabled                             */
+    for (i = 0U; i < DMA_BUFFER_SIZE; i++) {
+        source[i] = i;
+        destination[i] = 0xFF;
+    }
+
+    /* Enable DCache.*/
+    SCB_InvalidateDCache();
+    SCB_EnableDCache();
+
+    /* Access to the content of the variables source and destination in order
+       to be sure they are cached in DCache.
+       RAM:    source[i] = i, destination[i] = 0xFF
+       DCache: source[i] = i, destination[i] = 0xFF */
+    for (i = 0U; i < DMA_BUFFER_SIZE; i++) {
+        if (destination[i] == source[i]) {
+            while(1);
+        }
+    }
+
+    /* Allocates DMA stream for Memory-to-Memory transmission.*/
+    dma_descriptor = dma_stream_take(DMA1_STREAM0_ID,
+                                     IRQ_PRIORITY_10,
+                                     dma_callback,
+                                     NULL);
+
+    /* Configure DMA stream peripheral addresses.*/
+    /* In DMA M2M, the peripheral address is the source address.*/
+    dma_stream_set_peripheral(dma_descriptor, (uint32_t)(source));
+
+    /* Configure DMA priority level, data transfer direction and enable
+       transfer complete interrupt.*/
+    dma_mode = DMA_CCR_PL_VALUE(DMA_PRIORITY_MAX) |
+                                DMA_CCR_DIR_M2M   |
+                                DMA_CCR_TCIE;
+
+    /* Configure DMA memory increment mode.*/
+    dma_mode |= DMA_CCR_MINC | DMA_CCR_PINC;
+
+    /* Configure DMA frame size.*/
+    dma_mode |= DMA_CCR_PSIZE_BYTE | DMA_CCR_MSIZE_BYTE;
+
+    /* Set up calculated DMA modes.*/
+    dma_stream_set_transfer_mode(dma_descriptor, dma_mode);
+
+    /* Configure DMA number of data items.*/
+    dma_stream_set_count(dma_descriptor, DMA_BUFFER_SIZE);
+
+    /* Configure DMA stream memory address.*/
+    dma_stream_set_memory(dma_descriptor, (uint32_t)(destination));
+
+    /* Enable DMA. It will be disabled on the DMA end of transfer.*/
+    dma_stream_enable(dma_descriptor);
+
+    /* Wait till DMA transfer is complited. When the DMA transfer is complited,
+       the value of variable destination will be updated to the value of
+       variable source.
+       RAM:    source[i] = i, destination[i] = i
+       DCache: source[i] = i, destination[i] = 0xFF */
+    while (dma_completed == false);
+
+    /* Check DMA transfer.*/
+    for (i = 0U; i < DMA_BUFFER_SIZE; i++) {
+        if (destination[i] != source[i]) {
+            while(1);
+        }
+    }
+
+    /* Application main loop */
+    for ( ; ; ) {
+        /* Blink USER_LED_A.*/
+        gpio_toggle_pin(USER_LED_A);
+        osal_delay_millisec(250U);
+    }
+}
+
