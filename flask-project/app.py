@@ -97,7 +97,7 @@ def h_get_task():
     if task_queue.empty():
         return "null"
     task = task_queue.get()
-    message = task.task_id + "|" + task.task_mode
+    message = str(task.task_id) + "|" + task.task_mode
     if task.task_mode == "single":
         message += "|" + str(task.result.cell_id) + "|" + str(task.result.freq) + "|"
     elif task.task_mode == "all":
