@@ -22,13 +22,11 @@ last_h_query = 0
 shutdown = False
 
 class ResultA:
-    status_code = 0x00
     mode = 0
     voltages = []
     impedances = []
 
 class ResultS:
-    status_code = 0x00
     cell_id = 0
     freq = 0
     voltage = 0
@@ -39,6 +37,7 @@ class ResultS:
 
 class Task:
     task_id = 0
+    status_code = 0x00
     task_mode = None # "all" or "single"
     result = None
 
@@ -98,11 +97,11 @@ def h_get_task():
     if task_queue.empty():
         return "null"
     task = task_queue.get()
-    message = task.task_mode
+    message = task.task_id + "|" + task.task_mode
     if task.task_mode == "single":
-        message += "|" + str(task.result.cell_id) + "|" + str(task.result.freq)
+        message += "|" + str(task.result.cell_id) + "|" + str(task.result.freq) + "|"
     elif task.task_mode == "all":
-        message += "|" + str(task.result.mode)
+        message += "|" + str(task.result.mode) + "|"
     running_task = task
     return message
 
@@ -122,11 +121,13 @@ def h_submit_result():
     task = running_task
     
     try:
-        if data[1] == "single":
+        if data[1] == "failed":
+            task.status_code = int(data[2])
+        elif data[1] == "single":
             task.result.freq = int(data[2])
             task.result.voltage = float(data[3])
-            task.result.imag = float(data[4])
-            task.result.real = float(data[5])
+            task.result.real = float(data[4])
+            task.result.imag = float(data[5])
             task.result.zabs = (task.result.imag ** 2 + task.result.real ** 2) ** 0.5
             task.result.zarg = atan(task.result.imag / task.result.real)
         elif data[1] == "all":
