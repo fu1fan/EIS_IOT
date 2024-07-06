@@ -5,6 +5,7 @@ from werkzeug.serving import make_server
 import time
 from queue import Queue
 import os
+import traceback
 
 PORT = 1001
 
@@ -135,6 +136,8 @@ def h_submit_result():
             if task.result.mode != 1:
                 task.result.impedances = [float(x) for x in data[3].split(",")]
     except (ValueError, IndexError):
+        traceback.print_exc()
+        print(data)
         return "0"
     
     running_task = None
