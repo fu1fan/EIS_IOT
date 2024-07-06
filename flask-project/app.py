@@ -224,6 +224,8 @@ if __name__ == '__main__':
     try:
         while(1):
             time.sleep(60)
+        if not thread.is_alive():
+            print("Server stopped.")
     except KeyboardInterrupt:
         server.shutdown()
         thread.join()

@@ -4,6 +4,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 def update():
     # 返回上一层目录
     os.chdir("..")
+    os.system("git checkout .")
     os.system("git pull")
     os.chdir("flask-project")
 
