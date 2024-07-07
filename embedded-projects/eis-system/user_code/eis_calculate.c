@@ -147,8 +147,8 @@ void eis_single_point_process(void){
 	float imag_sum_valid = 0;
 	int valid_size = 0;
 	while (p != NULL) {
-		if (pow(p->real - real_mean, 2) < 3 * real_var
-				&& pow(p->imag - imag_mean, 2) < 3 * imag_var) {
+		if (pow(p->real - real_mean, 2) <= 3 * real_var
+				&& pow(p->imag - imag_mean, 2) <= 3 * imag_var) {
 			real_sum_valid += p->real;
 			imag_sum_valid += p->imag;
 			valid_size++;
