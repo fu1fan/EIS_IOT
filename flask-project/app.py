@@ -214,7 +214,7 @@ def c_add_task():
     except:
         return {"status": "error", "message": "Invalid JSON data"}
     task_type = data.get("type")
-    if not task_type in ["all", "single"]:
+    if task_type is None:
         return {"status": "error", "message": "Invalid task type"}
     result = None
     if task_type == "single":
