@@ -117,14 +117,28 @@ def h_get_task():
         running_task = None
     if task_queue.empty():
         return "null"
-    task = task_queue.get()
+    task = task_queue.queue[0]
     message = str(task.task_id) + "|" + task.task_mode
     if task.task_mode == "single":
         message += "|" + str(task.result.cell_id) + "|" + str(task.result.freq) + "|"
     elif task.task_mode == "all":
         message += "|" + str(task.result.mode) + "|"
-    running_task = task
     return message
+
+@app.route('/api/h/confirm_task', methods=['POST'])
+def h_confirm_task():
+    global running_task
+    data = request.get_data().decode("ascii")
+    try:
+        task_id = int(data)
+    except ValueError:
+        return "0"
+    if task_queue.empty():
+        return "0"
+    if task_queue.queue[0].task_id != task_id:
+        return "0"
+    running_task = task_queue.get()
+    return "1"
 
 @app.route('/api/h/submit_result', methods=['POST'])
 def h_submit_result():
