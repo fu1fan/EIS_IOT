@@ -368,7 +368,7 @@
 #define PIN_GPIO8_0_CFG                             \
 	(GPIO_MODE_MODER_OUTPUT |                       \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
@@ -380,7 +380,7 @@
 #define PIN_GPIO8_1_CFG                             \
 	(GPIO_MODE_MODER_OUTPUT |                       \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
@@ -392,7 +392,7 @@
 #define PIN_GPIO8_2_CFG                             \
 	(GPIO_MODE_MODER_OUTPUT |                       \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
@@ -404,7 +404,7 @@
 #define PIN_GPIO8_3_CFG                             \
 	(GPIO_MODE_MODER_OUTPUT |                       \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
@@ -416,7 +416,7 @@
 #define PIN_GPIO8_4_CFG                             \
 	(GPIO_MODE_MODER_OUTPUT |                       \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
@@ -428,7 +428,7 @@
 #define PIN_GPIO8_5_CFG                             \
 	(GPIO_MODE_MODER_INPUT |                        \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_PULLDOWN |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
