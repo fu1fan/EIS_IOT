@@ -190,7 +190,7 @@ def h_submit_result():
             task.result.zarg = atan(task.result.imag / task.result.real)
         elif data[1] == "all":
             task.result.voltages = [float(x) for x in data[2].split(",")]
-            if task.result.mode != 1:
+            if task.result.mode != 0:
                 task.result.impedances = [float(x) for x in data[3].split(",")]
         elif data[1] == "eis":
             print(2)
