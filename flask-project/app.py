@@ -9,10 +9,10 @@ import traceback
 
 PORT = 1001
 
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 with open("SYNC_TOKEN", "r") as f:
     TOKEN = f.read().strip()
-
-os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 app = Flask(__name__, static_folder='../', static_url_path='/')
 server = make_server('0.0.0.0', PORT, app)
@@ -23,18 +23,38 @@ last_h_query = 0
 shutdown = False
 
 class ResultA:
-    mode = 0
-    voltages = []
-    impedances = []
+    def __init__(self):
+        self.mode = 0
+        self.voltages = []
+        self.impedances = []
+    
+    def __json__(self):
+        return {
+            "mode": self.mode,
+            "voltages": self.voltages,
+            "impedances": self.impedances
+        }
 
 class ResultS:
-    cell_id = 0
-    freq = 0
-    voltage = 0
-    imag = 0.0
-    real = 0.0
-    zabs = 0.0
-    zarg = 0.0
+    def __init__(self):
+        self.cell_id = 0
+        self.freq = 0
+        self.voltage = 0
+        self.imag = 0.0
+        self.real = 0.0
+        self.zabs = 0.0
+        self.zarg = 0.0
+
+    def __json__(self):
+        return {
+            "cell_id": self.cell_id,
+            "freq": self.freq,
+            "voltage": self.voltage,
+            "imag": self.imag,
+            "real": self.real,
+            "zabs": self.zabs,
+            "zarg": self.zarg
+        }
 
 class Task:
     task_id = 0
@@ -144,7 +164,7 @@ def h_submit_result():
         return "0"
     
     running_task = None
-    results[task_id] = task.result
+    results[task_id] = task
 
     return "1"
 
@@ -225,12 +245,13 @@ def c_get_result():
         for task in task_queue.queue:
             if task.task_id == task_id:
                 return {"status": "warning", "message": "waiting"}
-        if task_id == running_task.task_id:
-            return {"status": "warning", "message": "processing"}
+        if running_task:
+            if task_id == running_task.task_id:
+                return {"status": "warning", "message": "processing"}
         return {"status": "error", "message": "notfound"}
-    result = results[task_id]
+    task = results[task_id]
     results.pop(task_id)
-    return {"status": "success", "data": results}
+    return {"status": "success", "code": task.status_code, "data": task.result.__json__() if task else {}}
 
 if __name__ == '__main__':
     thread = Thread(target=server.serve_forever, daemon=True)
