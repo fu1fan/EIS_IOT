@@ -56,6 +56,22 @@ class ResultS:
             "zarg": self.zarg
         }
 
+class ReusltE:
+    def __init__(self):
+        self.cell_id = 0
+        self.freqs = []
+        self.reals = []
+        self.imags = []
+
+    def __json__(self):
+        return {
+            "cell_id": self.cell_id,
+            "freqs": self.freqs,
+            "reals": self.reals,
+            "imags": self.imags
+        }
+
+
 class Task:
     task_id = 0
     status_code = 0x00
@@ -123,6 +139,8 @@ def h_get_task():
         message += "|" + str(task.result.cell_id) + "|" + str(task.result.freq) + "|"
     elif task.task_mode == "all":
         message += "|" + str(task.result.mode) + "|"
+    elif task.task_mode == "eis":
+        message += "|" + str(task.result.cell_id) + "|"
     return message
 
 @app.route('/api/h/confirm_task', methods=['POST'])
@@ -172,6 +190,11 @@ def h_submit_result():
             task.result.voltages = [float(x) for x in data[2].split(",")]
             if task.result.mode != 1:
                 task.result.impedances = [float(x) for x in data[3].split(",")]
+        elif data[1] == "eis":
+            task.result.freqs = [float(x) for x in data[2].split(",")]
+            task.result.reals = [float(x) for x in data[3].split(",")]
+            task.result.imags = [float(x) for x in data[4].split(",")]
+            
     except (ValueError, IndexError):
         traceback.print_exc()
         print(data)
@@ -215,6 +238,15 @@ def c_add_task():
         if mode not in [0, 1, 2]:
             return {"status": "error", "message": "Invalid mode"}
         result.mode = mode
+    elif task_type == "eis":
+        result = ReusltE()
+        try:
+            cell_id = int(data["cell_id"])
+        except (KeyError, ValueError):
+            return {"status": "error", "message": "Invalid cell ID"}
+        result.cell_id = cell_id
+    else:
+        return {"status": "error", "message": "Invalid task type"}
     task = Task()
     id = hash(time.time())
     while exist_task(id):
