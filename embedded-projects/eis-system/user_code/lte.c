@@ -362,6 +362,17 @@ eis_status_t _lte_http_post(const char *url, const uint8_t *content, uint32_t co
 		return status;
 	}
 	lte_uart_printf("AT+HTTPDATA=%d\r\n", content_size);
+	status = lte_uart_receive(RECEIVE_TIMEOUT);
+	if (!status.is_success) {
+		return status;
+	}
+	if (strstr((const char*) uart_buffer, "AT+HTTPDATA") == NULL) {
+		status.is_success = 0;
+		status.error_code = 0x60;
+#ifdef LTE_DEBUG
+		ui_console_printf("post debug point 0.5");
+#endif
+	}
 	lte_uart_write_buffer(content, content_size);
 	osal_delay_millisec(100U);
 	lte_uart_clear();
