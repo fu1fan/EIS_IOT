@@ -160,6 +160,7 @@ def h_confirm_task():
 
 @app.route('/api/h/submit_result', methods=['POST'])
 def h_submit_result():
+    print(0)
     global results, running_task
     data = request.get_data().decode("ascii").split("|")
 
@@ -175,6 +176,7 @@ def h_submit_result():
         return "0"
     
     task = running_task
+    print(1)
     
     try:
         if data[1] == "failed":
@@ -191,6 +193,7 @@ def h_submit_result():
             if task.result.mode != 1:
                 task.result.impedances = [float(x) for x in data[3].split(",")]
         elif data[1] == "eis":
+            print(2)
             task.result.freqs = [float(x) for x in data[2].split(",")]
             task.result.reals = [float(x) for x in data[3].split(",")]
             task.result.imags = [float(x) for x in data[4].split(",")]
