@@ -335,7 +335,7 @@ inout GPIO8_0 -> E7_164 as PIN_GPIO8_0
 	IO
 		MODER0 = 'Output',
 		OT0 = 'PushPull',
-		OSPEEDR0 = 'VeryHigh',
+		OSPEEDR0 = 'Low',
 		PUPDR0 = 'Floating',
 		AFRL0 = 0,
 		IHYSTR0 = 'CMOS',
@@ -347,7 +347,7 @@ inout GPIO8_0 -> E7_164 as PIN_GPIO8_0
 	IO
 		MODER1 = 'Output',
 		OT1 = 'PushPull',
-		OSPEEDR1 = 'VeryHigh',
+		OSPEEDR1 = 'Low',
 		PUPDR1 = 'Floating',
 		AFRL1 = 0,
 		IHYSTR1 = 'CMOS',
@@ -359,7 +359,7 @@ inout GPIO8_0 -> E7_164 as PIN_GPIO8_0
 	IO
 		MODER2 = 'Output',
 		OT2 = 'PushPull',
-		OSPEEDR2 = 'VeryHigh',
+		OSPEEDR2 = 'Low',
 		PUPDR2 = 'Floating',
 		AFRL2 = 0,
 		IHYSTR2 = 'CMOS',
@@ -371,7 +371,7 @@ inout GPIO8_0 -> E7_164 as PIN_GPIO8_0
 	IO
 		MODER3 = 'Output',
 		OT3 = 'PushPull',
-		OSPEEDR3 = 'VeryHigh',
+		OSPEEDR3 = 'Low',
 		PUPDR3 = 'Floating',
 		AFRL3 = 0,
 		IHYSTR3 = 'CMOS',
@@ -383,7 +383,7 @@ inout GPIO8_0 -> E7_164 as PIN_GPIO8_0
 	IO
 		MODER4 = 'Output',
 		OT4 = 'PushPull',
-		OSPEEDR4 = 'VeryHigh',
+		OSPEEDR4 = 'Low',
 		PUPDR4 = 'Floating',
 		AFRL4 = 0,
 		IHYSTR4 = 'CMOS',
@@ -395,7 +395,7 @@ inout GPIO8_0 -> E7_164 as PIN_GPIO8_0
 	IO
 		MODER5 = 'Input',
 		OT5 = 'PushPull',
-		OSPEEDR5 = 'VeryHigh',
+		OSPEEDR5 = 'Low',
 		PUPDR5 = 'PullDown',
 		AFRL5 = 0,
 		IHYSTR5 = 'CMOS',
