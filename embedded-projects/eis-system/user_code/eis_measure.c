@@ -74,16 +74,16 @@ eis_status_t voltage_follow_correct(void){
 		uint8_t buttom_flag = 0;
 		for (uint8_t i = 0; i < 128; i++) {
 			//  检查是否有触顶数据
-			if (!top_flag && g_tAD.usBuf_1[i] > 30000) {
+			if (!top_flag && g_tAD.usBuf_1[i] > 28000) {
 				top_count++;
 			}
-			if (!buttom_flag && g_tAD.usBuf_1[i] < -30000) {
+			if (!buttom_flag && g_tAD.usBuf_1[i] < -28000) {
 				buttom_count++;
 			}
-			if (top_count >= 5) {
+			if (top_count >= 10) {
 				top_flag = 1;
 			}
-			if (buttom_count >= 5) {
+			if (buttom_count >= 10) {
 				buttom_flag = 1;
 			}
 			if(top_flag && buttom_flag) {
@@ -262,6 +262,7 @@ eis_status_t eis_battery_select(uint8_t battery_) {
 	vf_relay(0);
 
 	eb_set(battery_ / 4, battery_ % 4);
+	voltage_correction = 0;
 
 	float battery_voltage = 5.0*g_tAD_single_buffer[BATTERY_CH]/32768;
 	if (battery_voltage < 2 || battery_voltage > 5) {
@@ -334,7 +335,7 @@ eis_status_t eis_measure() {
 #ifdef UART_DEBUG
 		printf("%d\t%f\t%f\r\n", (int)eis_result.tail->freq, eis_result.tail->real, eis_result.tail->imag);
 #endif
-		voltage_follow();
+		//voltage_follow();
 	}
 
 	ccs_relay(0);
