@@ -10,7 +10,7 @@
 
 #include "driver_headfile.h"
 
-#define FACTOR (250 * 1.62)
+#define FACTOR (250 * 1.62 * 1.3)
 
 struct eis_node_t{
 	float real;
