@@ -72,10 +72,10 @@ setInterval(() => {
             if (data.status == "success") {
               status = data.data.state
               voltage_data.value = data.data.voltages_his
-              voltage_mean = data.data.voltage_mean
-              battery_count = data.data.battery_count
-              ohmages_mean = data.data.ohmages_mean
-              last_update = data.data.last_update
+              voltage_mean.value = data.data.voltage_mean
+              battery_count.value = data.data.battery_count
+              ohmages_mean.value = data.data.ohmages_mean
+              last_update.value = data.data.last_update
             }
           })
           .catch(error => {
