@@ -287,7 +287,7 @@ def c_add_task():
 
     task_queue.put(task)
 
-    return {"status": "success", "id": id}
+    return {"status": "success", "id": str(id)}
 
 @app.route('/api/h/cur_task')
 def h_cur_task():
@@ -323,9 +323,6 @@ def c_get_result():
         if running_task:
             if task_id == running_task.task_id:
                 return {"status": "warning", "message": "processing"}
-        for waiting_task in task_queue.queue:
-            if waiting_task.task_id == task_id:
-                return {"status": "warning", "message": "waiting"}
         return {"status": "error", "message": "notfound"}
     task = results[task_id]
     results.pop(task_id)
