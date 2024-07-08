@@ -61,34 +61,42 @@ let ohmages_mean = ref(0)
 let last_update = ref(0)
 
 // Make a request to /api/c/is_online
-setInterval(() => {
-  fetch('/api/c/is_online')
-    .then(response => response.json())
-    .then(data => {
-      if (data.data==true) {
-        fetch('/api/c/get_state')
-          .then(response => response.json())
-          .then(data => {
-            if (data.status == "success") {
-              status.value = data.data.state
-              voltage_data.value = data.data.voltages_his
-              voltage_mean.value = data.data.voltage_mean.toFixed(3)
-              battery_count.value = data.data.battery_count
-              ohmages_mean.value = data.data.ohmages_mean.toFixed(3)
-              last_update.value = new Date(data.data.last_update * 1000).toLocaleTimeString()
-            }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
-      } else {
-        status = "离线"
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}, 2000);
+let intervalId = null;
+
+onMounted(() => {
+  intervalId = setInterval(() => {
+    fetch('/api/c/is_online')
+      .then(response => response.json())
+      .then(data => {
+        if (data.data == true) {
+          fetch('/api/c/get_state')
+            .then(response => response.json())
+            .then(data => {
+              if (data.status == "success") {
+                status.value = data.data.state
+                voltage_data.value = data.data.voltages_his
+                voltage_mean.value = data.data.voltage_mean.toFixed(3)
+                battery_count.value = data.data.battery_count
+                ohmages_mean.value = data.data.ohmages_mean.toFixed(3)
+                last_update.value = new Date(data.data.last_update * 1000).toLocaleTimeString()
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        } else {
+          status = "离线"
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, 2000);
+});
+
+onUnmounted(() => {
+  clearInterval(intervalId);
+});
 
 const option = computed(() => {
   const data = voltage_data.value.slice(-7).map((value) => {

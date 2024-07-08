@@ -1,7 +1,7 @@
 <template>
   <el-row gutter="20">
     <el-col :span="8">
-      <BatterySelect :batteryCount=5 @update:selectedIndex="updateSelectedIndex" />
+      <BatterySelect :batteryCount=battery_count @update:selectedIndex="updateSelectedIndex" />
     </el-col>
     <el-col :span="16">
       <el-card shadow="hover">
@@ -131,13 +131,14 @@ function checkResult(task_id) {
             add_data(data.data.reals[i], data.data.imags[i]);
           }
         } else {
-          alert('任务丢失，请重试');
+          alert('错误代码：' + data.code);
         }
-      }
-      else if (data.status == "warning") (
+      } else if (data.status == "warning") {
         // 如果任务未完成，稍后再次检查
         setTimeout(() => checkResult(task_id), 500)
-      )
+      } else {
+        alert('任务丢失')
+      }
     })
     .catch((error) => {
       alert('获取数据失败');
