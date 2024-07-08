@@ -100,7 +100,7 @@ class State:
             "voltages_his": list(self.voltages_his.queue),
             "voltage_mean": sum(self.voltages_cur) / len(self.voltages_cur),
             "voltage_total": sum(self.voltages_cur),
-            "last_h_query": self.last_h_query
+            "last_update": self.last_task
         }
 
 task_queue = Queue()

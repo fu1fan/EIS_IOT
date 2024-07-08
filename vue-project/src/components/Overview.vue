@@ -1,26 +1,8 @@
 <script setup>
 import BaseChart from './charts/BaseChart.vue'
+import { ref, computed } from 'vue'
 
-const option = {
-  title: {
-    text: '电压变化趋势图',
-    left: 'center'
-  },
-  xAxis: {
-    type: 'category',
-    data: ['-6min', '-5min', '-4min', '-3min', '-2min', '-1min', 'cur']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      data: [4.2, 4.15, 4.1, 4, 3.9, 3.92, 3.88],
-      type: 'line',
-      smooth: true
-    }
-  ]
-}
+let voltage_data = ref([])
 
 const tableRowClassName = ({
   row,
@@ -34,40 +16,134 @@ const tableRowClassName = ({
   return ''
 }
 
-const deviceData = [
+const batter_status = {
+  "正常": {
+    icon: "success",
+    title: "正常",
+    sub_title: "电池状态正常"
+  },
+  "未知": {
+    icon: "warning",
+    title: "未知",
+    sub_title: "请等待第一次扫描结果"
+  },
+  "离线": {
+    icon: "error",
+    title: "离线",
+    sub_title: "设备离线"
+  },
+  "均衡": {
+    icon: "warning",
+    title: "电压不均衡",
+    sub_title: "请到就近维修店检修电池"
+  },
+  "异常": {
+    icon: "error",
+    title: "存在异常电池",
+    sub_title: "已断开动力源，请到就近维修店检修电池"
+  },
+  "低压": {
+    icon: "error",
+    title: "电压过低",
+    sub_title: "部分电池电压低于临界值"
+  },
+  "未响应": {
+    icon: "error",
+    title: "未响应",
+    sub_title: "设备未响应"
+  }
+}
+
+let status = ref("异常")
+let voltage_mean = ref(0)
+let battery_count = ref(0)
+let ohmages_mean = ref(0)
+let last_update = ref(0)
+
+// Make a request to /api/c/is_online
+setInterval(() => {
+  fetch('/api/c/is_online')
+    .then(response => response.json())
+    .then(data => {
+      if (data.is_online) {
+        fetch('/api/c/battery_status')
+          .then(response => response.json())
+          .then(data => {
+            if (data.status == "success") {
+              status = data.data.state
+              voltage_data.value = data.data.voltages_his
+              voltage_mean = data.data.voltage_mean
+              battery_count = data.data.battery_count
+              ohmages_mean = data.data.ohmages_mean
+              last_update = data.data.last_update
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      } else {
+        status = "离线"
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}, 2000);
+
+const option = computed(() => {
+  const data = voltage_data.value.slice(-7).map((value) => {
+    return value.toFixed(2)
+  })
+
+  const xAxisData = ['-6min', '-5min', '-4min', '-3min', '-2min', '-1min', 'cur']
+  const yAxisData = data.length < 7 ? Array(7 - data.length).fill(0).concat(data) : data
+
+  return {
+    title: {
+      text: '电压变化趋势图',
+      left: 'center'
+    },
+    xAxis: {
+      type: 'category',
+      data: xAxisData
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: yAxisData,
+        type: 'line',
+        smooth: true
+      }
+    ]
+  }
+})
+const deviceData = computed(() => [
   {
     item: '设备状态',
-    content: '离线',
+    content: status.value,
   },
   {
     item: '上次更新',
-    content: '...',
+    content: last_update.value,
   },
-  {
-    item: "电池数量",
-    content: 1
-  }
-]
+])
 
-const batteryData = [
+const batteryData = computed(() => [
   {
     item: '电池数量',
-    content: '0',
+    content: battery_count.value,
   },
   {
     item: '平均内阻',
-    content: '0',
+    content: ohmages_mean.value,
   },
   {
     item: "平均电压",
-    content: '0'
+    content: voltage_mean.value
   },
-  {
-    item: "电压变化率",
-    content: '0'
-  }
-]
-
+])
 </script>
 
 <template>
@@ -107,7 +183,8 @@ const batteryData = [
                 <span>电池状态</span>
               </div>
             </template>
-            <el-result icon="warning" title="未知" sub-title="请检查是否已启动EIS模块">
+            <el-result :icon="batter_status[status].icon" :title="batter_status[status].title"
+              :sub-title="batter_status[status].sub_title">
             </el-result>
           </el-card>
         </el-col>
