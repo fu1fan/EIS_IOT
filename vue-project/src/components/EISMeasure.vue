@@ -105,12 +105,7 @@ const add_data = (x, y) => {
 // }
 
 function checkResult(task_id) {
-  fetch('/api/c/get_result', {
-    method: 'GET',
-    params: {
-      "id": task_id,
-    }
-  })
+  fetch('/api/c/get_result?id='+task_id, { method: 'GET' })
     .then((response) => response.json())
     .then((data) => {
       if (data.status == "success") {
