@@ -144,11 +144,11 @@ const batteryData = computed(() => [
     content: battery_count.value,
   },
   {
-    item: '平均内阻',
+    item: '平均内阻(mΩ)',
     content: ohmages_mean.value,
   },
   {
-    item: "平均电压",
+    item: "平均电压(V)",
     content: voltage_mean.value
   },
 ])
