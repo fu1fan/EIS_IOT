@@ -120,29 +120,29 @@ function checkResult(task_id) {
       "id": task_id,
     }
   })
-  .then((response) => response.json())
-  .then((data) => {
-    if(data.status == "success"){
-      if(data.code == 0){
-        // data.imags存放着纵坐标
-        // data.reals存放着横坐标
-        // 遍历添加
-        for (let i = 0; i < data.data.freqs.length; i++) {
-          add_data(data.data.reals[i], data.data.imags[i]);
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.status == "success") {
+        if (data.code == 0) {
+          // data.imags存放着纵坐标
+          // data.reals存放着横坐标
+          // 遍历添加
+          for (let i = 0; i < data.data.freqs.length; i++) {
+            add_data(data.data.reals[i], data.data.imags[i]);
+          }
+        } else {
+          alert('任务丢失，请重试');
         }
-      } else {
-        alert('任务丢失，请重试');
       }
-    }
-    else if(data.status == "warning")(
-      // 如果任务未完成，稍后再次检查
-      setTimeout(() => checkResult(task_id), 500)
-    )
-  })
-  .catch((error) => {
-    alert('获取数据失败');
-    // 可以在这里添加错误处理逻辑，比如重试或者终止
-  });
+      else if (data.status == "warning") (
+        // 如果任务未完成，稍后再次检查
+        setTimeout(() => checkResult(task_id), 500)
+      )
+    })
+    .catch((error) => {
+      alert('获取数据失败');
+      // 可以在这里添加错误处理逻辑，比如重试或者终止
+    });
 }
 
 const start_measure = () => {
@@ -153,6 +153,9 @@ const start_measure = () => {
   console.log('start measure');
   fetch('/api/c/add_task', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify({
       "type": "eis",
       "cell_id": selected_cell_id.value,
@@ -160,10 +163,10 @@ const start_measure = () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      if(data.status == "success"){
+      if (data.status == "success") {
         let task_id = data.data.id;
         checkResult(task_id);
-      }else{
+      } else {
         ElMessageBox.alert('设备离线或正忙', '错误', {
           confirmButtonText: '确定',
           type: 'error',
