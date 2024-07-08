@@ -95,7 +95,7 @@ class State:
             "state": self.state,
             "battery_count": self.battery_count,
             "ohmages": self.ohmages,
-            "ohmages_mean": sum(self.ohmages) / len(self.ohmages),
+            "ohmages_mean": sum(self.ohmages) / len(self.ohmages) if self.ohmages else 0,
             "voltages_cur": self.voltages_cur,
             "voltages_his": list(self.voltages_his.queue),
             "voltage_mean": sum(self.voltages_cur) / len(self.voltages_cur),
@@ -376,8 +376,8 @@ def task_setter():
                         if min(State.voltages_cur) < 3.0:
                             State.state = "低压"
                         
-                        # 如果有电池内阻大于300mΩ，认为电池内阻过高
-                        if max(State.ohmages) > 300:
+                        # 如果有电池内阻大于30mΩ，认为电池内阻过高
+                        if max(State.ohmages) > 30 or 0 in State.ohmages:
                             State.state = "异常"
 
                         flag = True
