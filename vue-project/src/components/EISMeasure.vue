@@ -156,7 +156,7 @@ const start_measure = () => {
     .then((response) => response.json())
     .then((data) => {
       if (data.status == "success") {
-        let task_id = data.data.id;
+        let task_id = data.id;
         checkResult(task_id);
       } else {
         ElMessageBox.alert('设备离线或正忙', '错误', {
