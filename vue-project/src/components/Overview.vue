@@ -1,6 +1,6 @@
 <script setup>
 import BaseChart from './charts/BaseChart.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 let voltage_data = ref([])
 
