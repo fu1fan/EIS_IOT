@@ -54,7 +54,7 @@ const batter_status = {
   }
 }
 
-let status = ref("异常")
+let status = ref("未知")
 let voltage_mean = ref(0)
 let battery_count = ref(0)
 let ohmages_mean = ref(0)
