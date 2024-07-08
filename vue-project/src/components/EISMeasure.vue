@@ -111,11 +111,11 @@ function checkResult(task_id) {
           for (let i = 0; i < data.data.freqs.length; i++) {
             add_data(data.data.reals[i], 0 - data.data.imags[i]);
           }
-          button_disabled.value = false;
-          button_text.value = '开始测量';
         } else {
           alert('错误代码：' + data.code);
         }
+        button_disabled.value = false;
+        button_text.value = '开始测量';
       } else if (data.status == "warning") {
         if (data.message == "waiting") {
           button_text.value = '任务排队中';
