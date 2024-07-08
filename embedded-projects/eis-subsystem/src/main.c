@@ -95,7 +95,7 @@ int main (void)
 
     for ( ; ; )
     {
-        osal_delay_millisec(10U);
+        osal_delay_millisec(5U);
         run_led_duty = (100 > run_led_duty) ? (run_led_duty + 1) : (0);
         system_rgb_control(SYSTEM_LED_GREEN, run_led_duty);
         if(can_rx_flag)
