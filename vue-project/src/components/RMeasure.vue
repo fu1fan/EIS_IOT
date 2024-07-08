@@ -52,7 +52,7 @@ function checkResult(task_id) {
           // data.imags存放着纵坐标
           // data.reals存放着横坐标
           // 遍历添加
-          result.value = data.data.zabs + "(" + data.data.zarg + ")";
+          result.value = data.data.zabs.toFixed(4) + "Ω (" + data.data.zarg.toFixed(4) + ")";
         } else {
           alert('错误代码：' + data.code);
         }
