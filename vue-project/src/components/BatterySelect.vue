@@ -48,8 +48,7 @@ onMounted(() => {
 // 定义emits
 const emits = defineEmits(['update:selectedIndex']);
 
-// 本地状态来跟踪选中的索引
-const selectedIndex = ref(props.initialSelectedIndex || 0);
+const selectedIndex = ref(0);
 
 // 选择电池的方法
 const selectBattery = (index) => {
