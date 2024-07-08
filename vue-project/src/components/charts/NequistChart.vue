@@ -23,6 +23,9 @@ let data = ref([])
 defineExpose({
   add_data(x, y) {
     data.value.push([x, y])
+  },
+  clear_data() {
+    data.value = []
   }
 })
 

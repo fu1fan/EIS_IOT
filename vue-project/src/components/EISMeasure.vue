@@ -8,7 +8,10 @@
         <nequist-chart ref="nequistChartRef" />
         <template #footer>
           <div style="display: flex; justify-content: flex-end;">
-            <el-button type="primary" @click="start_measure">开始测量</el-button>
+            <!-- <el-button type="primary" @click="start_measure">开始测量</el-button> -->
+            <el-button :disabled="button_disabled" type="primary" @click="start_measure">
+              {{ button_text }}
+            </el-button>
           </div>
         </template>
       </el-card>
@@ -24,6 +27,8 @@ import { ElMessageBox } from 'element-plus';
 
 let battery_count = ref(0)
 
+let button_disabled = ref(false);
+let button_text = ref('开始测量');
 
 const selected_cell_id = ref(-1);
 
@@ -38,6 +43,12 @@ const nequistChartRef = ref(null);
 const add_data = (x, y) => {
   if (nequistChartRef.value) {
     nequistChartRef.value.add_data(x, y);
+  }
+};
+
+const clear_data = () => {
+  if (nequistChartRef.value) {
+    nequistChartRef.value.clear_data();
   }
 };
 
@@ -100,10 +111,17 @@ function checkResult(task_id) {
           for (let i = 0; i < data.data.freqs.length; i++) {
             add_data(data.data.reals[i], 0 - data.data.imags[i]);
           }
+          button_disabled.value = false;
+          button_text.value = '开始测量';
         } else {
           alert('错误代码：' + data.code);
         }
       } else if (data.status == "warning") {
+        if (data.message == "waiting") {
+          button_text.value = '任务排队中';
+        } else if (data.message == "processing") {
+          button_text.value = '任务进行中';
+        }
         // 如果任务未完成，稍后再次检查
         setTimeout(() => checkResult(task_id), 500)
       } else {
@@ -129,13 +147,16 @@ const start_measure = () => {
     },
     body: JSON.stringify({
       "type": "eis",
-      "cell_id": selected_cell_id.value,
+      "cell_id": selected_cell_id.value - 1,
     }),
   })
     .then((response) => response.json())
     .then((data) => {
       if (data.status == "success") {
         let task_id = data.id;
+        clear_data();
+        button_disabled.value = true;
+        button_text.value = '等待...';
         checkResult(task_id);
       } else {
         ElMessageBox.alert('设备离线或正忙', '错误', {
