@@ -20,6 +20,7 @@ server = make_server('0.0.0.0', PORT, app)
 
 battery_count = -1
 last_h_query = 0
+last_task = 0
 
 shutdown = False
 
@@ -140,7 +141,8 @@ def api():
 
 @app.route('/api/h/init', methods=['POST'])
 def h_init():
-    global last_h_query, running_task, battery_count
+    global last_h_query, running_task, battery_count, last_task
+    last_task = 0
     last_h_query = time.time()
     running_task = None
     try:
@@ -169,7 +171,8 @@ def h_get_task():
 
 @app.route('/api/h/confirm_task', methods=['POST'])
 def h_confirm_task():
-    global running_task
+    global running_task, last_h_query
+    last_h_query = time.time()
     data = request.get_data().decode("ascii")
     try:
         task_id = int(data)
@@ -185,7 +188,8 @@ def h_confirm_task():
 @app.route('/api/h/submit_result', methods=['POST'])
 def h_submit_result():
     print(0)
-    global results, running_task
+    global results, running_task, last_h_query
+    last_h_query = time.time()
     data = request.get_data().decode("ascii").split("|")
 
     try:
@@ -330,7 +334,7 @@ def c_get_state():
     return {"status": "success", "data": State().__json__()}
 
 def task_setter():
-    last_task = 0
+    global last_task
     while(1):
         time.sleep(1)
         if _is_online():
@@ -349,6 +353,8 @@ def task_setter():
                 flag = False
                 while(time.time() - cur < 15):
                     if task.task_id in results:
+                        if task.status_code != 0:
+                            break
                         results.pop(task.task_id)
                         last_task = time.time()
                         # 处理数据
