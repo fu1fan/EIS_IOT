@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import NequistChart from './charts/NequistChart.vue';
 import BatterySelect from './BatterySelect.vue';
 import { ElMessageBox } from 'element-plus';
