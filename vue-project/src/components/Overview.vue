@@ -66,7 +66,7 @@ setInterval(() => {
     .then(response => response.json())
     .then(data => {
       if (data.is_online) {
-        fetch('/api/c/battery_status')
+        fetch('/api/c/get_state')
           .then(response => response.json())
           .then(data => {
             if (data.status == "success") {
