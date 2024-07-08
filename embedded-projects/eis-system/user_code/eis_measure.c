@@ -123,6 +123,7 @@ eis_status_t voltage_follow_correct(void){
 			if ((voltage_correction > 0 && top_flag) || (voltage_correction < 0 && buttom_flag)) {
 				status.is_success = 0;
 				status.error_code = 0x32;
+				voltage_correction = 0;
 				binary_status = 3;
 				break;
 			}
@@ -146,6 +147,7 @@ eis_status_t voltage_follow_correct(void){
             if (binary_depth >= 8) {
             	status.is_success = 0;
             	status.error_code = 0x32;
+            	voltage_correction = 0;
             	binary_status = 3;
             }
 		}
@@ -292,7 +294,7 @@ eis_status_t eis_measure() {
 		return status;
 	}
 
-	for (uint8_t i = 5; i < 38; i+=2) {
+	for (uint8_t i = 9; i < 38; i+=2) {
 		uint32_t freq = pow(e, 0.2303*i)+0.5;
 
 		status = voltage_follow_correct();
@@ -303,7 +305,7 @@ eis_status_t eis_measure() {
 
 		ad9959_set(CH1, freq, 1023);
 		osal_delay_millisec(FRQ_CHANGE_WAIT);
-		uint32_t sfreq = freq * 512;
+		uint32_t sfreq = freq * DEFAULT_SAMPLE_RATIO;
 		while(sfreq>30000){
 			sfreq /= 2;
 		}
@@ -373,7 +375,7 @@ eis_status_t eis_single_measure(uint32_t freq_, uint8_t accuracy_){
 		ad9959_set(CH1, freq_, 1023);
 		osal_delay_millisec(FRQ_CHANGE_WAIT);
 
-		uint32_t sfreq = freq_ * 512;
+		uint32_t sfreq = freq_ * DEFAULT_SAMPLE_RATIO;
 		while (sfreq > 30000) {
 			sfreq /= 2;
 		}
