@@ -8,7 +8,9 @@
         <el-text size="large">{{ result }}</el-text>
         <template #footer>
           <div style="display: flex; justify-content: flex-end;">
-            <el-button type="primary" @click="start_measure">开始测量</el-button>
+            <el-button :disabled="button_disabled" type="primary" @click="start_measure">
+              {{ button_text }}
+            </el-button>
           </div>
         </template>
       </el-card>
@@ -19,6 +21,10 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import BatterySelect from './BatterySelect.vue';
+
+let button_disabled = ref(false);
+let button_text = ref('开始测量');
+
 const selected_cell_id = ref(-1);
 const result = ref('未开始测量');
 
