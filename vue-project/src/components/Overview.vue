@@ -65,7 +65,7 @@ setInterval(() => {
   fetch('https://eis.zzzing.cn/api/c/is_online')
     .then(response => response.json())
     .then(data => {
-      if (data.date==true) {
+      if (data.data==true) {
         fetch('https://eis.zzzing.cn/api/c/get_state')
           .then(response => response.json())
           .then(data => {
