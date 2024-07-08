@@ -276,6 +276,10 @@ eis_status_t eis_battery_select(uint8_t battery_) {
 	return status;
 }
 
+void eis_battery_clear() {
+	eb_clear();
+}
+
 eis_status_t eis_measure() {
 	eis_status_t status;
 	status.is_success = 1;
@@ -350,6 +354,7 @@ eis_status_t eis_measure() {
 		status.error_code = 0x34;
 	}
 
+	eis_battery_clear();
 	return status;
 }
 
@@ -405,6 +410,7 @@ eis_status_t eis_single_measure(uint32_t freq_, uint8_t accuracy_){
 }
 
 void eis_single_end() {
+	eis_battery_clear();
 	_end();
 }
 

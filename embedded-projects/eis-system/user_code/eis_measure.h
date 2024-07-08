@@ -21,8 +21,9 @@
 #define FRQ_CHANGE_WAIT 100
 #define VF_DELAY 15
 
-#define DEFAULT_SAMPLE_RATIO 256
+#define DEFAULT_SAMPLE_RATIO 512
 
+void eis_battery_clear(void);
 eis_status_t eis_measure_init(void);
 eis_status_t eis_battery_select(uint8_t battery_);
 eis_status_t eis_measure(void);
