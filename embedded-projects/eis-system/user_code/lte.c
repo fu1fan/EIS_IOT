@@ -373,6 +373,13 @@ eis_status_t _lte_http_post(const char *url, const uint8_t *content, uint32_t co
 		ui_console_printf("post debug point 0.5");
 #endif
 	}
+	// 每次发送64byte
+	while (content_size > 64) {
+		lte_uart_write_buffer(content, 64);
+		content += 64;
+		content_size -= 64;
+		osal_delay_millisec(10U);
+	}
 	lte_uart_write_buffer(content, content_size);
 	osal_delay_millisec(100U);
 	lte_uart_clear();
