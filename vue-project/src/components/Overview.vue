@@ -85,7 +85,7 @@ onMounted(() => {
               console.error('Error:', error);
             });
         } else {
-          status = "离线"
+          status.value = "离线"
         }
       })
       .catch(error => {

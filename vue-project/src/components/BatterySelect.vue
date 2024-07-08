@@ -9,7 +9,7 @@
 		</template>
 		<div class="battery-list">
 			<div
-				v-for="index in props.batteryCount"
+				v-for="index in batteryCount"
 				:key="index"
 				class="battery-item"
 				:class="{ selected: index === selectedIndex }"
@@ -22,14 +22,27 @@
 </template>
 
 <script setup>
-import { ref, defineProps, defineEmits } from 'vue';
+import { ref, defineProps, defineEmits, onMounted } from 'vue';
 
 // 定义props
-const props = defineProps({
-	batteryCount:{
-		type: Number,
-		required: true
-	},
+// const props = defineProps({
+// 	batteryCount:{
+// 		type: Number,
+// 		required: true
+// 	},
+// });
+const batteryCount = ref(0);
+
+onMounted(() => {
+	// 获取电池数量
+	fetch('/api/c/battery_count')
+	.then((response) => response.json())
+	.then((data) => {
+		batteryCount.value = data.data
+	})
+	.catch((error) => {
+		console.error('Error:', error);
+	});
 });
 
 // 定义emits

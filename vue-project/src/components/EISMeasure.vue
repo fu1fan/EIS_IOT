@@ -1,7 +1,7 @@
 <template>
   <el-row gutter="20">
     <el-col :span="8">
-      <BatterySelect :batteryCount=battery_count @update:selectedIndex="updateSelectedIndex" />
+      <BatterySelect @update:selectedIndex="updateSelectedIndex" />
     </el-col>
     <el-col :span="16">
       <el-card shadow="hover">
@@ -40,15 +40,6 @@ import { ElMessageBox } from 'element-plus';
 
 let battery_count = ref(0)
 
-// 获取电池数量
-fetch('/api/c/get_battery_list')
-  .then((response) => response.json())
-  .then((data) => {
-    battery_count.value = data.data;
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
 
 const selected_cell_id = ref(-1);
 
