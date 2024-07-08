@@ -5,7 +5,16 @@
     </el-col>
     <el-col :span="16">
       <el-card shadow="hover">
-        <el-text size="large">{{ result }}</el-text>
+        <template #header>
+          <div class="card-header">
+            <span class="card-name">
+              <span class="align-middle">测量结果</span>
+            </span>
+          </div>
+        </template>
+        <el-text size="large">
+          <p>{{ result }}</p>
+        </el-text>
         <template #footer>
           <div style="display: flex; justify-content: flex-end;">
             <el-button :disabled="button_disabled" type="primary" @click="start_measure">
