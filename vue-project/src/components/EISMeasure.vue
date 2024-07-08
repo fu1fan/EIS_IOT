@@ -114,7 +114,7 @@ function checkResult(task_id) {
           // data.reals存放着横坐标
           // 遍历添加
           for (let i = 0; i < data.data.freqs.length; i++) {
-            add_data(data.data.reals[i], data.data.imags[i]);
+            add_data(data.data.reals[i], - data.data.imags[i]);
           }
         } else {
           alert('错误代码：' + data.code);
