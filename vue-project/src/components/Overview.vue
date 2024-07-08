@@ -62,11 +62,11 @@ let last_update = ref(0)
 
 // Make a request to /api/c/is_online
 setInterval(() => {
-  fetch('https://eis.zzzing.cn/api/c/is_online')
+  fetch('/api/c/is_online')
     .then(response => response.json())
     .then(data => {
       if (data.data==true) {
-        fetch('https://eis.zzzing.cn/api/c/get_state')
+        fetch('/api/c/get_state')
           .then(response => response.json())
           .then(data => {
             if (data.status == "success") {
