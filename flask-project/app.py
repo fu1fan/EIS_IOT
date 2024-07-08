@@ -82,7 +82,6 @@ class Task:
 
 class State:
     state = "正常"
-    battery_count = 0
     last_h_query = 0
     ohmages = []
     # ohmages_mean = 0 计算得出
@@ -93,7 +92,7 @@ class State:
     def __json__(self):
         return {
             "state": self.state,
-            "battery_count": self.battery_count,
+            "battery_count": battery_count,
             "ohmages": self.ohmages,
             "ohmages_mean": sum(self.ohmages) / len(self.ohmages) if self.ohmages else 0,
             "voltages_cur": self.voltages_cur,
@@ -364,7 +363,6 @@ def task_setter():
                         if len(State.voltages_his.queue) > 7:
                             State.voltages_his.get()
                         State.voltages_his.put(sum(task.result.voltages))
-                        State.battery_count = battery_count
 
                         # 如果电压最大差值大于0.5V，认为电池不平衡
                         if max(State.voltages_cur) - min(State.voltages_cur) > 0.5:

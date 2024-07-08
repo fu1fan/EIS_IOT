@@ -70,12 +70,12 @@ setInterval(() => {
           .then(response => response.json())
           .then(data => {
             if (data.status == "success") {
-              status = data.data.state
+              status.value = data.data.state
               voltage_data.value = data.data.voltages_his
-              voltage_mean.value = data.data.voltage_mean
+              voltage_mean.value = data.data.voltage_mean.toFixed(3)
               battery_count.value = data.data.battery_count
-              ohmages_mean.value = data.data.ohmages_mean
-              last_update.value = data.data.last_update
+              ohmages_mean.value = data.data.ohmages_mean.toFixed(3)
+              last_update.value = new Date(data.data.last_update * 1000).toLocaleTimeString()
             }
           })
           .catch(error => {
