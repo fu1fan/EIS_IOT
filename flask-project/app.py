@@ -10,11 +10,12 @@ import traceback
 PORT = 1001
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+static_floder = "../" if os.path.isfile("../index.html") else "../vue-project/dist/"
 
 with open("SYNC_TOKEN", "r") as f:
     TOKEN = f.read().strip()
 
-app = Flask(__name__, static_folder='../', static_url_path='/')
+app = Flask(__name__, static_folder=static_floder, static_url_path='/')
 server = make_server('0.0.0.0', PORT, app)
 
 battery_count = -1
@@ -77,6 +78,29 @@ class Task:
     status_code = 0x00
     task_mode = None # "all" or "single"
     result = None
+
+class State:
+    state = "正常"
+    battery_count = 0
+    last_h_query = 0
+    ohmages = []
+    # ohmages_mean = 0 计算得出
+    voltages_cur = []
+    voltages_his = Queue()
+    # voltages_mean = 0 计算得出
+    # voltages_total = 0 计算得出
+    def __json__(self):
+        return {
+            "state": self.state,
+            "battery_count": self.battery_count,
+            "ohmages": self.ohmages,
+            "ohmages_mean": sum(self.ohmages) / len(self.ohmages),
+            "voltages_cur": self.voltages_cur,
+            "voltages_his": list(self.voltages_his.queue),
+            "voltage_mean": sum(self.voltages_cur) / len(self.voltages_cur),
+            "voltage_total": sum(self.voltages_cur),
+            "last_h_query": self.last_h_query
+        }
 
 task_queue = Queue()
 running_task = None
@@ -253,7 +277,6 @@ def c_add_task():
     task = Task()
     id = hash(time.time())
     while exist_task(id):
-        time.sleep(0.01)
         id = hash(time.time())
     task.task_id = id
     task.task_mode = task_type
@@ -302,9 +325,74 @@ def c_get_result():
     results.pop(task_id)
     return {"status": "success", "code": task.status_code, "data": task.result.__json__() if task else {}}
 
+@app.route('/api/c/get_state')
+def c_get_state():
+    return {"status": "success", "data": State().__json__()}
+
+def task_setter():
+    last_task = 0
+    while(1):
+        time.sleep(1)
+        if _is_online():
+            if time.time() - last_task > 60:
+                task = Task()
+                id = hash(time.time())
+                while exist_task(id):
+                    id = hash(time.time())
+                task.task_id = id
+                task.task_mode = "all"
+                task.result = ResultA()
+                task.result.mode = 1
+                task_queue.put(task)
+
+                cur = time.time()
+                flag = False
+                while(time.time() - cur < 15):
+                    if task.task_id in results:
+                        results.pop(task.task_id)
+                        last_task = time.time()
+                        # 处理数据
+
+                        State.voltages_cur = task.result.voltages
+                        State.ohmages = task.result.impedances
+                        if len(State.voltages_his.queue) > 7:
+                            State.voltages_his.get()
+                        State.voltages_his.put(sum(task.result.voltages))
+                        State.battery_count = battery_count
+
+                        # 如果电压最大差值大于0.5V，认为电池不平衡
+                        if max(State.voltages_cur) - min(State.voltages_cur) > 0.5:
+                            State.state = "均衡"
+                        else:
+                            State.state = "正常"
+                        
+                        # 如果有电池电压低于3.0V，认为电池电压过低
+                        if min(State.voltages_cur) < 3.0:
+                            State.state = "低压"
+                        
+                        # 如果有电池内阻大于300mΩ，认为电池内阻过高
+                        if max(State.ohmages) > 300:
+                            State.state = "异常"
+
+                        flag = True
+                        break
+                    time.sleep(0.5)
+                if not flag:
+                    if _is_online():
+                        State.state = "未响应"
+                        if task in task_queue.queue:
+                            task_queue.queue.remove(task)
+                    else:
+                        last_task = 0
+        else:
+            State.state = "离线"
+            
+
 if __name__ == '__main__':
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
+    routine = Thread(target=task_setter, daemon=True)
+    routine.start()
     print("Server started.")
     try:
         while(1):
