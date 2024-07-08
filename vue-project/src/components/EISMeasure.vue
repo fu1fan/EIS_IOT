@@ -5,23 +5,7 @@
     </el-col>
     <el-col :span="16">
       <el-card shadow="hover">
-        <el-row gutter="20">
-          <el-col :span="16">
-            <nequist-chart ref="nequistChartRef" />
-          </el-col>
-          <el-col :span="8">
-            <el-card shadow="never">
-              <template #header>
-                <div class="card-header">
-                  <span class="card-name">
-                    <span class="align-middle">设备状态</span>
-                  </span>
-                </div>
-              </template>
-              暂无
-            </el-card>
-          </el-col>
-        </el-row>
+        <nequist-chart ref="nequistChartRef" />
         <template #footer>
           <div style="display: flex; justify-content: flex-end;">
             <el-button type="primary" @click="start_measure">开始测量</el-button>
@@ -105,7 +89,7 @@ const add_data = (x, y) => {
 // }
 
 function checkResult(task_id) {
-  fetch('/api/c/get_result?id='+task_id, { method: 'GET' })
+  fetch('/api/c/get_result?id=' + task_id, { method: 'GET' })
     .then((response) => response.json())
     .then((data) => {
       if (data.status == "success") {
@@ -114,7 +98,7 @@ function checkResult(task_id) {
           // data.reals存放着横坐标
           // 遍历添加
           for (let i = 0; i < data.data.freqs.length; i++) {
-            add_data(data.data.reals[i], - data.data.imags[i]);
+            add_data(data.data.reals[i], 0 - data.data.imags[i]);
           }
         } else {
           alert('错误代码：' + data.code);
