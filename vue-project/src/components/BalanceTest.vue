@@ -3,8 +3,8 @@
         <el-card v-for="index in battery_count" :key="index">
             <!-- Card content here -->
             <div>
-                <p>Battery {{ index + 1 }}</p>
-                <p>Voltage: {{ voltages[index] }}</p>
+                <p>Battery {{ index }}</p>
+                <p>Voltage: {{ voltages[index-1] }}</p>
             </div>
         </el-card>
     </div>
@@ -18,7 +18,7 @@ let ohmages = ref([])
 let voltages = ref([])
 let last_update = ref('')
 
-let intervalId = null;
+let intervalId = null
 
 onMounted(() => {
   intervalId = setInterval(() => {

@@ -82,7 +82,7 @@ const start_measure = () => {
     .then((data) => {
       if (data.status == "success") {
         let task_id = data.id;
-        clear_data();
+        result.value = '等待测量结果';
         button_disabled.value = true;
         button_text.value = '等待...';
         checkResult(task_id);

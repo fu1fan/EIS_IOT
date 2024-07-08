@@ -3,10 +3,10 @@
         <el-card v-for="index in battery_count" :key="index">
             <!-- Card content here -->
             <div>
-                <p>Battery {{ index + 1 }}</p>
-                <p>100Hz阻抗: {{ ohmages[index] }}（大小与电池驱动能力成强负相关）</p>
-                <p v-if="ohmages[index] > 20" class="warning">动力不足</p>
-                <p v-if="ohmages[index] = 0" class="warning">阻抗过大，超出量程，请送检</p>
+                <p>Battery {{ index }}</p>
+                <p>100Hz阻抗: {{ ohmages[index - 1] }} （大小与电池驱动能力成强负相关）</p>
+                <p v-if="ohmages[index - 1] > 20" class="warning">动力不足</p>
+                <p v-if="ohmages[index - 1] = 0" class="warning">阻抗过大，超出量程，请送检</p>
             </div>
         </el-card>
     </div>
