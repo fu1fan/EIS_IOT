@@ -13,10 +13,14 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
 let battery_count = ref(0)
 let ohmages = ref([])
 let voltages = ref([])
 let last_update = ref('')
+
+let intervalId = null;
 
 onMounted(() => {
   intervalId = setInterval(() => {

@@ -8,7 +8,7 @@
         <el-text size="large">{{ result }}</el-text>
         <template #footer>
           <div style="display: flex; justify-content: flex-end;">
-            <el-button type="primary">开始测量</el-button>
+            <el-button type="primary" @click="start_measure">开始测量</el-button>
           </div>
         </template>
       </el-card>
@@ -17,6 +17,7 @@
 </template>
 
 <script setup>
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import BatterySelect from './BatterySelect.vue';
 const selected_cell_id = ref(-1);
 const result = ref('未开始测量');
