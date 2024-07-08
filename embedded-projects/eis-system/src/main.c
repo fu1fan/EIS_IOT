@@ -18,6 +18,7 @@
 #include "tft_ui.h"
 #include "lte.h"
 
+#include "math.h"
 #include "stdio.h"
 #include "stdarg.h"
 
@@ -99,7 +100,7 @@ int main (void)
 
 	// 电池扫描
 	ui_console_printf("searching batterys...");
-	uint8_t eb_count = eb_query();
+	uint8_t eb_count = 1;
 	float voltage = 0;
 	ui_console_printf("ExBoard found: %d", eb_count);
 	for (uint8_t i = 0; i < eb_count; i++) {
@@ -329,7 +330,7 @@ int main (void)
 
 						p = eis_result.head;
 						while (p != NULL) {
-							sprintf(content + strlen(content), "%f,", p->imag);
+							sprintf(content + strlen(content), "%f,", p->real);
 							p = p->next;
 						}
 						content[strlen(content) - 1] = '|';
@@ -337,16 +338,16 @@ int main (void)
 
 						p = eis_result.head;
 						while (p != NULL) {
-							sprintf(content + strlen(content), "%f,", p->real);
+							sprintf(content + strlen(content), "%f,", p->imag);
 							p = p->next;
 						}
 						content[strlen(content) - 1] = '\0';
 						post_size = strlen(content);
-						status = lte_http_post("https://eis.zzzing.cn/api/h/submit_result", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
-						if (!status.is_success) {
-							ui_console_printf("submit result failed!");
-							ui_console_printf("error_code: %d", status.error_code);
-						}
+					}
+					status = lte_http_post("https://eis.zzzing.cn/api/h/submit_result", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+					if (!status.is_success) {
+						ui_console_printf("submit result failed!");
+						ui_console_printf("error_code: %d", status.error_code);
 					}
 				} else if (0 == strcmp(p, "all")) {
 					p = ++q;
@@ -380,6 +381,11 @@ int main (void)
 							for (retry = 0; retry < MEASURE_RETRY; retry++) {
 								status = eis_single_measure(100, 1);
 								if (status.is_success) {
+									ohmages[i] = sqrt(pow(eis_result.tail->real, 2) + pow(eis_result.tail->imag, 2));
+									break;
+								}
+								if (status.error_code == 0x31){
+									ohmages[i] = 0;
 									break;
 								}
 							}
@@ -395,6 +401,11 @@ int main (void)
 							for (retry = 0; retry < MEASURE_RETRY; retry++) {
 								status = eis_single_measure(70, 1);
 								if (status.is_success) {
+									ohmages[i] = sqrt(pow(eis_result.tail->real, 2) + pow(eis_result.tail->imag, 2));
+									break;
+								}
+								if (status.error_code == 0x31) {
+									ohmages[i] = 0;
 									break;
 								}
 							}
@@ -412,6 +423,7 @@ int main (void)
 							break;
 						}
 					}
+					eis_single_end();
 					if (flag == 1) {
 						// 示例数据"{task_id}|all|volt1,volt2...|ohm1,ohm2..."
 						wpostf("%s|all|", task_id);
@@ -436,6 +448,11 @@ int main (void)
 						}
 					}else{
 						ui_console_printf("measure failed!");
+						status = lte_http_post("https://eis.zzzing.cn/api/h/submit_result", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+						if (!status.is_success) {
+							ui_console_printf("submit result failed!");
+							ui_console_printf("error_code: %d", status.error_code);
+						}
 					}
 				} else {
 					ui_console_printf("invaild task type");
