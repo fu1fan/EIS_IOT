@@ -5,8 +5,8 @@
             <div>
                 <p>Battery {{ index }}</p>
                 <p>100Hz阻抗: {{ states.ohmages[index - 1] }}mΩ（大小与电池驱动能力成强负相关）</p>
-                <p v-if="states.ohmages[index - 1] > 20" class="warning">动力不足</p>
-                <p v-if="states.ohmages[index - 1] == 0" class="warning">阻抗过大，超出量程，请送检</p>
+                <p v-if="states.ohmages[index - 1] > 20" class="warning" style="color: red; font-weight: bold;">动力不足</p>
+                <p v-if="states.ohmages[index - 1] == 0" class="warning" style="color: red; font-weight: bold;">阻抗过大，超出量程，请送检</p>
             </div>
         </el-card>
     </div>
