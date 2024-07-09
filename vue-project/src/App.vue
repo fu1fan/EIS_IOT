@@ -79,8 +79,8 @@ onMounted(() => {
                 states.value.omages_mean = data.data.omages_mean
                 states.value.voltages_cur = data.data.voltages_cur
                 states.value.voltages_his = data.data.voltages_his
-                states.value.voltages_mean = data.data.voltages_mean
-                states.value.voltages_total = data.data.voltages_total
+                states.value.voltages_mean = data.data.voltage_mean
+                states.value.voltages_total = data.data.voltage_total
                 states.value.last_update = data.data.last_update
               }
             })
