@@ -226,7 +226,7 @@ inout GPIO4_1 -> E7_86 as PIN_GPIO4_1
 	IO
 		MODER1 = 'Output',
 		OT1 = 'PushPull',
-		OSPEEDR1 = 'VeryHigh',
+		OSPEEDR1 = 'High',
 		PUPDR1 = 'Floating',
 		AFRL1 = 0,
 		IHYSTR1 = 'CMOS',
@@ -238,7 +238,7 @@ inout GPIO4_1 -> E7_86 as PIN_GPIO4_1
 	IO
 		MODER3 = 'Output',
 		OT3 = 'PushPull',
-		OSPEEDR3 = 'VeryHigh',
+		OSPEEDR3 = 'High',
 		PUPDR3 = 'Floating',
 		AFRL3 = 0,
 		IHYSTR3 = 'CMOS',
@@ -358,7 +358,7 @@ inout GPIO4_4 -> E7_89 as PIN_GPIO4_4
 	IO
 		MODER4 = 'Output',
 		OT4 = 'PushPull',
-		OSPEEDR4 = 'VeryHigh',
+		OSPEEDR4 = 'High',
 		PUPDR4 = 'Floating',
 		AFRL4 = 0,
 		IHYSTR4 = 'CMOS',

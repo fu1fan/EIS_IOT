@@ -242,16 +242,17 @@ int main (void)
 					}
 					*q = '\0';
 					uint32_t freq = atoi(p);
-					eis_battery_select(cell_id);
 					if (freq == 0){	// 欧姆阻抗测量
 						float ohmage, voltage;
 						uint8_t retry;
+						eis_battery_select(cell_id);
 						eis_get_voltage(&voltage);
 						for (retry = 0; retry < MEASURE_RETRY; retry++) {
 							status = eis_ohmage_measure(&ohmage, &freq);
 							if (status.is_success) {
 								break;
 							}
+							eis_battery_select(cell_id);
 						}
 						if (retry == MEASURE_RETRY) {
 							ui_console_printf("measure failed!");
@@ -269,6 +270,7 @@ int main (void)
 					}else{    // 指定频率测量
 						float voltage;
 						uint8_t retry;
+						eis_battery_select(cell_id);
 						eis_get_voltage(&voltage);
 						eis_single_init();
 						for (retry = 0; retry < MEASURE_RETRY; retry++) {
@@ -276,6 +278,7 @@ int main (void)
 							if (status.is_success) {
 								break;
 							}
+							eis_battery_select(cell_id);
 						}
 						if (retry == MEASURE_RETRY) {
 							ui_console_printf("measure failed!");
@@ -305,9 +308,9 @@ int main (void)
 						ui_console_printf("invaild cell id");
 						continue;
 					}
-					eis_battery_select(cell_id);
 					uint32_t retry;
 					for (retry = 0; retry < MEASURE_RETRY; retry++) {
+						eis_battery_select(cell_id);
 						status = eis_measure();
 						if (status.is_success) {
 							break;
@@ -388,6 +391,7 @@ int main (void)
 									ohmages[i] = 0;
 									break;
 								}
+								eis_battery_select(i);
 							}
 							if (retry == MEASURE_RETRY) {
 								ui_console_printf("measure failed!");
@@ -408,6 +412,7 @@ int main (void)
 									ohmages[i] = 0;
 									break;
 								}
+								eis_battery_select(i);
 							}
 							if (retry == MEASURE_RETRY) {
 								ui_console_printf("measure failed!");
