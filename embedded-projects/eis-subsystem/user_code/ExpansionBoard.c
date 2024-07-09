@@ -88,18 +88,23 @@ uint8_t EB_Init(void) {
 void EB_Select(uint8_t board, uint8_t index) {
 	_74HC595_Clear();
 	// 除了被选的board，其他board寄存器全写0
-	uint8_t write_index = board_count - board - 1;
-	uint8_t i = 0;
-	for (i = 0; i < board_count; i++) {
-		if (i == write_index) {
-			_74HC595_Write(0x01 << index | 0b01000000, 0);
-		} else {
-			_74HC595_Write(0x00, 0);
-		}
+
+	for (uint8_t re = 0; re < 3; re++) {
+		uint8_t write_index = board_count - board - 1;
+			uint8_t i = 0;
+			for (i = 0; i < board_count; i++) {
+				if (i == write_index) {
+					_74HC595_Write(0x01 << index | 0b01000000, 0);
+				} else {
+					_74HC595_Write(0x00, 0);
+				}
+			}
+			_74HC595_Apply();
 	}
-	_74HC595_Apply();
 }
 
 void EB_Clear(void) {
+	_74HC595_Clear();
+	_74HC595_Clear();
 	_74HC595_Clear();
 }
