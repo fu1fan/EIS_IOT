@@ -63,10 +63,8 @@ let states = ref({
   last_update: 0
 })
 
-let intervalId = null;
-
 onMounted(() => {
-  intervalId = setInterval(() => {
+  setInterval(() => {
     fetch('/api/c/is_online')
       .then(response => response.json())
       .then(data => {
@@ -99,9 +97,6 @@ onMounted(() => {
   }, 2000);
 });
 
-onUnmounted(() => {
-  clearInterval(intervalId);
-});
 </script>
 
 <template>
