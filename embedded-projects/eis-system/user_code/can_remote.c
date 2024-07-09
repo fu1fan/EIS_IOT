@@ -94,7 +94,7 @@ void eb_set(uint8_t board, uint8_t index) {
 	can_receive_buffer[3] = index;
 
 	can_send_frame(can_remote_id, can_receive_buffer);
-	osal_delay_millisec(25U);
+	osal_delay_millisec(100U);
 }
 
 void eb_clear() {
@@ -102,7 +102,7 @@ void eb_clear() {
 	can_receive_buffer[1] = 0x02;
 
 	can_send_frame(can_remote_id, can_receive_buffer);
-	osal_delay_millisec(25U);
+	osal_delay_millisec(100U);
 }
 
 
