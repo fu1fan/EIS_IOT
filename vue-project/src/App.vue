@@ -90,7 +90,7 @@ onMounted(() => {
               console.error('Error:', error);
             });
         } else {
-          status.value = "离线"
+          states.value.text = "离线"
         }
       })
       .catch(error => {

@@ -97,7 +97,7 @@ class State:
             "ohmages_mean": sum(self.ohmages) / len(self.ohmages) if self.ohmages else 0,
             "voltages_cur": self.voltages_cur,
             "voltages_his": list(self.voltages_his.queue),
-            "voltage_mean": sum(self.voltages_cur) / len(self.voltages_cur),
+            "voltage_mean": sum(self.voltages_cur) / len(self.voltages_cur) if self.voltages_cur else 0,
             "voltage_total": sum(self.voltages_cur),
             "last_update": last_task
         }
@@ -302,7 +302,11 @@ def h_cur_task():
 
 @app.route('/api/c/is_online')
 def c_is_online():
-    return {"status": "success", "data": _is_online()}
+    response = app.make_response({"status": "success", "data": _is_online()})
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 @app.route('/api/c/battery_count')
 def c_battery_count():
