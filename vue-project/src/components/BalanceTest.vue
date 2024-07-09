@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card v-for="index in battery_count" :key="index">
+        <el-card v-for="index in states.battery_count" :key="index">
             <!-- Card content here -->
             <div>
                 <p>Battery {{ index }}</p>
