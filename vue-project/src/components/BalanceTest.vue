@@ -4,7 +4,7 @@
             <!-- Card content here -->
             <div>
                 <p>Battery {{ index }}</p>
-                <p>Voltage: {{ states.voltages[index-1] }}</p>
+                <p>Voltage: {{ states.voltages_cur[index-1] }}</p>
             </div>
         </el-card>
     </div>
@@ -60,26 +60,30 @@ const props = defineProps({
 
 <style scoped>
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .card {
-    width: 45%;
-    margin-bottom: 20px;
+  width: 45%;
+  margin-bottom: 20px;
 }
 
 .card-content {
-    padding: 10px;
+  padding: 10px;
 }
 
 .card-title {
-    font-weight: bold;
-    margin-bottom: 5px;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
 .card-voltage {
-    margin-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.el-card + .el-card {
+  margin-top: 20px;
 }
 </style>
