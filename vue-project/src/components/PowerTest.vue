@@ -4,9 +4,9 @@
             <!-- Card content here -->
             <div>
                 <p>Battery {{ index }}</p>
-                <p>100Hz阻抗: {{ ohmages[index - 1] }}mΩ（大小与电池驱动能力成强负相关）</p>
-                <p v-if="ohmages[index - 1] > 20" class="warning">动力不足</p>
-                <p v-if="ohmages[index - 1] == 0" class="warning">阻抗过大，超出量程，请送检</p>
+                <p>100Hz阻抗: {{ states.ohmages[index - 1] }}mΩ（大小与电池驱动能力成强负相关）</p>
+                <p v-if="states.ohmages[index - 1] > 20" class="warning">动力不足</p>
+                <p v-if="states.ohmages[index - 1] == 0" class="warning">阻抗过大，超出量程，请送检</p>
             </div>
         </el-card>
     </div>
@@ -15,45 +15,49 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
-let battery_count = ref(0)
-let ohmages = ref([])
-let voltages = ref([])
-let last_update = ref('')
+const props = defineProps({
+  states: Object
+})
 
-let intervalId = null;
+// let battery_count = ref(0)
+// let ohmages = ref([])
+// let voltages = ref([])
+// let last_update = ref('')
 
-onMounted(() => {
-  intervalId = setInterval(() => {
-    fetch('/api/c/is_online')
-      .then(response => response.json())
-      .then(data => {
-        if (data.data == true) {
-          fetch('/api/c/get_state')
-            .then(response => response.json())
-            .then(data => {
-              if (data.status == "success") {
-                battery_count.value = data.data.battery_count
-                voltages.value = data.data.voltages_cur
-                ohmages.value = data.data.ohmages
-                last_update.value = new Date(data.data.last_update * 1000).toLocaleTimeString()
-              }
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
-        } else {
-          console.log('设备离线');
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }, 2000);
-});
+// let intervalId = null;
 
-onUnmounted(() => {
-  clearInterval(intervalId);
-});
+// onMounted(() => {
+//   intervalId = setInterval(() => {
+//     fetch('/api/c/is_online')
+//       .then(response => response.json())
+//       .then(data => {
+//         if (data.data == true) {
+//           fetch('/api/c/get_state')
+//             .then(response => response.json())
+//             .then(data => {
+//               if (data.status == "success") {
+//                 battery_count.value = data.data.battery_count
+//                 voltages.value = data.data.voltages_cur
+//                 ohmages.value = data.data.ohmages
+//                 last_update.value = new Date(data.data.last_update * 1000).toLocaleTimeString()
+//               }
+//             })
+//             .catch(error => {
+//               console.error('Error:', error);
+//             });
+//         } else {
+//           console.log('设备离线');
+//         }
+//       })
+//       .catch(error => {
+//         console.error('Error:', error);
+//       });
+//   }, 2000);
+// });
+
+// onUnmounted(() => {
+//   clearInterval(intervalId);
+// });
 </script>
 
 <style scoped>

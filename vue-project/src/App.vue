@@ -12,7 +12,7 @@ import Setting from './components/Setting.vue';
 import Thermorunaway from './components/Thermorunaway.vue';
 import MechanicalDamage from './components/MechanicalDamage.vue';
 
-import { reactive, watch, ref, shallowRef } from 'vue'
+import { reactive, watch, ref, shallowRef, onMounted, onUnmounted } from 'vue'
 // import { isDark } from '~/composables/dark'
 const isDark = ref(false)
 
@@ -32,8 +32,6 @@ watch(
   }
 )
 
-let view_index = "1"
-
 const views = {
   "1": Overview,
   "2-1": EISMeasure,
@@ -52,6 +50,58 @@ const menu_callback = (index) => {
   console.log(index)
   cur_view.value = views[index]
 }
+
+let states = ref({
+  text: "未知",
+  battery_count: "",
+  ohmages:  [],
+  omages_mean: [],
+  voltages_cur: [],
+  voltages_his: [],
+  voltages_mean: 0,
+  voltages_total: 0,
+  last_update: 0
+})
+
+let intervalId = null;
+
+onMounted(() => {
+  intervalId = setInterval(() => {
+    fetch('/api/c/is_online')
+      .then(response => response.json())
+      .then(data => {
+        if (data.data == true) {
+          fetch('/api/c/get_state')
+            .then(response => response.json())
+            .then(data => {
+              if (data.status == "success") {
+                states.value.text = data.data.state
+                states.value.battery_count = data.data.battery_count
+                states.value.ohmages = data.data.ohmages
+                states.value.omages_mean = data.data.omages_mean
+                states.value.voltages_cur = data.data.voltages_cur
+                states.value.voltages_his = data.data.voltages_his
+                states.value.voltages_mean = data.data.voltages_mean
+                states.value.voltages_total = data.data.voltages_total
+                states.value.last_update = data.data.last_update
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        } else {
+          status.value = "离线"
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, 2000);
+});
+
+onUnmounted(() => {
+  clearInterval(intervalId);
+});
 </script>
 
 <template>
@@ -66,7 +116,7 @@ const menu_callback = (index) => {
               <Menu :select_callback="menu_callback" isOnline/>
             </el-aside>
             <el-main>
-              <component :is="cur_view"></component> 
+              <component :is="cur_view" :states="states"></component> 
             </el-main>
           </el-container>
         </el-container>

@@ -2,7 +2,11 @@
 import BaseChart from './charts/BaseChart.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
-let voltage_data = ref([])
+const props = defineProps({
+  states: Object
+})
+
+const { states } = props
 
 const tableRowClassName = ({
   row,
@@ -16,7 +20,7 @@ const tableRowClassName = ({
   return ''
 }
 
-const batter_status = {
+const battery_status = {
   "正常": {
     icon: "success",
     title: "正常",
@@ -54,52 +58,52 @@ const batter_status = {
   }
 }
 
-let status = ref("未知")
-let voltage_mean = ref(0)
-let battery_count = ref(0)
-let ohmages_mean = ref(0)
-let last_update = ref(0)
+// let status = ref("未知")
+// let voltage_mean = ref(0)
+// let battery_count = ref(0)
+// let ohmages_mean = ref(0)
+// let last_update = ref(0)
 
-// Make a request to /api/c/is_online
-let intervalId = null;
+// // Make a request to /api/c/is_online
+// let intervalId = null;
 
-onMounted(() => {
-  intervalId = setInterval(() => {
-    fetch('/api/c/is_online')
-      .then(response => response.json())
-      .then(data => {
-        if (data.data == true) {
-          fetch('/api/c/get_state')
-            .then(response => response.json())
-            .then(data => {
-              if (data.status == "success") {
-                status.value = data.data.state
-                voltage_data.value = data.data.voltages_his
-                voltage_mean.value = data.data.voltage_mean.toFixed(3)
-                battery_count.value = data.data.battery_count
-                ohmages_mean.value = data.data.ohmages_mean.toFixed(3)
-                last_update.value = new Date(data.data.last_update * 1000).toLocaleTimeString()
-              }
-            })
-            .catch(error => {
-              console.error('Error:', error);
-            });
-        } else {
-          status.value = "离线"
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }, 2000);
-});
+// onMounted(() => {
+//   intervalId = setInterval(() => {
+//     fetch('/api/c/is_online')
+//       .then(response => response.json())
+//       .then(data => {
+//         if (data.data == true) {
+//           fetch('/api/c/get_state')
+//             .then(response => response.json())
+//             .then(data => {
+//               if (data.status == "success") {
+//                 status.value = data.data.state
+//                 voltage_data.value = data.data.voltages_his
+//                 voltage_mean.value = data.data.voltage_mean.toFixed(3)
+//                 battery_count.value = data.data.battery_count
+//                 ohmages_mean.value = data.data.ohmages_mean.toFixed(3)
+//                 last_update.value = new Date(data.data.last_update * 1000).toLocaleTimeString()
+//               }
+//             })
+//             .catch(error => {
+//               console.error('Error:', error);
+//             });
+//         } else {
+//           status.value = "离线"
+//         }
+//       })
+//       .catch(error => {
+//         console.error('Error:', error);
+//       });
+//   }, 1000);
+// });
 
-onUnmounted(() => {
-  clearInterval(intervalId);
-});
+// onUnmounted(() => {
+//   clearInterval(intervalId);
+// });
 
 const option = computed(() => {
-  const data = voltage_data.value.slice(-7).map((value) => {
+  const data = states.voltages_cur.slice(-7).map((value) => {
     return value.toFixed(2)
   })
 
@@ -130,26 +134,26 @@ const option = computed(() => {
 const deviceData = computed(() => [
   {
     item: '设备状态',
-    content: status.value,
+    content: states.text,
   },
   {
     item: '上次更新',
-    content: last_update.value,
+    content: states.last_update,
   },
 ])
 
 const batteryData = computed(() => [
   {
     item: '电池数量',
-    content: battery_count.value,
+    content: states.battery_count,
   },
   {
     item: '平均内阻(mΩ)',
-    content: ohmages_mean.value,
+    content: states.ohmages_mean,
   },
   {
     item: "平均电压(V)",
-    content: voltage_mean.value
+    content: states.voltage_mean,
   },
 ])
 </script>
@@ -191,8 +195,8 @@ const batteryData = computed(() => [
                 <span>电池状态</span>
               </div>
             </template>
-            <el-result :icon="batter_status[status].icon" :title="batter_status[status].title"
-              :sub-title="batter_status[status].sub_title">
+            <el-result :icon="battery_status[states.text].icon" :title="battery_status[states.text].title"
+              :sub-title="battery_status[states.text].sub_title">
             </el-result>
           </el-card>
         </el-col>
