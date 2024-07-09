@@ -81,7 +81,7 @@ onMounted(() => {
                 states.value.voltages_his = data.data.voltages_his
                 states.value.voltages_mean = data.data.voltage_mean
                 states.value.voltages_total = data.data.voltage_total
-                states.value.last_update = data.data.last_update
+                states.value.last_update = new Date(data.data.last_update * 1000).toLocaleTimeString()
               }
             })
             .catch(error => {
