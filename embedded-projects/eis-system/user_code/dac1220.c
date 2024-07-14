@@ -8,26 +8,20 @@
 
 #include "dac1220.h"
 
-static gpio_port_t sclk_port;
-static gpio_pin_t sclk_pin;
-static GPIO_TypeDef* sclk_p;
+//#define SCLK_0() sclk_p->BSRR = (uint32_t) (0x10000U << sclk_pin);
+#define SCLK_0() gpio_write_pin(DAC_SCLK_PIN, 0);
+//#define SCLK_1() sclk_p->BSRR = (uint32_t) (1U << sclk_pin);
+#define SCLK_1() gpio_write_pin(DAC_SCLK_PIN, 1);
 
-static gpio_port_t sdio_port;
-static gpio_pin_t sdio_pin;
-static GPIO_TypeDef* sdio_p;
+//#define SDIO_0()  sdio_p->BSRR = (uint32_t) (0x10000U << sdio_pin);
+#define SDIO_0()  gpio_write_pin(DAC_SDIO_PIN, 0);
+//#define SDIO_1()  sdio_p->BSRR = (uint32_t) (1U << sdio_pin);
+#define SDIO_1()  gpio_write_pin(DAC_SDIO_PIN, 1);
 
-static gpio_port_t cs_port;
-static gpio_pin_t cs_pin;
-static GPIO_TypeDef* cs_p;
-
-#define SCLK_0() sclk_p->BSRR = (uint32_t) (0x10000U << sclk_pin);
-#define SCLK_1() sclk_p->BSRR = (uint32_t) (1U << sclk_pin);
-
-#define SDIO_0()  sdio_p->BSRR = (uint32_t) (0x10000U << sdio_pin);
-#define SDIO_1()  sdio_p->BSRR = (uint32_t) (1U << sdio_pin);
-
-#define CS_0()  cs_p->BSRR = (uint32_t) (0x10000U << cs_pin);
-#define CS_1()  cs_p->BSRR = (uint32_t) (1U << cs_pin);
+//#define CS_0()  cs_p->BSRR = (uint32_t) (0x10000U << cs_pin);
+#define CS_0()  gpio_write_pin(DAC_CS_PIN, 0);
+//#define CS_1()  cs_p->BSRR = (uint32_t) (1U << cs_pin);
+#define CS_1()  gpio_write_pin(DAC_CS_PIN, 1);
 
 void delay_us(uint32_t us) {
 	osal_delay_microsec(us);
@@ -35,20 +29,6 @@ void delay_us(uint32_t us) {
 
 void delay_ms(uint32_t ms) {
 	osal_delay_millisec(ms);
-}
-
-static void gpio_reg_init(void){
-	sclk_port = gpio_iounpack_port(DAC_SCLK_PIN);
-	sclk_pin = gpio_iounpack_pin(DAC_SCLK_PIN);
-	sclk_p = gpio_dev_get_port_reg_ptr(sclk_port);
-
-	sdio_port = gpio_iounpack_port(DAC_SDIO_PIN);
-	sdio_pin = gpio_iounpack_pin(DAC_SDIO_PIN);
-	sdio_p = gpio_dev_get_port_reg_ptr(sdio_port);
-
-	cs_port = gpio_iounpack_port(DAC_CS_PIN);
-	cs_pin = gpio_iounpack_pin(DAC_CS_PIN);
-	cs_p = gpio_dev_get_port_reg_ptr(cs_port);
 }
 
 static void SDA_OUT(void)
@@ -73,7 +53,6 @@ static void SDA_IN(void)
 
 void DAC1220_IO_Init(void)
 {
-	gpio_reg_init();
 	SCLK_1();
 	//while (1);
 	SDA_IN();
@@ -119,7 +98,7 @@ uint8_t DAC1220_Read_Byte(void)
 		delay_us(5);
 		SCLK_1();
 		data<<=1;
-		if ((sdio_p->IDR & (1U << sdio_pin)) != 0U)
+		if (gpio_read_pin(DAC_SDIO_PIN) == 1)
 			data++;
 		delay_us(5);
 		SCLK_0();		//锁存数据

@@ -260,7 +260,7 @@
 #define PIN_GPIO4_1_CFG                             \
 	(GPIO_MODE_MODER_OUTPUT |                       \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_HIGH |                       \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
@@ -272,7 +272,7 @@
 #define PIN_GPIO4_3_CFG                             \
 	(GPIO_MODE_MODER_OUTPUT |                       \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_HIGH |                       \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
@@ -392,7 +392,7 @@
 #define PIN_GPIO4_4_CFG                             \
 	(GPIO_MODE_MODER_OUTPUT |                       \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_HIGH |                       \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
