@@ -180,7 +180,7 @@ int main (void)
 	ui_console_printf("service inited!");
 
 	char *p, *q;
-    for( ; ; )                                                                  // 主循环的代码就是控制各个 LED 呼吸亮灭
+    for( ; ; ) 
         {
     		status = lte_http_get("https://eis.zzzing.cn/api/h/get_task", &response, 5000, HTTP_RETRY);
     		if(!status.is_success){
@@ -459,6 +459,8 @@ int main (void)
 							ui_console_printf("error_code: %d", status.error_code);
 						}
 					}
+					free(voltages);
+					free(ohmages);
 				} else {
 					ui_console_printf("invaild task type");
 				}
