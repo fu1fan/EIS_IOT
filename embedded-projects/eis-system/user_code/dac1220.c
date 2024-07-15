@@ -210,7 +210,7 @@ void DAC1220_Self_Calibration(void) //自校准
 void DAC1220VolWrite(float v)
 {
 	uint32_t dacData;
-	dacData=mapfloat(v,-10, 10, 0, 1048575);
+	dacData=mapfloat(v,-9.9738, 9.9725, 0, 1048575);
 	DAC1220_WDAT(dacData);
 }
 
