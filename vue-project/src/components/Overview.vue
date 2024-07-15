@@ -103,7 +103,7 @@ const battery_status = {
 // });
 
 const option = computed(() => {
-  const data = states.voltages_cur.slice(-7).map((value) => {
+  const data = states.voltages_his.slice(-7).map((value) => {
     return value.toFixed(2)
   })
 
