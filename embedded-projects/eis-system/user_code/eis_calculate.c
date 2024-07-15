@@ -13,12 +13,14 @@ struct eis_data_t eis_result;
 
 void eis_result_clear(){
 	struct eis_node_t *p = eis_result.head;
+	struct eis_node_t *q = NULL;
 	while (p != NULL) {
-		struct eis_node_t *q = p->next;
+		q = p->next;
 		free(p);
 		p = q;
 	}
 	eis_result.size = 0;
+	eis_result.head = NULL;
 }
 
 void eis_calculate_init() {
