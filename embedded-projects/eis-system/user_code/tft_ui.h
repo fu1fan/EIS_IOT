@@ -13,6 +13,7 @@
 void ui_init(void);
 void ui_menu(uint8_t index);
 void ui_console_mode(void);
+void ui_console_up(void);
 void ui_console_printf(const char *fmt, ...);
 
 #endif /* USER_CODE_TFT_UI_H_ */

@@ -39,6 +39,10 @@ void ui_console_printf(const char *fmt, ...) {
 	console_line++;
 }
 
+void ui_console_up() {
+	console_line--;
+}
+
 void ui_background(void){
 
 }
