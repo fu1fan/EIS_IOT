@@ -47,7 +47,7 @@ void voltage_follow(void) {
 	vf_relay(1);
 	float battery_voltage = ADS1256_ReadPin(ADS1256_GAIN_1, 0) + voltage_correction;
 	DAC1220VolWrite(battery_voltage);
-	osal_delay_millisec(FRQ_CHANGE_WAIT);
+	osal_delay_millisec(VF_DELAY);
 }
 
 eis_status_t voltage_follow_correct(void){
@@ -60,19 +60,20 @@ eis_status_t voltage_follow_correct(void){
     osal_delay_millisec(FRQ_CHANGE_WAIT*2);
     ccs_relay(1);
 
-    int8_t binary_status = 0;	//状态机：-1检测是否已通过测试 0初测 1二分开始 2二分查找中 3二分结束
+    int8_t binary_status = -1;	//状态机：-1检测是否已通过测试 0初测 1二分开始 2二分查找中 3二分结束
     uint8_t binary_depth = 0;
     float binary_l = 0;
     float binary_r = 0;
     while(1){
     	voltage_follow();
+    	osal_delay_millisec(FRQ_CHANGE_WAIT/2);
     	ad7606_StartRecord(16000, 64);
     	ad7606_WaitforRecord();
 		uint8_t top_count = 0;
 		uint8_t buttom_count = 0;
 		uint8_t top_flag = 0;
 		uint8_t buttom_flag = 0;
-		for (uint8_t i = 0; i < 128; i++) {
+		for (uint8_t i = 0; i < 64; i++) {
 			//  检查是否有触顶数据
 			if (!top_flag && g_tAD.usBuf_1[i] > 28000) {
 				top_count++;
@@ -80,10 +81,10 @@ eis_status_t voltage_follow_correct(void){
 			if (!buttom_flag && g_tAD.usBuf_1[i] < -28000) {
 				buttom_count++;
 			}
-			if (top_count >= 10) {
+			if (top_count >= 20) {
 				top_flag = 1;
 			}
-			if (buttom_count >= 10) {
+			if (buttom_count >= 20) {
 				buttom_flag = 1;
 			}
 			if(top_flag && buttom_flag) {
@@ -102,7 +103,7 @@ eis_status_t voltage_follow_correct(void){
 				break;
 			}
 			voltage_correction = 0;
-			binary_status = 1;
+			binary_status = 0;
 			break;
 		case 0:
 			if (top_flag) {
@@ -120,13 +121,13 @@ eis_status_t voltage_follow_correct(void){
 			binary_status = 1;
 			break;
 		case 1:
-			if ((voltage_correction > 0 && top_flag) || (voltage_correction < 0 && buttom_flag)) {
-				status.is_success = 0;
-				status.error_code = 0x32;
-				voltage_correction = 0;
-				binary_status = 3;
-				break;
-			}
+//			if ((voltage_correction > 0 && top_flag) || (voltage_correction < 0 && buttom_flag)) {
+//				status.is_success = 0;
+//				status.error_code = 0x32;
+//				voltage_correction = 0;
+//				binary_status = 3;
+//				break;
+//			}
 			voltage_correction = (binary_l + binary_r) / 2;
 			binary_status = 2;
 			break;
@@ -144,7 +145,7 @@ eis_status_t voltage_follow_correct(void){
 				voltage_correction = (binary_l + binary_r) / 2;
 			}
             binary_depth++;
-            if (binary_depth >= 8) {
+            if (binary_depth >= 12) {
             	status.is_success = 0;
             	status.error_code = 0x32;
             	voltage_correction = 0;
@@ -156,83 +157,27 @@ eis_status_t voltage_follow_correct(void){
     }
     ad9959_reset();
     return status;
-//	while(retry<VOLTAGE_CORRECTION_RANGE*2){
-//		uint8_t top_count = 0;
-//		uint8_t buttom_count = 0;
-//		uint8_t top_flag = 0;
-//		uint8_t buttom_flag = 0;
-//		for(uint16_t i=0; i<256; i++){
-//			// 检查是否有触顶数据
-//			if(!top_flag&&g_tAD.usBuf_1[i] == 0x7FFF){
-//				top_count++;
-//			}
-//			else if(top_count){
-//				top_count = 0;
-//			}
-//			if(!buttom_flag&&g_tAD.usBuf_1[i] == -32768){
-//				buttom_count++;
-//			}
-//			else if(buttom_count){
-//				buttom_count = 0;
-//			}
-//			if(top_count>=5){
-//				top_flag = 1;
-//			}
-//			if(buttom_count>=5){
-//				buttom_flag = 1;
-//			}
-//		}
-//		if (top_flag && buttom_flag) {
-//			status.is_success = 0;
-//			status.error_code = 0x31; //TODO: 错误代码是内阻过大
-//			voltage_correction = 0;
-//			return status;
-//		}
-//		if (top_flag) {
-//			voltage_correction += 0.01;
-//		}
-//		else if (buttom_flag) {
-//			voltage_correction -= 0.01;
-//		}
-//		else {
-//			break;
-//		}
-//		retry++;
-//		if (retry != MAX_RETRY) {
-//			voltage_follow();
-//			osal_delay_millisec(10);
-//			ad7606_StartRecord(sfreq_, 2048);
-//			ad7606_WaitforRecord();
-//		}
-//	}
-//	if (retry == MAX_RETRY) {
-//		status.is_success = 0;
-//		status.error_code = 0x32;	//偏置异常
-//		voltage_correction = 0;
-//	}
-//	return status;
 }
 
 
-eis_status_t eis_measure_init(void) {
+eis_status_t eis_init(void) {
 	eis_status_t status;
 	status.is_success = 1;
 	status.error_code = 0x00;
 
 	voltage_correction = 0;
 
+	eb_clear();
+
 	gpio_write_pin(VF_RELAY, 0);
 	gpio_write_pin(CCS_RELAY, 0);
-
-	DAC1220_Init();
-	DAC1220VolWrite(0);
 
 	bsp_InitAD7606();
 	ad7606_SingleRecord();
 
 	uint8_t i;
 	for(i = 0; i < 8; i++){
-		if(g_tAD_single_buffer[i] != 0.0f){
+		if(g_tAD_single_buffer[i] != 0){
 			break;
 		}
 	}
@@ -241,6 +186,17 @@ eis_status_t eis_measure_init(void) {
 		status.error_code = 0x12;
 		return status;
 	}
+
+	DAC1220_Init();
+	DAC1220VolWrite(6);
+	osal_delay_millisec(50U);
+	ad7606_SingleRecord();
+	if(g_tAD_single_buffer[1]!=-32768){
+		status.is_success = 0;
+		status.error_code = 0x14;
+		return status;
+	}
+	DAC1220VolWrite(0);
 
 	ad9959_reset();
 
@@ -374,7 +330,6 @@ eis_status_t eis_single_measure(uint32_t freq_, uint8_t accuracy_){
 	while(retry<MAX_RETRY&&eis_result.size<accuracy_){
 		status = voltage_follow_correct();
 		if (!status.is_success) {
-			_end();
 			return status;
 		}
 		ad9959_set(CH1, freq_, 1023);
