@@ -189,7 +189,7 @@ eis_status_t eis_init(void) {
 
 	DAC1220_Init();
 	DAC1220VolWrite(6);
-	osal_delay_millisec(50U);
+	osal_delay_millisec(100U);
 	ad7606_SingleRecord();
 	if(g_tAD_single_buffer[1]!=-32768){
 		status.is_success = 0;
