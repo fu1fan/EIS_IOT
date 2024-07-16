@@ -109,7 +109,7 @@ class State:
             for ohmage in self.ohmages:
                 if not ohmage == 0:
                     ohmages_mean += ohmage
-                    i += 0
+                    i += 1
         if i:
             ohmages_mean /= i
 
