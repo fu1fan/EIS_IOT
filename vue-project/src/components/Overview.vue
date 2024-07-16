@@ -160,7 +160,7 @@ const batteryData = computed(() => [
 
 <template>
   <el-row gutter=20>
-    <el-col :span="16"><el-card shadow="hover">
+    <el-col :span=16><el-card shadow="hover">
         <template #header>
           <div class="card-header"><span class="card-name"><span class="align-middle">
                 概要
@@ -168,10 +168,10 @@ const batteryData = computed(() => [
         </template>
         <div>
           <el-row gutter=10>
-            <el-col :span="16">
+            <el-col :span=14>
               <BaseChart :Option="option" width="100%" height="370px" />
             </el-col>
-            <el-col :span="8">
+            <el-col :span=10>
               <el-table :data="deviceData" style="width: 100%" :row-class-name="tableRowClassName">
                 <el-table-column prop="item" />
                 <el-table-column prop="content" />
@@ -186,9 +186,9 @@ const batteryData = computed(() => [
         </div>
       </el-card>
     </el-col>
-    <el-col :span="8">
+    <el-col :span=8>
       <el-row gutter=10>
-        <el-col :span="24">
+        <el-col :span=24>
           <el-card shadow="hover">
             <template #header>
               <div class="card-header">
@@ -202,7 +202,7 @@ const batteryData = computed(() => [
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="24">
+        <el-col :span=24>
           <el-card shadow="hover">
             <template #header>
               <div class="card-header">
