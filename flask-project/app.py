@@ -129,6 +129,10 @@ task_queue = Queue()
 running_task = None
 results = {}
 
+def write_log(message, level="INFO"):
+    with open("log.txt", "a+") as f:
+        f.write(f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] [{level}] {message}\n")
+
 def exist_task(task_id):
     for task in task_queue.queue:
         if task.task_id == task_id:
@@ -157,6 +161,17 @@ def update():
     Thread(target=_update).start()
     return "1"
 
+@app.route('/api/log/clear')
+def clear_log():
+    with open("log.txt", "w") as f:
+        pass
+    return "1"
+
+@app.route('/api/log')
+def log():
+    with open("log.txt", "r") as f:
+        return f.read()
+
 @app.route('/api/')
 def api():
     return "2024"
@@ -174,6 +189,7 @@ def h_init():
         running_task = None
     except ValueError:
         return "0"
+    write_log(f"Init: {battery_count}")
     return "1"
 
 @app.route('/api/h/get_task')
@@ -218,14 +234,17 @@ def h_submit_result():
     data = request.get_data().decode("ascii").split("|")
 
     try:
-        task_id = int(data[0])
+        task_id = int(data[0].strip())
     except ValueError:
+        write_log(f"SR:Invalid task ID:{task_id}", "ERROR")
         return "0"
     
     if running_task is None:
+        write_log(f"SR:Task not found: {task_id}", "ERROR")
         return "0"
 
     if task_id != running_task.task_id:
+        write_log(f"SR:Task ID mismatch: {task_id}", "ERROR")
         return "0"
     
     task = running_task
@@ -252,8 +271,9 @@ def h_submit_result():
             task.result.imags = [float(x) for x in data[4].split(",")]
             
     except (ValueError, IndexError):
-        traceback.print_exc()
-        print(data)
+        # traceback.print_exc()
+        # print(data)
+        write_log(f"SR:Invalid data format: {str(data)}", "ERROR")
         return "0"
     
     running_task = None
