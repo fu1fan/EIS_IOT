@@ -34,6 +34,12 @@ let option = computed(() => ({
     text: 'Nyquist Chart',
     left: 'center'
   },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross'
+    }
+  },
   xAxis: {
     type: 'value',
     name: 'Re(Z)',
