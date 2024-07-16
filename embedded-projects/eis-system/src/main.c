@@ -323,7 +323,12 @@ void NORMAL_Mode(void)
 				ui_console_printf("error_code: %d", status.error_code);
 			}
 			response_purify(&response);
-			ui_console_printf("task_confirmed: %s", response.content);
+			ui_console_printf("confirm_code: %s", response.content);
+
+			if (1 == strcmp((const char *)response.content, "1") || 1 == strcmp((const char *)response.content, "1\r")){
+				ui_console_printf("confirm task error!");
+				continue;
+			}
 
 			p = ++q;
 			q = strchr(p, '|');
