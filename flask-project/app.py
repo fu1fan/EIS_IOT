@@ -401,6 +401,7 @@ def task_setter():
                 cur = time.time()
                 flag = False
                 while(time.time() - cur < 60):
+                    running = False
                     if task.task_id in results:
                         if task.status_code != 0:
                             break
@@ -430,6 +431,17 @@ def task_setter():
 
                         flag = True
                         break
+                    if running_task and running_task.task_id == task.task_id:
+                        running = True
+                    if running:
+                        if running_task:
+                            if running_task.task_id != task.task_id:
+                                break
+                        else:
+                            break
+                    elif(time.time() - cur > 20):
+                        break
+
                     time.sleep(0.5)
                 if not flag:    # TODO: Overview不稳定可以优化这里
                     if _is_online():
