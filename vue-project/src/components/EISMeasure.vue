@@ -1,9 +1,9 @@
 <template>
   <el-row gutter=20>
-    <el-col :span="8">
-      <BatterySelect @update:selectedIndex="updateSelectedIndex" />
+    <el-col :span=8>
+      <BatterySelect @update:selectedIndex="updateSelectedIndex" :states="props.states" />
     </el-col>
-    <el-col :span="16">
+    <el-col :span=16>
       <el-card shadow="hover">
         <nequist-chart ref="nequistChartRef" />
         <template #footer>
@@ -21,7 +21,7 @@
   <el-divider content-position="center">详细数据</el-divider>
   <div>
     <el-row gutter=20>
-      <el-col :span="15">
+      <el-col :span=15>
         <el-space direction="vertical" style="width: 100%">
           <span style="width: 100%; display: flex; justify-content: center;"><a><el-text>阻抗表</el-text></a></span>
           <el-table :data="eisData" stripe style="width: 100%">
@@ -33,7 +33,7 @@
           </el-table>
         </el-space>
       </el-col>
-      <el-col :span="9">
+      <el-col :span=9>
         <span style="width: 100%; display: flex; justify-content: center;"><a><el-text>其他图表</el-text></a></span>
         <div style="width: 100%;">
           <el-divider border-style="dashed" content-position="center"></el-divider>
@@ -50,11 +50,15 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import NequistChart from './charts/NequistChart.vue';
 import LinesChart from './charts/LinesChart.vue';
 import BatterySelect from './BatterySelect.vue';
 import { ElMessageBox } from 'element-plus';
+
+const props = defineProps({
+  states: Object
+})
 
 let battery_count = ref(0)
 
