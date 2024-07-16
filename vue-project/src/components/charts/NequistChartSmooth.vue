@@ -4,10 +4,6 @@ import { computed } from 'vue'
 import BaseChart from './BaseChart.vue'
 
 const props = defineProps({
-  symbolSize:{
-    type: Number,
-    default: 5
-  },
   width: {
     type: String,
     default: '100%'
@@ -33,11 +29,6 @@ let option = computed(() => ({
   title: {
     text: 'Nyquist Chart',
     left: 'center'
-  },
-  toolbox: {
-    feature: {
-      saveAsImage: {}
-    }
   },
   tooltip: {
     trigger: 'axis',
@@ -65,8 +56,8 @@ let option = computed(() => ({
   },
   series: [{
     data: data.value,
-    type: 'scatter',
-    symbolSize: props.symbolSize
+    type: 'line',
+    smooth: true
   }]
 }))
 </script>
