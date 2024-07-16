@@ -651,13 +651,19 @@ int main(void)
 	ui_console_mode();
 
 	// 核心测量模块初始化
-	ui_console_printf("init core...");
-	status = eis_init();
-	if (!status.is_success)
-	{
-		ui_console_printf("error_code: %#02x", status.error_code);
-		return 0;
+	for(;;){
+		ui_console_printf("init core...");
+		status = eis_init();
+		if (!status.is_success)
+		{
+			ui_console_printf("error_code: %#02x, retry...", status.error_code);
+			osal_delay_millisec(100U);
+		}
+		else {
+			break;
+		}
 	}
+
 	// 电池扫描
 	ui_console_printf("searching batterys...");
 	eb_count = eb_query();
@@ -672,6 +678,7 @@ int main(void)
 			ui_console_printf("b%d: %.4fv", i * 4 + j, voltage);
 		}
 	}
+	eb_clear();
 	osal_delay_millisec(200U);
 
 	ui_console_mode();
