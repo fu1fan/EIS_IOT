@@ -73,7 +73,7 @@ uint8_t EB_Init(void) {
 			_74HC595_Write(0x00, 0);
 		}
 		_74HC595_Apply();
-		osal_delay_millisec(5U);
+		osal_delay_millisec(50U);
 		if (gpio_read_pin(DET_PIN)) {
 			board_count++;
 		}
