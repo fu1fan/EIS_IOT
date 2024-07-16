@@ -400,7 +400,7 @@ def task_setter():
 
                 cur = time.time()
                 flag = False
-                while(time.time() - cur < 30):
+                while(time.time() - cur < 60):
                     if task.task_id in results:
                         if task.status_code != 0:
                             break
@@ -431,7 +431,7 @@ def task_setter():
                         flag = True
                         break
                     time.sleep(0.5)
-                if not flag:
+                if not flag:    # TODO: Overview不稳定可以优化这里
                     if _is_online():
                         State.state = "未响应"
                         if task in task_queue.queue:
