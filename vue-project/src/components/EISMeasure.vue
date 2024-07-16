@@ -1,5 +1,5 @@
 <template>
-  <el-row gutter="20">
+  <el-row gutter=20>
     <el-col :span="8">
       <BatterySelect @update:selectedIndex="updateSelectedIndex" />
     </el-col>
@@ -17,11 +17,42 @@
       </el-card>
     </el-col>
   </el-row>
+  <br />
+  <el-divider content-position="center">详细数据</el-divider>
+  <div>
+    <el-row gutter=20>
+      <el-col :span="15">
+        <el-space direction="vertical" style="width: 100%">
+          <span style="width: 100%; display: flex; justify-content: center;"><a><el-text>阻抗表</el-text></a></span>
+          <el-table :data="eisData" stripe style="width: 100%">
+            <el-table-column sortable prop="freq" label="FREQ" />
+            <el-table-column prop="real" label="REAL(mΩ)" />
+            <el-table-column prop="imag" label="IMAG(mΩ)" />
+            <el-table-column prop="abs" label="ABS(mΩ)" />
+            <el-table-column prop="phase" label="PHAS(rad)" />
+          </el-table>
+        </el-space>
+      </el-col>
+      <el-col :span="9">
+        <span style="width: 100%; display: flex; justify-content: center;"><a><el-text>其他图表</el-text></a></span>
+        <div style="width: 100%;">
+          <el-divider border-style="dashed" content-position="center"></el-divider>
+          <LinesChart ref="amplFreqChartRef" title="幅频特性曲线" height="240px" xName="Freq(Hz)" yName="Impedance(Ω)" />
+          <el-divider border-style="dashed" content-position="center"></el-divider>
+          <LinesChart ref="compFreqChartRef" title="复数特性曲线" height="240px" xName="Freq(Hz)" yName="Impedance(Ω)" />
+          <el-divider border-style="dashed" content-position="center"></el-divider>
+          <LinesChart ref="phasFreqChartRef" title="相频特性曲线" height="240px" xName="Freq(Hz)" yName="Phase(rad)"  />
+          <el-divider border-style="dashed" content-position="center"></el-divider>
+        </div>
+      </el-col>
+    </el-row>
+  </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import NequistChart from './charts/NequistChart.vue';
+import LinesChart from './charts/LinesChart.vue';
 import BatterySelect from './BatterySelect.vue';
 import { ElMessageBox } from 'element-plus';
 
@@ -39,65 +70,63 @@ function updateSelectedIndex(index) {
 }
 
 const nequistChartRef = ref(null);
+const amplFreqChartRef = ref(null);
+const compFreqChartRef = ref(null);
+const phasFreqChartRef = ref(null);
+const eisData = ref([
+  { freq: 0, real: 0, imag: 0, abs: 0, phase: 0 },
+]);
 
-const add_data = (x, y) => {
+let imagFreq = []
+let realFreq = []
+let absFreq = []
+let phaseFreq = []
+
+const add_data = (f, x, y) => {
   if (nequistChartRef.value) {
     nequistChartRef.value.add_data(x, y);
+    realFreq.push([f, x])
+    imagFreq.push([f, y])
+    absFreq.push([f, Math.sqrt(x * x + y * y)])
+    phaseFreq.push([f, Math.atan2(y, x)])
   }
+  eisData.value.push({
+    freq: f,
+    real: x.toFixed(4),
+    imag: y.toFixed(4),
+    abs: Math.sqrt(x * x + y * y).toFixed(4),
+    phase: Math.atan2(y, x).toFixed(4),
+  });
+};
+
+const set_series = () => {
+  amplFreqChartRef.value.add_series("abs", absFreq);
+  compFreqChartRef.value.add_series("real", realFreq);
+  compFreqChartRef.value.add_series("imag", imagFreq);
+  phasFreqChartRef.value.add_series("phase", phaseFreq);
 };
 
 const clear_data = () => {
+  imagFreq = []
+  realFreq = []
+  absFreq = []
+  phaseFreq = []
   if (nequistChartRef.value) {
     nequistChartRef.value.clear_data();
   }
+  if (eisData.value.length > 0) {
+    eisData.value = [];
+  }
+  if (amplFreqChartRef.value) {
+    amplFreqChartRef.value.clear_data();
+  }
+  if (phasFreqChartRef.value) {
+    phasFreqChartRef.value.clear_data();
+  }
+  if (compFreqChartRef.value) {
+    compFreqChartRef.value.clear_data();
+  }
 };
-
-// {  执行时格式
-//   "message": "processing",
-//     "status": "warning"
-// }
-
-// {  成功时格式
-//     "code": 0,
-//     "data": {
-//         "cell_id": 1,
-//         "freqs": [
-//             8.0,
-//             13.0,
-//             20.0,
-//         ],
-//         "imags": [
-//             -0.412315,
-//             -0.329344,
-//             -0.462629,
-//         ],
-//         "reals": [
-//             14.431007,
-//             14.340127,
-//             13.979543,
-//         ]
-//     },
-//     "status": "success"
-// }
-
-// {  失败时格式
-//     "code": 0x90（不等于0）
-//     "data": {
-//         "cell_id": 1,
-//         "freqs": [
-//         ],
-//         "imags": [
-//         ],
-//         "reals": [
-//         ]
-//     },
-//     "status": "success"
-// }
-
-// {  任务丢失时格式
-//     "message": "notfound",
-//     "status": "error"
-// }
 
 function checkResult(task_id) {
   fetch('/api/c/get_result?id=' + task_id, { method: 'GET' })
@@ -109,8 +138,9 @@ function checkResult(task_id) {
           // data.reals存放着横坐标
           // 遍历添加
           for (let i = 0; i < data.data.freqs.length; i++) {
-            add_data(data.data.reals[i], 0 - data.data.imags[i]);
+            add_data(data.data.freqs[i], data.data.reals[i], 0 - data.data.imags[i]);
           }
+          set_series();
         } else {
           alert('错误代码：' + data.code);
         }
@@ -130,6 +160,7 @@ function checkResult(task_id) {
     })
     .catch((error) => {
       alert('获取数据失败');
+      console.error('Error:', error);
       // 可以在这里添加错误处理逻辑，比如重试或者终止
     });
 }
@@ -175,5 +206,9 @@ const start_measure = () => {
 <style scoped>
 .el-card {
   height: 100%;
+}
+
+.h1 {
+  font-size: 22em;
 }
 </style>
