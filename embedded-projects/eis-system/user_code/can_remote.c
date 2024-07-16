@@ -6,7 +6,7 @@
  */
 #include "can_remote.h"
 
-#define TIMEOUT 200
+#define TIMEOUT 1000
 
 uint8_t can_remote_init(void) {
 	can_remote_id = 0x7F0;
@@ -80,7 +80,7 @@ uint8_t eb_query() {
 		osal_delay_millisec(1U);
 		time++;
 		if (time > TIMEOUT) {
-			return 0;
+			return 255;
 		}
 	}
 	can_rx_flag = 0;

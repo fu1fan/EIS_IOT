@@ -660,7 +660,7 @@ int main(void)
 	}
 	// 电池扫描
 	ui_console_printf("searching batterys...");
-	eb_count = 1;
+	eb_count = eb_query();
 	float voltage = 0;
 	ui_console_printf("ExBoard found: %d", eb_count);
 	for (uint8_t i = 0; i < eb_count; i++)
