@@ -400,7 +400,7 @@ def task_setter():
 
                 cur = time.time()
                 flag = False
-                while(time.time() - cur < 15):
+                while(time.time() - cur < 30):
                     if task.task_id in results:
                         if task.status_code != 0:
                             break
