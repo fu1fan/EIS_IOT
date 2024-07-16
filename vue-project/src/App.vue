@@ -60,7 +60,7 @@ let states = ref({
   voltages_his: [],
   voltages_mean: 0,
   voltages_total: 0,
-  last_update: 0
+  last_update: "--:--:--"
 })
 
 onMounted(() => {
@@ -81,7 +81,13 @@ onMounted(() => {
                 states.value.voltages_his = data.data.voltages_his
                 states.value.voltage_mean = data.data.voltage_mean.toFixed(4)
                 states.value.voltage_total = data.data.voltage_total
-                states.value.last_update = new Date(data.data.last_update * 1000).toLocaleTimeString()
+                states.value.last_update = data.data.last_update != 0 ? new Date(data.data.last_update * 1000).toLocaleTimeString() : "--:--:--";
+              }
+              // 遍历states.value.ohmages，把值为0的数据改为>50
+              for (let i = 0; i < states.value.ohmages.length; i++) {
+                if (states.value.ohmages[i] == 0) {
+                  states.value.ohmages[i] = ">50";
+                }
               }
             })
             .catch(error => {
