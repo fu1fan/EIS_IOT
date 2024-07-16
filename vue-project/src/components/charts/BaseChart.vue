@@ -29,16 +29,21 @@ export default defineComponent({
   //第三步：创建Dom结构（并且设定div的大小）用来echars图表
   //第四步：通过ref获取到创建的Dom结构 (！！！！！Dom加载完成的生命周期！！！！！)
   mounted() {
-    const main = this.$refs.EchartRef;
+    fetch('customed.project.json')
+      .then(r => r.json())
+      .then(theme => {
+        const main = this.$refs.EchartRef;
 
-    //第五步：初始化咱们的图表内容（到这里基础的引入工作已经完成了）
-    const myChars = echarts.init(main);
-    //第六步：需要配置对应的option数据可以采用对象拼接的数据
-    //第七步：通过setOption进行数据的设置
-    myChars.setOption(this.Option);
+        //第五步：初始化咱们的图表内容（到这里基础的引入工作已经完成了）
+        echarts.registerTheme('customed', theme);
+        const myChars = echarts.init(main, 'customed');
+        //第六步：需要配置对应的option数据可以采用对象拼接的数据
+        //第七步：通过setOption进行数据的设置
+        myChars.setOption(this.Option);
 
-    //监听窗口变化，重新渲染
-    window.addEventListener('resize', this.handleWindowResize);
+        //监听窗口变化，重新渲染
+        window.addEventListener('resize', this.handleWindowResize);
+      })
   },
   //父组件传过来的数据
   props: {
