@@ -76,10 +76,10 @@ onMounted(() => {
                 states.value.text = data.data.state
                 states.value.battery_count = data.data.battery_count
                 states.value.ohmages = data.data.ohmages
-                states.value.ohmages_mean = data.data.ohmages_mean
+                states.value.ohmages_mean = data.data.ohmages_mean.toFix(2)
                 states.value.voltages_cur = data.data.voltages_cur
                 states.value.voltages_his = data.data.voltages_his
-                states.value.voltage_mean = data.data.voltage_mean
+                states.value.voltage_mean = data.data.voltage_mean.toFix(4)
                 states.value.voltage_total = data.data.voltage_total
                 states.value.last_update = new Date(data.data.last_update * 1000).toLocaleTimeString()
               }
