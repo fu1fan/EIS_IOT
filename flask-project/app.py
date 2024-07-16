@@ -90,15 +90,38 @@ class State:
     # voltages_mean = 0 计算得出
     # voltages_total = 0 计算得出
     def __json__(self):
+        i=0
+        voltage_total = 0
+        voltage_mean = 0
+        if self.voltages_cur:
+            for voltage in self.voltages_cur:
+                if 1 < voltage < 5:
+                    voltage_total += voltage
+                    i += 1
+        if i:
+            voltage_mean = voltage_total / i
+        else:
+            voltage_mean = 0
+
+        i = 0
+        ohmages_mean = 0
+        if self.ohmages:
+            for ohmage in self.ohmages:
+                if not ohmage == 0:
+                    ohmages_mean += ohmage
+                    i += 0
+        if i:
+            ohmages_mean /= i
+
         return {
             "state": self.state,
             "battery_count": battery_count,
             "ohmages": self.ohmages,
-            "ohmages_mean": sum(self.ohmages) / len(self.ohmages) if self.ohmages else 0,
+            "ohmages_mean": ohmages_mean,
             "voltages_cur": self.voltages_cur,
             "voltages_his": list(self.voltages_his.queue),
-            "voltage_mean": sum(self.voltages_cur) / len(self.voltages_cur) if self.voltages_cur else 0,
-            "voltage_total": sum(self.voltages_cur),
+            "voltage_mean": voltage_mean,
+            "voltage_total": voltage_total,
             "last_update": last_task
         }
 
@@ -140,12 +163,15 @@ def api():
 
 @app.route('/api/h/init', methods=['POST'])
 def h_init():
-    global last_h_query, running_task, battery_count, last_task
+    global last_h_query, running_task, battery_count, last_task, task_queue, State
     last_task = 0
     last_h_query = time.time()
     running_task = None
     try:
         battery_count = int(request.get_data().decode("ascii"))
+        State.voltages_his.queue.clear()
+        task_queue.queue.clear()
+        running_task = None
     except ValueError:
         return "0"
     return "1"
