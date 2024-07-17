@@ -387,9 +387,9 @@ def c_get_result():
 def c_get_state():
     return {"status": "success", "data": State().__json__()}
 
-@app.route('/api/c/is_mail_enabled')
+@app.route('/api/c/get_mail_setting')
 def c_is_mail_enabled():
-    return {"status": "success", "data": enable_mail}
+    return {"status": "success", "enable": enable_mail, "to": poster.to}
 
 @app.route('/api/c/enable_mail')
 def c_enable_mail():
@@ -413,11 +413,6 @@ def c_set_mail_to():
         return {"status": "error", "message": "Invalid email address"}
     poster.to = data["to"]
     return {"status": "success"}
-
-@app.route('/api/c/get_mail_to')
-def c_get_mail_to():
-    global poster
-    return {"status": "success", "data": poster.to}
 
 def task_setter():
     global last_task, poster
