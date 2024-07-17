@@ -14,6 +14,7 @@ import Thermorunaway from './components/Thermorunaway.vue';
 import MechanicalDamage from './components/MechanicalDamage.vue';
 
 import { reactive, watch, ref, shallowRef, onMounted, onUnmounted } from 'vue'
+import { ElMessageBox } from 'element-plus';
 // import { isDark } from '~/composables/dark'
 const isDark = ref(false)
 
@@ -66,6 +67,7 @@ let states = ref({
 })
 
 onMounted(() => {
+  window.alert = ElMessageBox.alert
   setInterval(() => {
     fetch('/api/c/is_online')
       .then(response => response.json())
