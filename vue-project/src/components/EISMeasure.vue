@@ -207,6 +207,7 @@ const start_measure = () => {
   if (selected_cell_id.value == -1) {
     console.log(selected_cell_id.value);
     alert('请选择电池');
+    return;
   }
   console.log('start measure');
   fetch('/api/c/add_task', {

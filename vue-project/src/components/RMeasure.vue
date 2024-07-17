@@ -188,6 +188,7 @@ const start_measure = () => {
   if (selected_cell_id.value == -1) {
     console.log(selected_cell_id.value);
     alert('请选择电池');
+    return;
   }
   if (measure_freq.value < 1) {
     alert('频率过低');
