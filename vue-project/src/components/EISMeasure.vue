@@ -22,15 +22,33 @@
   <div>
     <el-row gutter=20>
       <el-col :span=15>
-        <el-space direction="vertical" style="width: 100%">
+        <el-space direction="vertical" style="width: 100%" fill>
           <span style="width: 100%; display: flex; justify-content: center;"><a><el-text>阻抗表</el-text></a></span>
-          <el-table :data="eisData" stripe style="width: 100%">
+          <el-table :data="eisData" stripe style="width: 100%" :default-sort="{ prop: 'freq', order: 'ascending' }">
             <el-table-column sortable prop="freq" label="FREQ" />
             <el-table-column prop="real" label="REAL(mΩ)" />
             <el-table-column prop="imag" label="IMAG(mΩ)" />
             <el-table-column prop="abs" label="ABS(mΩ)" />
             <el-table-column prop="phase" label="PHAS(rad)" />
           </el-table>
+          <div style="width: 100%;padding-left: 5%;padding-right: 5%;padding-top: 20px;">
+            <el-divider content-position="left" border-style="dotted">测量错误代码说明</el-divider>
+            <!-- 0x3X: 测量时错误
+            0x30: 未知错误
+            0x31: 超出量程
+            0x32: 电压偏置调整异常
+            0x33: 部分点采样失败
+            0x34: 多点采样失败
+            0x35: 单点采样失败
+            0x36: 欧姆阻抗位置错误(电池质量太差)
+            0x37: 欧姆阻抗超出量程(电池质量太差)
+            0x38: 欧姆阻抗查找失败(数据仍有参考价值) -->
+            <el-table :data="errorData" stripe style="width: 100%" border>
+              <el-table-column prop="code" label="错误代码" />
+              <el-table-column prop="message" label="错误信息" />
+            </el-table>
+          </div>
+          
         </el-space>
       </el-col>
       <el-col :span=9>
@@ -103,6 +121,18 @@ const add_data = (f, x, y) => {
   });
 };
 
+const errorData = [
+  { code: "0x30(48)", message: "未知错误" },
+  { code: "0x31(49)", message: "超出量程" },
+  { code: "0x32(50)", message: "电压偏置调整异常" },
+  { code: "0x33(51)", message: "部分点采样失败" },
+  { code: "0x34(52)", message: "多点采样失败" },
+  { code: "0x35(53)", message: "单点采样失败" },
+  { code: "0x36(54)", message: "欧姆阻抗位置错误(电池质量太差)" },
+  { code: "0x37(55)", message: "欧姆阻抗超出量程(电池质量太差)" },
+  { code: "0x38(56)", message: "欧姆阻抗查找失败(数据仍有参考价值)" },
+];
+
 const set_series = () => {
   amplFreqChartRef.value.add_series("abs", absFreq);
   compFreqChartRef.value.add_series("real", realFreq);
@@ -160,10 +190,14 @@ function checkResult(task_id) {
         setTimeout(() => checkResult(task_id), 500)
       } else {
         alert('任务丢失')
+        button_disabled.value = false;
+        button_text.value = '开始测量';
       }
     })
     .catch((error) => {
-      alert('获取数据失败');
+      alert(error);
+      button_disabled.value = false;
+      button_text.value = '开始测量';
       console.error('Error:', error);
       // 可以在这里添加错误处理逻辑，比如重试或者终止
     });
