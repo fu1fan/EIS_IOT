@@ -7,6 +7,7 @@ import EISMeasure from './components/EISMeasure.vue';
 import RMeasure from './components/RMeasure.vue';
 import BalanceTest from './components/BalanceTest.vue';
 import PowerTest from './components/PowerTest.vue';
+import Batterys from './components/Batterys.vue';
 import History from './components/History.vue';
 import Setting from './components/Setting.vue';
 import Thermorunaway from './components/Thermorunaway.vue';
@@ -38,6 +39,7 @@ const views = {
   "2-2": RMeasure,
   "2-3": BalanceTest,
   "2-4": PowerTest,
+  "2-7": Batterys,
   "2-5": Thermorunaway,
   "2-6": MechanicalDamage,
   "3": History,
@@ -117,7 +119,9 @@ onMounted(() => {
               <Menu :select_callback="menu_callback" isOnline/>
             </el-aside>
             <el-main>
-              <component :is="cur_view" :states="states"></component> 
+              <KeepAlive>
+                <component :is="cur_view" :states="states"></component> 
+              </KeepAlive>
             </el-main>
           </el-container>
         </el-container>
