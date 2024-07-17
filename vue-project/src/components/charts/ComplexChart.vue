@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineExpose } from 'vue'
+import { ref } from 'vue'
 import { computed } from 'vue'
 import BaseChart from './BaseChart.vue'
 
