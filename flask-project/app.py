@@ -1,4 +1,5 @@
 from math import atan
+import re
 from flask import Flask, redirect, request
 from threading import Thread
 from werkzeug.serving import make_server
@@ -6,6 +7,7 @@ import time
 from queue import Queue
 import os
 import traceback
+import mail
 
 PORT = 1001
 
@@ -21,6 +23,9 @@ server = make_server('0.0.0.0', PORT, app)
 battery_count = -1
 last_h_query = 0
 last_task = 0
+
+enable_mail = False
+poster = mail.Poster()
 
 shutdown = False
 
@@ -382,8 +387,35 @@ def c_get_result():
 def c_get_state():
     return {"status": "success", "data": State().__json__()}
 
+@app.route('/api/c/is_mail_enabled')
+def c_is_mail_enabled():
+    return {"status": "success", "data": enable_mail}
+
+@app.route('/api/c/enable_mail')
+def c_enable_mail():
+    global enable_mail
+    enable_mail = True
+    return {"status": "success"}
+
+@app.route('/api/c/disable_mail')
+def c_disable_mail():
+    global enable_mail
+    enable_mail = False
+    return {"status": "success"}
+
+@app.route('/api/c/set_mail_to', methods=['POST'])
+def c_set_mail_to():
+    global poster
+    data = request.get_json()
+    if "to" not in data:
+        return {"status": "error", "message": "Invalid data"}
+    if "to" not in data or not isinstance(data["to"], str) or not re.match(r"[^@]+@[^@]+\.[^@]+", data["to"]):
+        return {"status": "error", "message": "Invalid email address"}
+    poster.to = data["to"]
+    return {"status": "success"}
+
 def task_setter():
-    global last_task
+    global last_task, poster
     while(1):
         time.sleep(1)
         if _is_online():
@@ -414,22 +446,32 @@ def task_setter():
                         if len(State.voltages_his.queue) > 7:
                             State.voltages_his.get()
                         State.voltages_his.put(sum(task.result.voltages))
+                        err_list = []
 
                         # 如果电压最大差值大于0.5V，认为电池不平衡
                         if max(State.voltages_cur) - min(State.voltages_cur) > 0.5:
                             State.state = "均衡"
+                            err_list.append("电池不平衡，最大差值：" + str(max(State.voltages_cur) - min(State.voltages_cur)))
                         else:
                             State.state = "正常"
                         
                         # 如果有电池电压低于3.0V，认为电池电压过低
                         if min(State.voltages_cur) < 3.0:
                             State.state = "低压"
+                            err_list.append("第" + str(State.voltages_cur.index(min(State.voltages_cur))) + "号电池电压过低")
+                        
+                        if max(State.voltages_cur) > 5:
+                            State.state = "高压"
+                            err_list.append("第" + str(State.voltages_cur.index(max(State.voltages_cur))) + "号电池电压过高")
                         
                         # 如果有电池内阻大于30mΩ，认为电池内阻过高
                         if max(State.ohmages) > 30 or 0 in State.ohmages:
                             State.state = "异常"
+                            err_list.append("第" + str(State.ohmages.index(max(State.ohmages))) + "号电池内阻过高")
 
                         flag = True
+                        if enable_mail:
+                            Thread(target=poster.send, args=("电池状态异常报警", "共" + str(len(err_list)) + "条异常信息\n" + "\n".join(err_list)), daemon=True).start()
                         break
                     if running_task and running_task.task_id == task.task_id:
                         running = True
