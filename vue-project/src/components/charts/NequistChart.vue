@@ -31,7 +31,7 @@ defineExpose({
 
 let option = computed(() => ({
   title: {
-    text: 'Nyquist Chart',
+    text: 'Nyquist Chart of Battery',
     left: 'center'
   },
   toolbox: {
@@ -45,9 +45,15 @@ let option = computed(() => ({
       type: 'cross'
     }
   },
+  grid: {
+    left: '9%',
+    right: '9%',
+    bottom: '10%',
+    containLabel: true
+  },
   xAxis: {
     type: 'value',
-    name: 'Re(Z)',
+    name: 'Re(Z)  mΩ',
     nameLocation: 'middle',
     nameGap: 25,
     nameTextStyle: {
@@ -56,7 +62,7 @@ let option = computed(() => ({
   },
   yAxis: {
     type: 'value',
-    name: '-Im(Z)',
+    name: '-Im(Z)  mΩ',
     nameLocation: 'middle',
     nameGap: 25,
     nameTextStyle: {
