@@ -51,6 +51,11 @@ const battery_status = {
     title: "电压过低",
     sub_title: "部分电池电压低于临界值"
   },
+  "高压": {
+    icon: "error",
+    title: "电压过高",
+    sub_title: "部分电池电压高于临界值"
+  },
   "未响应": {
     icon: "error",
     title: "未响应",
