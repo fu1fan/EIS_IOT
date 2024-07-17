@@ -8,15 +8,18 @@
       </div>
     </template>
     <el-scrollbar>
-      <div class="battery-list">
+      <div v-if="props.states.battery_count > 0" class="battery-list">
         <div v-for="index in props.states.battery_count" :key="index" class="battery-item"
           :class="{ selected: index === selectedIndex }" @click="selectBattery(index)">
           Battery {{ index }}
         </div>
       </div>
+      <div v-else class="battery-none">
+        <el-text type="info" size="large">无电池</el-text>
+      </div>
     </el-scrollbar>
     <template #footer>
-      <el-space direction="vertical" :size="10" fill style="width:100%;">
+      <el-space direction="vertical" :size=10 fill style="width:100%;">
         <el-text>电池信息</el-text>
         <el-table :data="batteryData" border style="width:100%;">
           <el-table-column prop="voltage" label="Vol(V)" />
@@ -78,6 +81,13 @@ const selectBattery = (index) => {
   justify-content: center;
   min-height: 240px;
   align-content: flex-start;
+}
+
+.battery-none {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 240px;
 }
 
 .battery-item {
