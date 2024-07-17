@@ -414,11 +414,18 @@ def c_set_mail_to():
     poster.to = data["to"]
     return {"status": "success"}
 
+@app.route('/api/c/get_mail_to')
+def c_get_mail_to():
+    global poster
+    return {"status": "success", "data": poster.to}
+
 def task_setter():
     global last_task, poster
+    offline_alerted = False
     while(1):
         time.sleep(1)
         if _is_online():
+            offline_alerted = False
             if time.time() - last_task > 60:
                 task = Task()
                 id = hash(time.time())
@@ -449,25 +456,31 @@ def task_setter():
                         err_list = []
 
                         # 如果电压最大差值大于0.5V，认为电池不平衡
-                        if max(State.voltages_cur) - min(State.voltages_cur) > 0.5:
+                        if max(State.voltages_cur) - min(State.voltages_cur) > 0.1:
                             State.state = "均衡"
-                            err_list.append("电池不平衡，最大差值：" + str(max(State.voltages_cur) - min(State.voltages_cur)))
+                            err_list.append("电池不平衡，最大差值：" + "{:.4f}".format(max(State.voltages_cur) - min(State.voltages_cur)))
                         else:
                             State.state = "正常"
                         
                         # 如果有电池电压低于3.0V，认为电池电压过低
                         if min(State.voltages_cur) < 3.0:
                             State.state = "低压"
-                            err_list.append("第" + str(State.voltages_cur.index(min(State.voltages_cur))) + "号电池电压过低")
+                            for index, voltage in enumerate(State.voltages_cur):
+                                if voltage < 3.0:
+                                    err_list.append("第" + str(index) + "号电池电压过低")
                         
                         if max(State.voltages_cur) > 5:
                             State.state = "高压"
-                            err_list.append("第" + str(State.voltages_cur.index(max(State.voltages_cur))) + "号电池电压过高")
+                            for index, voltage in enumerate(State.voltages_cur):
+                                if voltage > 5:
+                                    err_list.append("第" + str(index) + "号电池电压过高")
                         
                         # 如果有电池内阻大于30mΩ，认为电池内阻过高
                         if max(State.ohmages) > 30 or 0 in State.ohmages:
                             State.state = "异常"
-                            err_list.append("第" + str(State.ohmages.index(max(State.ohmages))) + "号电池内阻过高")
+                            for index, ohmage in enumerate(State.ohmages):
+                                if ohmage > 30 or ohmage == 0:
+                                    err_list.append("第" + str(index) + "号电池内阻过高")
 
                         flag = True
                         if enable_mail:
@@ -494,6 +507,9 @@ def task_setter():
                         last_task = 0
         else:
             State.state = "离线"
+            if enable_mail:
+                Thread(target=poster.send, args=("设备离线通知", "新能源汽车锂电池EIS检测平台已下线"), daemon=True).start()
+            offline_alerted = True
             
 
 if __name__ == '__main__':
