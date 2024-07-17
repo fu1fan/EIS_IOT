@@ -2,7 +2,7 @@
   <el-space direction="vertical" :size=20 fill style="width: 100%;">
     <el-row gutter=20>
       <el-col :span=16>
-        <el-card shadow="hover">
+        <el-card shadow="hover" style="display: flex; flex-direction: column; height: 100%;" body-style="flex-grow: 1;">
           <template #header>
             <div class="card-header">
               <span class="card-name">
@@ -10,12 +10,17 @@
               </span>
             </div>
           </template>
-          <div>
-            <BatterysChart :states="props.states" ref="batteryChartRef" height="350px" />
-            <div style="text-align: center; width: 100%; margin-top: 5px;">
-              <el-text type="warning" size="small">
-                *阻抗超出量程的故障电池由于阻抗无法测量，故不显示在图中
-              </el-text>
+          <div style="height: 100%;">
+            <div v-if="props.states.battery_count > 0" class="battery-list" style="height: 100%;">
+              <BatterysChart :states="props.states" ref="batteryChartRef" height="350px" />
+              <div style="text-align: center; width: 100%; margin-top: 5px;">
+                <el-text type="warning" size="small">
+                  *阻抗超出量程的故障电池由于阻抗无法测量，故不显示在图中
+                </el-text>
+              </div>
+            </div>
+            <div v-else class="battery-none">
+              <el-text type="info" size="large">设备离线</el-text>
             </div>
           </div>
 
@@ -200,5 +205,12 @@ const tableRowClassName = ({
 
 :deep() .el-table .success-row {
   --el-table-tr-bg-color: var(--el-color-success-light-9);
+}
+
+.battery-none {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100%;
 }
 </style>

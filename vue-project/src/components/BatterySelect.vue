@@ -15,7 +15,7 @@
         </div>
       </div>
       <div v-else class="battery-none">
-        <el-text type="info" size="large">无电池</el-text>
+        <el-text type="info" size="large">设备离线</el-text>
       </div>
     </el-scrollbar>
     <template #footer>
