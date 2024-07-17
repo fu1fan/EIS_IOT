@@ -122,6 +122,12 @@ const option = computed(() => {
     yAxis: {
       type: 'value'
     },
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross'
+      }
+    },
     series: [
       {
         data: yAxisData,
