@@ -115,6 +115,12 @@ const option = computed(() => {
       text: '电压变化趋势图',
       left: 'center'
     },
+    grid: {
+      left: '0%',
+      // right: '3%',
+      bottom: '0%',
+      containLabel: true
+    },
     xAxis: {
       type: 'category',
       data: xAxisData
@@ -175,7 +181,7 @@ const batteryData = computed(() => [
         <div>
           <el-row gutter=10>
             <el-col :span=14>
-              <BaseChart :Option="option" width="100%" height="370px" />
+              <BaseChart :Option="option" width="100%" height="330px" />
             </el-col>
             <el-col :span=10>
               <el-table :data="deviceData" style="width: 100%" :row-class-name="tableRowClassName">
