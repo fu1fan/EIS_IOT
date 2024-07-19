@@ -24,7 +24,7 @@
         </el-menu-item-group>
         <el-menu-item-group>
           <template #title><span>其他</span></template>
-          <el-menu-item index="2-5">热失控（实验）</el-menu-item>
+          <el-menu-item index="2-5">热失控（演示）</el-menu-item>
           <!-- <el-menu-item index="2-6">机械损伤（实验）</el-menu-item> -->
         </el-menu-item-group>
       </el-sub-menu>

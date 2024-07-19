@@ -2,7 +2,7 @@
   <el-row gutter=20>
     <el-col :span=14>
       <div style="display: flex; flex-direction: column; height: 100%; padding: 10px;">
-        <el-space direction="vertical" alignment="flex-start" :size="20" style="width: 100%;" fill>
+        <el-space direction="vertical" alignment="flex-start" :size=20 style="width: 100%;" fill>
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <h1>邮件设置</h1>
             <el-space>
@@ -23,10 +23,10 @@
     </el-col>
     <el-col :span=10>
       <el-card shadow="hover" style="display: flex; flex-direction: column; height: 100%;" body-style="flex-grow: 1;">
-        <el-space direction="vertical" alignment="flex-start" :size="20" style="width: 100%;" fill>
+        <el-space direction="vertical" alignment="flex-start" :size=20 style="width: 100%;" fill>
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <h1>关于</h1>
-            <el-text type="info">2024嵌入式设计大赛·Loong的传人</el-text>
+            <el-text type="info">2024嵌入式设计大赛 · Loong的传人</el-text>
           </div>
           <div style="margin-left: 5px;">
           </div>
@@ -38,29 +38,27 @@
               <el-text>又因不小心把一块100多的动力电池过放报废、半瓶可乐倒在作品上而觉得好笑。</el-text>
               <el-text>最让我破防的还是学校的实训老师谢某某，拜他所赐，这个项目近万行代码几乎有一般是我熬夜到两点多写的，第二天早八还要参加AD10的理论课，我真想知道还有哪些公司在用这个自动布线都能卡死的古董软件。</el-text>
               <el-text>多的也不说了，还是要感谢这次比赛，让我有机会在大一就体验到了写论文致谢的感觉（笑）。</el-text>
-              <el-text id="yeah">对了，最后，我们很自豪的是，这套作品不是划水、没有学长老师的帮忙、没有继承，是我们自己赋予了它生命。我们，是创造的创造者。</el-text>
+              <el-text id="yeah">最后，我们很自豪的是，这套作品的完成没有划水、没有学长老师的代劳、没有继承，是我们自己从零赋予了它生命。我们，是创造的创造者。</el-text>
             </el-space>
           </div>
         </el-space>
-        <template #footer>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span>
-              <el-space>
-                <el-tag type="primary">Vue.js</el-tag>
-                <el-tag type="primary">Element-Plus</el-tag>
-                <el-tag type="primary">Python</el-tag>
-                <el-tag type="primary">Flask</el-tag>
-                <el-tag type="success">...</el-tag>
-              </el-space>
-            </span>
-            <div style="display: flex; justify-content: flex-end;"><el-space><a>Presented by</a><a
-              href="https://github.com/fu1fan/" id="link">fu1fan</a></el-space></div>
-          </div>
-          
-        </template>
       </el-card>
     </el-col>
   </el-row>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <span>
+      <el-space>
+        <el-tag type="primary">Vue.js</el-tag>
+        <el-tag type="primary">Element-Plus</el-tag>
+        <el-tag type="primary">Python</el-tag>
+        <el-tag type="primary">Flask</el-tag>
+        <el-tag type="success">...</el-tag>
+      </el-space>
+    </span>
+    <!-- <br /> -->
+    <div style="display: flex; justify-content: flex-end;"><el-space><a>Presented by</a><a
+      href="https://github.com/fu1fan/" id="link">fu1fan</a></el-space></div>
+  </div>
 </template>
 
 <script setup>

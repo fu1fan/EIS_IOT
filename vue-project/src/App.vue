@@ -68,6 +68,12 @@ let states = ref({
 
 onMounted(() => {
   window.alert = ElMessageBox.alert
+  window.confirm = ElMessageBox.confirm
+  window.prompt = ElMessageBox.prompt
+  // 检测屏幕大小，如果是手机端，则提示不支持
+  if (window.screen.width < 768) {
+    alert("屏幕宽度过小，内容可能无法正常显示，请尝试使用平板或者电脑访问")
+  }
   setInterval(() => {
     fetch('/api/c/is_online')
       .then(response => response.json())

@@ -1,5 +1,5 @@
 <template>
-  <el-card shadow="hover">
+  <el-card shadow="hover" style="display: flex; flex-direction: column; height: 100%;" body-style="flex-grow: 1;">
     <template #header>
       <div class="card-header">
         <span class="card-name">

@@ -2,12 +2,13 @@
   <div ref="EchartRef" :style="style"></div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue";
 //第一步：先在官网中的指令进行安装
 // npm install echarts --save
 //第二步：导入echarts
 import * as echarts from "echarts";
+// import * as ecStat from 'echarts-stat';
 
 // 保存原始的addEventListener方法
 const originalAddEventListener = EventTarget.prototype.addEventListener;
@@ -37,6 +38,7 @@ export default defineComponent({
         //第五步：初始化咱们的图表内容（到这里基础的引入工作已经完成了）
         echarts.registerTheme('customed', theme);
         const myChars = echarts.init(main, 'customed');
+        // echarts.registerTransform(ecStat.transform.regression);
         //第六步：需要配置对应的option数据可以采用对象拼接的数据
         //第七步：通过setOption进行数据的设置
         myChars.setOption(this.Option);
@@ -79,7 +81,9 @@ export default defineComponent({
       // Your code logic here
       // This function will be called when the Option prop changes
       const myChart = echarts.getInstanceByDom(this.$refs.EchartRef); // Declare myChart variable
+      if (myChart!=null){
       myChart.setOption(newOption);
+      }
       console.log("Option changed");
     },
     handleWindowResize() {
