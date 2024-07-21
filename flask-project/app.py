@@ -502,7 +502,7 @@ def task_setter():
                         last_task = 0
         else:
             State.state = "离线"
-            if enable_mail:
+            if enable_mail and not offline_alerted:
                 Thread(target=poster.send, args=("设备离线通知", "新能源汽车锂电池EIS检测平台已下线"), daemon=True).start()
             offline_alerted = True
             
