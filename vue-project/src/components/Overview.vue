@@ -57,9 +57,9 @@ const battery_status = {
     sub_title: "部分电池电压高于临界值"
   },
   "未响应": {
-    icon: "error",
-    title: "未响应",
-    sub_title: "设备未响应"
+    icon: "info",
+    title: "等待测量结果",
+    sub_title: "这比预期的等待时间长"
   }
 }
 

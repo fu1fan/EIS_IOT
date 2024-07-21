@@ -55,6 +55,7 @@ const rate = ref(0)
 let from = 0
 let stop_flag = 0
 let retry = 0
+let cycle = 1
 
 function updateSelectedIndex(index) {
   //console.log('updateSelectedIndex', index);
@@ -71,6 +72,7 @@ function checkResult(task_id) {
           console.info(data.data)
           lineChartRef.value.add_data(0, ((Date.now() - from) / 1000).toFixed(2), data.data.zabs)
           lineChartRef.value.add_data(1, ((Date.now() - from) / 1000).toFixed(2), data.data.voltage)
+          cycle += 1
           add_task()
         } else {
           alert('错误代码：' + data.code);
@@ -79,11 +81,13 @@ function checkResult(task_id) {
         // button_disabled.value = false;
         // button_text.value = '开始测量';
       } else if (data.status == "warning") {
-        // if (data.message == "waiting") {
-        //   button_text.value = '任务排队中';
-        // } else if (data.message == "processing") {
-        //   button_text.value = '任务进行中';
-        // }
+        if (data.message == "waiting") {
+          // button_text.value = '任务排队中';
+          text.value = "第" + cycle + "轮：" + "任务排队中"
+        } else if (data.message == "processing") {
+          // button_text.value = '任务进行中';
+          text.value = "第" + cycle + "轮：" + "任务进行中"
+        }
         // 如果任务未完成，稍后再次检查
         setTimeout(() => checkResult(task_id), 500)
       } else {
@@ -102,6 +106,7 @@ function checkResult(task_id) {
             retry = 0
             add_task()
           }).catch(() => {
+            text.value = "未启动"
             button_text.value = '开始测量'
           })
         }
@@ -126,12 +131,14 @@ const start = () => {
     button_text.value = '停止测量'
     stop_flag = 0
     retry = 0
+    cycle=1
     add_task()
   }
   else if (button_text.value == "停止测量") {
     stop()
   }
   else {
+    text.value = "未启动"
     button_text.value = '开始测量'
   }
 }
@@ -161,21 +168,25 @@ const add_task = () => {
           let task_id = data.id;
           // button_disabled.value = true;
           // button_text.value = '等待...';
+          text.value = "第" + cycle + "轮：" + "等待..."
           checkResult(task_id);
         } else {
           ElMessageBox.alert('设备离线或正忙', '错误', {
             confirmButtonText: '确定',
             type: 'error',
           });
+          text.value = "未启动"
           button_text.value = '开始测量'
         }
       })
       .catch((error) => {
         console.error('Error:', error);
+        text.value = "未启动"
         button_text.value = '开始测量'
       });
   }
   else {
+    text.value = "未启动"
     button_text.value = '开始测量'
     stop_flag = 0
   }

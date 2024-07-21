@@ -36,7 +36,7 @@ let yAxis = ref([])
 const limit = -1
 
 defineExpose({
-  add_yAxis(name) {
+  add_yAxis(name, showLine=false) {
     yAxis.value.push({
       type: 'value',
       name: name,
@@ -44,6 +44,9 @@ defineExpose({
       nameGap: 26,
       nameTextStyle: {
         fontSize: 12
+      },
+      splitLine: {
+        show: showLine
       }
     })
   },
