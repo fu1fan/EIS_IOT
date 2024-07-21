@@ -230,22 +230,33 @@ void NORMAL_Mode(void)
 	ui_console_printf("");
 	// LTE模块初始化
 	ui_console_printf("init lte module...");
-	status = lte_module_init();
-	if (!status.is_success)
-	{
-		ui_console_printf("lte init failed!");
-		ui_console_printf("error_code: %d", status.error_code);
-		return;
+
+	for(;;){
+		status = lte_module_init();
+		if (!status.is_success)
+		{
+			ui_console_printf("lte init failed!");
+			ui_console_printf("error_code: %d", status.error_code);
+			osal_delay_millisec(1000U);
+			ui_console_printf("retrying...");
+			continue;
+		}
+		ui_console_printf("lte module founded!");
+		ui_console_printf("init cecullar...");
+		status = lte_celluar_init();
+		if (!status.is_success)
+		{
+			ui_console_printf("cecullar init failed!");
+			ui_console_printf("error_code: %d", status.error_code);
+			osal_delay_millisec(1000U);
+			ui_console_printf("retrying...");
+			continue;
+		}
+
+		break;
 	}
-	ui_console_printf("lte module founded!");
-	ui_console_printf("init cecullar...");
-	status = lte_celluar_init();
-	if (!status.is_success)
-	{
-		ui_console_printf("cecullar init failed!");
-		ui_console_printf("error_code: %d", status.error_code);
-		return;
-	}
+
+
 	ui_console_printf("IP:%s", ip_address);
 	ui_console_printf("Cecullar connected!");
 
@@ -269,19 +280,25 @@ void NORMAL_Mode(void)
 
 	ui_console_printf("");
 	ui_console_printf("init service...");
-	wpostf("%d", eb_count * 4);
-	status = lte_http_post("https://eis.zzzing.cn/api/h/init", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
-	if (!status.is_success)
-	{
-		ui_console_printf("init error!");
-		ui_console_printf("error_code: %d", status.error_code);
-		return;
-	}
-	response_purify(&response);
-	if (0 == strcmp((const char *)response.content, "0"))
-	{
-		ui_console_printf("service error!");
-		return;
+
+	for(;;){
+		wpostf("%d", eb_count * 4);
+		status = lte_http_post("https://eis.zzzing.cn/api/h/init", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+		if (!status.is_success)
+		{
+			ui_console_printf("init error!");
+			ui_console_printf("error_code: %d", status.error_code);
+			ui_console_printf("retrying...");
+			continue;
+		}
+		response_purify(&response);
+		if (0 == strcmp((const char *)response.content, "0"))
+		{
+			ui_console_printf("service error!");
+			ui_console_printf("retrying...");
+			continue;
+		}
+		break;
 	}
 	ui_console_printf("service inited!");
 

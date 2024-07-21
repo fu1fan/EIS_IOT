@@ -224,6 +224,13 @@ eis_status_t lte_celluar_init(void){
 	char *q1 = strstr(p1, "\r\n");
 	*q1 = '\0';
 	strcpy((char*) ip_address, p1);
+	// 如果ip地址为0或者0\r则说明获取失败
+	if (strcmp((char*) ip_address, "0") == 0
+			|| strcmp((char*) ip_address, "0\r") == 0) {
+		status.is_success = 0;
+		status.error_code = 0x56;
+		return status;
+	}
 
 	return status;
 }
