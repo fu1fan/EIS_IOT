@@ -17,6 +17,8 @@
 
 #include "AD9959.h"
 #include "ExpansionBoard.h"
+#include "screen_uart.h"
+#include "math.h"
 
 // 打开新的工程或者工程移动了位置务必执行以下操作
 // 第一步 关闭所有打开的文件
@@ -49,6 +51,9 @@
 // 
 // 如果发现现象与说明严重不符 请参照本文件最下方 例程常见问题说明 进行排查
 
+uint32_t freq_cur = 0;
+uint16_t channel_cur = 0;
+uint8_t buffer[SCREEN_UART_BUFFER_SIZE];
 
 //-------------------------------------------------------------------------------------------------------------------
 // 函数简介     主函数
@@ -71,10 +76,18 @@ int main (void)
     uint16  run_led_duty    = 0;
     // uint16  send_led_duty   = 0;
     uint16  key_count_ms    = 0;
+    float real = 0;
+    float imag = 0;
+    uint32_t len = 0;
+    uint32_t temp;
+
+    gpio_write_pin(PIN_GPIO0_9, 1);
+    gpio_write_pin(PIN_GPIO3_9, 1);
 
     debug_uart_init();                                                          // 以默认配置初始化调试输出串口
     system_rgb_pwm_init();                                                      // 初始化 RGB 灯配置
     can_module_init();
+    screen_uart_init();
     printf("CAN test running.\r\n");
 
 	AD9959_Init();								//初始化控制AD9959需要用到的IO口,及寄存器
@@ -83,6 +96,8 @@ int main (void)
 	AD9959_Set_Phase(CH2, 0);	//设置通道2相位控制值8192(180度)，范围0~16383
 	AD9959_Set_Phase(CH3, 0);	//设置通道3相位控制值12288(270度)，范围0~16383
 
+	screen_uart_printf("\xff\xff\xffrest\xff\xff\xff");
+
 	//EB_Select(0, 0);
 	uint8_t eb_count = EB_Init();
 	printf("eb_count:%d\r\n", eb_count);
@@ -90,14 +105,18 @@ int main (void)
 	//	IO_Update();	//AD9959更新数据,调用此函数后，上述操作生效！！！！
 //
 //	osal_delay_millisec(10000);
-//	AD9959_Set_Fre(CH1, 500);	//设置通道1频率100000Hz
+//	AD9959_Set_Fre(CH1, 500);	//设置通道1频率100000 Hz
 //	IO_Update();	//AD9959更新数据,调用此函数后，上述操作生效！！！！
+
+	screen_uart_read_buffer(buffer, SCREEN_UART_BUFFER_SIZE); // 清空缓冲区
 
     for ( ; ; )
     {
-        osal_delay_millisec(5U);
-        run_led_duty = (100 > run_led_duty) ? (run_led_duty + 1) : (0);
-        system_rgb_control(SYSTEM_LED_GREEN, run_led_duty);
+        osal_delay_millisec(2U);
+        run_led_duty = (300 > run_led_duty) ? (run_led_duty + 1) : (0);
+        system_rgb_control(SYSTEM_LED_GREEN, run_led_duty/3);
+        system_rgb_control(SYSTEM_LED_RED, run_led_duty/3);
+        system_rgb_control(SYSTEM_LED_BLUE, run_led_duty/3);
         if(can_rx_flag)
         {
         	can_rx_flag = 0;
@@ -113,20 +132,24 @@ int main (void)
             	can_receive_buffer[0] = 0xFF;
             	can_send_frame(can_remote_id, can_receive_buffer);
             	AD9959_Init();
+            	screen_uart_printf("freq.txt=\"stop\"\xff\xff\xff");
             }
             else if(can_receive_buffer[0] == 0x01){
             	uint8_t channel = can_receive_buffer[1];
             	uint16_t amp = (can_receive_buffer[2] << 8) | can_receive_buffer[3];
             	uint32_t fre = (can_receive_buffer[4] << 24) | (can_receive_buffer[5] << 16) | (can_receive_buffer[6] << 8) | can_receive_buffer[7];
-            	printf("channel:%d, fre:%d, amp:%d\r\n", channel, fre, amp);
+            	printf("channel:%d, fre:%d, amp:%d\r\n", channel, (int)fre, amp);
 				if (channel == 0x00) {
 					AD9959_Init();
+					screen_uart_printf("freq.txt=\"stop\"\xff\xff\xff");
 					continue;
 				}
             	AD9959_Set_Fre(channel, fre);
             	AD9959_Set_Amp(channel, amp);
             	AD9959_Set_Phase(channel, 0);
             	IO_Update();
+            	freq_cur = fre;
+            	screen_uart_printf("freq.txt=\"%d Hz\"\xff\xff\xff", freq_cur);
             }
             else if(can_receive_buffer[0] == 0x02){
             	uint8_t mode = can_receive_buffer[1];
@@ -137,16 +160,96 @@ int main (void)
 					eb_count = EB_Init();
 					can_receive_buffer[0] = 0x02;
 					can_receive_buffer[1] = eb_count;
+					// screen_uart_printf("battery_count.txt=\"%d\"\xff\xff\xff", eb_count*4);
 					can_send_frame(can_remote_id, can_receive_buffer);
 					break;
 				case 0x01:
 					EB_Select(board, index);
+					channel_cur = board*4+index;
+					screen_uart_printf("channel.txt=\"%d\"\xff\xff\xff", channel_cur);
 					break;
 				case 0x02:
 					EB_Clear();
+					screen_uart_printf("channel.txt=\"open\"\xff\xff\xff");
 					break;
             	}
             }
+            else if(can_receive_buffer[0] == 0x03){
+            	switch(can_receive_buffer[1]) {
+            	case 0x00:	// 初始化
+            		screen_uart_printf("page 2\xff\xff\xff");
+            		screen_uart_printf("battery_count.txt=\"%d\"\xff\xff\xff", eb_count*4);
+            		EB_PowerOff();
+					screen_uart_printf("relay.txt=\"true\"\xff\xff\xff");
+            		switch(can_receive_buffer[2]) {
+					case 0x00:
+						screen_uart_printf("mode.txt=\"Nomral\"\xff\xff\xff");
+						break;
+					case 0x01:
+						screen_uart_printf("mode.txt=\"DEBUG\"""\xff\xff\xff");
+						break;
+            		}
+            		break;
+				case 0x01:	// 任务状态
+					switch (can_receive_buffer[2]) {
+					case 0x00:
+						screen_uart_printf("task.txt=\"scan\"\xff\xff\xff");
+						break;
+					case 0x01:
+						screen_uart_printf("task.txt=\"single\"\xff\xff\xff");
+						break;
+					case 0x02:
+						screen_uart_printf("task.txt=\"eis\"\xff\xff\xff");
+						break;
+					}
+					break;
+				case 0x02:	// 提交结果
+//					read_two_float(&real, &imag);
+					temp = (can_receive_buffer[4] << 24) | (can_receive_buffer[5] << 16) | (can_receive_buffer[6] << 8) | can_receive_buffer[7];
+					switch(can_receive_buffer[2]) {
+					case 0x00:// 传输real can_receive_buffer[4]~can_receive_buffer[7]为float数据
+						memcpy(&real, &temp, sizeof(real));
+						break;
+					case 0x01:// 传输imag can_receive_buffer[4]~can_receive_buffer[7]为float数据
+						memcpy(&imag, &temp, sizeof(imag));
+                        screen_uart_printf("task.txt=\"null\"\xff\xff\xff");
+						screen_uart_printf("last_channel.txt=\"%d\"\xff\xff\xff", channel_cur);
+						screen_uart_printf("last_freq.txt=\"%d\"\xff\xff\xff", freq_cur);
+						screen_uart_printf("last_real.txt=\"%f mOhm\"\xff\xff\xff", real);
+						screen_uart_printf("last_imag.txt=\"%f mOhm\"\xff\xff\xff", imag);
+						screen_uart_printf("las_impedance.txt=\"%f mOhm\"\xff\xff\xff", sqrt(real*real+imag*imag));
+						screen_uart_printf("last_angel.txt=\"%f rad\"\xff\xff\xff", atan2(imag, real)); // 我承认我拼错了，但是我懒得改了
+                        break;
+					break;
+					}
+            	}
+			}
+			else if(can_receive_buffer[0] == 0x04){
+				if(can_receive_buffer[1] == 0x00){	// 打开供电
+					EB_PowerOn();
+					screen_uart_printf("relay.txt=\"false\"\xff\xff\xff");
+				}
+				else{
+					EB_PowerOff();
+					screen_uart_printf("relay.txt=\"true\"\xff\xff\xff");
+				}
+			}
+		}
+        len = screen_uart_read_buffer(buffer, SCREEN_UART_BUFFER_SIZE);
+        if(len!=0){
+        	// 查看数据是否以FF FF FF结尾
+			if (buffer[len - 3] == 0xFF && buffer[len - 2] == 0xFF
+					&& buffer[len - 1] == 0xFF) {
+				printf("recv:%s", buffer);
+				if(buffer[0] == 0x55){
+					// 执行软重启
+					AD9959_Init();
+					EB_Clear();
+					gpio_write_pin(PIN_GPIO3_9, 0);
+					osal_delay_millisec(500U);
+					gpio_write_pin(PIN_GPIO3_9, 1);
+				}
+			}
         }
         if(!gpio_read_pin(USER_KEY_C7))
         {

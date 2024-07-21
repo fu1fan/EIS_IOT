@@ -3,19 +3,7 @@ PinSettings Config
 Board "ZFEVB_SR5E1E3.gpio_board"
 
 GPIO {
-    inout GPIO3_9 -> E7_64 as SOFT_IIC_SCL_D9
-    IO
-        MODER9 = 'Output',
-        OT9 = 'PushPull',
-        OSPEEDR9 = 'VeryHigh',
-        PUPDR9 = 'PullUp',
-        AFRL9 = 0,
-        IHYSTR9 = 'CMOS',
-        TR9 = 'Enable',
-        SFS9 = 'Disabled',
-        SFV9 = 'Low'
-    ;
-    inout GPIO4_8 -> E7_72 as SOFT_IIC_SDA_E8
+	inout GPIO4_8 -> E7_72 as SOFT_IIC_SDA_E8
     IO
         MODER8 = 'Output',
         OT8 = 'OpenDrain',
@@ -27,20 +15,7 @@ GPIO {
         SFS8 = 'Disabled',
         SFV8 = 'Low'
     ;
-    
-    inout GPIO0_9 -> E7_11 as WIRLESS_RST_A9
-    IO
-        MODER9 = 'Output',
-        OT9 = 'PushPull',
-        OSPEEDR9 = 'VeryHigh',
-        PUPDR9 = 'PullUp',
-        AFRL9 = 0,
-        IHYSTR9 = 'CMOS',
-        TR9 = 'Enable',
-        SFS9 = 'Disabled',
-        SFV9 = 'High'
-    ;
-    inout GPIO1_1 -> E7_56 as WIRLESS_RTS_B1
+	inout GPIO1_1 -> E7_56 as WIRLESS_RTS_B1
     IO
         MODER1 = 'Input',
         OT1 = 'PushPull',
@@ -402,6 +377,30 @@ inout GPIO8_0 -> E7_164 as PIN_GPIO8_0
 		TR5 = 'Enable',
 		SFS5 = 'Disabled',
 		SFV5 = 'Low'
+	;
+inout GPIO0_9 -> E7_11 as PIN_GPIO0_9
+	IO
+		MODER9 = 'Output',
+		OT9 = 'PushPull',
+		OSPEEDR9 = 'Low',
+		PUPDR9 = 'Floating',
+		AFRL9 = 0,
+		IHYSTR9 = 'CMOS',
+		TR9 = 'Enable',
+		SFS9 = 'Disabled',
+		SFV9 = 'Low'
+	;
+inout GPIO3_9 -> E7_64 as PIN_GPIO3_9
+	IO
+		MODER9 = 'Output',
+		OT9 = 'PushPull',
+		OSPEEDR9 = 'Low',
+		PUPDR9 = 'Floating',
+		AFRL9 = 0,
+		IHYSTR9 = 'CMOS',
+		TR9 = 'Enable',
+		SFS9 = 'Disabled',
+		SFV9 = 'Low'
 	;
 }
 

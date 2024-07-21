@@ -6,21 +6,21 @@
     <el-col :span=16>
       <el-card shadow="hover" style="display: flex; flex-direction: column; height: 100%;" body-style="flex-grow: 1;">
         <template #header>
-          充电热失控监控
+          热失控监控
         </template>
         <!-- <LineChart ref="lineChartRef" :states="props.states" height="300px" title="70Hz阻抗变化" /> -->
         <el-space dirction="vertical" style="width: 100%;" fill>
           <DynamicLinesChart ref="lineChartRef" height="300px" title="70Hz阻抗变化" />
-          <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+          <!-- <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
             <el-space>
               <el-text type="warning">阻抗变化率</el-text>
             </el-space>
-          </div>
+          </div> -->
         </el-space>
         <template #footer>
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <el-text size="large">
-              <a>{{ text }}</a>
+            <el-text size="large" type="info">
+              {{ text }}
             </el-text>
             <el-button :disabled="button_disabled" type="primary" @click="start">
               {{ button_text }}
@@ -45,7 +45,7 @@ const props = defineProps({
 
 const lineChartRef = ref(null)
 
-const text = ref('')
+const text = ref('未启动')
 const button_disabled = ref(false)
 const button_text = ref('开始测量')
 const selected_cell_id = ref(-1)

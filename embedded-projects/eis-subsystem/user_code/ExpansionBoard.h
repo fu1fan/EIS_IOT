@@ -20,5 +20,7 @@
 uint8_t EB_Init(void);
 void EB_Select(uint8_t board, uint8_t index);
 void EB_Clear(void);
+void EB_PowerOn(void);
+void EB_PowerOff(void);
 
 #endif /* USER_CODE_EXPANSIONBOARD_H_ */

@@ -8,6 +8,7 @@
 #include "ExpansionBoard.h"
 
 static uint8_t board_count = 0;
+static uint8_t power = 0;
 
 void _74HC595_Init(void){
 	gpio_write_pin(DS_PIN, 0);
@@ -27,6 +28,7 @@ void _74HC595_Apply(void) {
 
 void _74HC595_Write(uint8_t data, uint8_t apply) {
 	uint8_t i;
+	data |= power ? 0b00010000 : 0b00000000;
 	for (i = 0; i < 8; i++) {
 		gpio_write_pin(DS_PIN, data & 0x80);
 		gpio_write_pin(SHCP_PIN, 0);
@@ -57,7 +59,7 @@ void _74HC595_Disable(void) {
 void _74HC595_Clear(void) {
 	_74HC595_Reset();
 	for (int i = 0; i < board_count; i++) {
-		_74HC595_Write(0x00, 0);
+		_74HC595_Write(power ? 0b00010000 : 0b00000000, 0);
 	}
 	_74HC595_Apply();
 }
@@ -89,7 +91,7 @@ void EB_Select(uint8_t board, uint8_t index) {
 	_74HC595_Clear();
 	// 除了被选的board，其他board寄存器全写0
 
-	for (uint8_t re = 0; re < 3; re++) {
+	for (uint8_t re = 0; re < 1; re++) {
 		uint8_t write_index = board_count - board - 1;
 			uint8_t i = 0;
 			for (i = 0; i < board_count; i++) {
@@ -105,6 +107,20 @@ void EB_Select(uint8_t board, uint8_t index) {
 
 void EB_Clear(void) {
 	_74HC595_Clear();
+}
+
+void EB_PowerOn(void) {
+	if (power) {
+		return;
+	}
+	power = 1;
 	_74HC595_Clear();
+}
+
+void EB_PowerOff(void) {
+	if (!power) {
+		return;
+	}
+	power = 0;
 	_74HC595_Clear();
 }

@@ -40,18 +40,6 @@
 #define ZFEVB_SR5E1E3_EXAMPLE5_CAN_DEMO	1
 
 /*--------------------- GPIO pins definitions ---------------------*/
-#define SOFT_IIC_SCL_D9 gpio_iopack(GPIO_PORT_D, GPIO_PIN_9) /* PD[9] */
-#define SOFT_IIC_SCL_D9_CFG                         \
-	(GPIO_MODE_MODER_OUTPUT |                       \
-	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
-	 GPIO_MODE_PUPDR_PULLUP |                       \
-	 GPIO_MODE_AFR(0U) |                            \
-	 GPIO_MODE_IHYSTR_CMOS |                        \
-	 GPIO_MODE_TRIGENR_IN_ENABLED |                 \
-	 GPIO_MODE_SAFESELR_DISABLED |                  \
-	 GPIO_MODE_SAFEVALR_LOW)
-
 #define SOFT_IIC_SDA_E8 gpio_iopack(GPIO_PORT_E, GPIO_PIN_8) /* PE[8] */
 #define SOFT_IIC_SDA_E8_CFG                         \
 	(GPIO_MODE_MODER_OUTPUT |                       \
@@ -63,18 +51,6 @@
 	 GPIO_MODE_TRIGENR_IN_ENABLED |                 \
 	 GPIO_MODE_SAFESELR_DISABLED |                  \
 	 GPIO_MODE_SAFEVALR_LOW)
-
-#define WIRLESS_RST_A9 gpio_iopack(GPIO_PORT_A, GPIO_PIN_9) /* PA[9] */
-#define WIRLESS_RST_A9_CFG                          \
-	(GPIO_MODE_MODER_OUTPUT |                       \
-	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
-	 GPIO_MODE_PUPDR_PULLUP |                       \
-	 GPIO_MODE_AFR(0U) |                            \
-	 GPIO_MODE_IHYSTR_CMOS |                        \
-	 GPIO_MODE_TRIGENR_IN_ENABLED |                 \
-	 GPIO_MODE_SAFESELR_DISABLED |                  \
-	 GPIO_MODE_SAFEVALR_HIGH)
 
 #define WIRLESS_RTS_B1 gpio_iopack(GPIO_PORT_B, GPIO_PIN_1) /* PB[1] */
 #define WIRLESS_RTS_B1_CFG                          \
@@ -436,6 +412,30 @@
 	 GPIO_MODE_SAFESELR_DISABLED |                  \
 	 GPIO_MODE_SAFEVALR_LOW)
 
+#define PIN_GPIO0_9 gpio_iopack(GPIO_PORT_A, GPIO_PIN_9) /* PA[9] */
+#define PIN_GPIO0_9_CFG                             \
+	(GPIO_MODE_MODER_OUTPUT |                       \
+	 GPIO_MODE_OTYPER_PUSHPULL |                    \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
+	 GPIO_MODE_PUPDR_FLOATING |                     \
+	 GPIO_MODE_AFR(0U) |                            \
+	 GPIO_MODE_IHYSTR_CMOS |                        \
+	 GPIO_MODE_TRIGENR_IN_ENABLED |                 \
+	 GPIO_MODE_SAFESELR_DISABLED |                  \
+	 GPIO_MODE_SAFEVALR_LOW)
+
+#define PIN_GPIO3_9 gpio_iopack(GPIO_PORT_D, GPIO_PIN_9) /* PD[9] */
+#define PIN_GPIO3_9_CFG                             \
+	(GPIO_MODE_MODER_OUTPUT |                       \
+	 GPIO_MODE_OTYPER_PUSHPULL |                    \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
+	 GPIO_MODE_PUPDR_FLOATING |                     \
+	 GPIO_MODE_AFR(0U) |                            \
+	 GPIO_MODE_IHYSTR_CMOS |                        \
+	 GPIO_MODE_TRIGENR_IN_ENABLED |                 \
+	 GPIO_MODE_SAFESELR_DISABLED |                  \
+	 GPIO_MODE_SAFEVALR_LOW)
+
 
 /*--------------------- SAR2 pins definitions ---------------------*/
 #define MOTOR1_A_CU_B7 gpio_iopack(GPIO_PORT_B, GPIO_PIN_7) /* PB[7] */
@@ -760,9 +760,7 @@ extern "C" {
 __STATIC_INLINE void Config_init(void) {
 	
 	/* GPIO */
-	gpio_set_pin_mode(SOFT_IIC_SCL_D9, SOFT_IIC_SCL_D9_CFG);
 	gpio_set_pin_mode(SOFT_IIC_SDA_E8, SOFT_IIC_SDA_E8_CFG);
-	gpio_set_pin_mode(WIRLESS_RST_A9, WIRLESS_RST_A9_CFG);
 	gpio_set_pin_mode(WIRLESS_RTS_B1, WIRLESS_RTS_B1_CFG);
 	gpio_set_pin_mode(ENCODER1_CS_G8, ENCODER1_CS_G8_CFG);
 	gpio_set_pin_mode(ENCODER2_CS_G12, ENCODER2_CS_G12_CFG);
@@ -793,6 +791,8 @@ __STATIC_INLINE void Config_init(void) {
 	gpio_set_pin_mode(PIN_GPIO8_3, PIN_GPIO8_3_CFG);
 	gpio_set_pin_mode(PIN_GPIO8_4, PIN_GPIO8_4_CFG);
 	gpio_set_pin_mode(PIN_GPIO8_5, PIN_GPIO8_5_CFG);
+	gpio_set_pin_mode(PIN_GPIO0_9, PIN_GPIO0_9_CFG);
+	gpio_set_pin_mode(PIN_GPIO3_9, PIN_GPIO3_9_CFG);
 
 	/* SAR2 */
 	gpio_set_pin_mode(MOTOR1_A_CU_B7, MOTOR1_A_CU_B7_CFG);

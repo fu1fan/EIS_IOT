@@ -50,6 +50,50 @@ void voltage_follow(void) {
 	osal_delay_millisec(VF_DELAY);
 }
 
+//void read_two_float(float *f1, float *f2){
+//	static uint8_t t;
+//	t = 0;
+//	can_rx_flag = 0;
+//	// 前四位为f1，后四位为f2
+//	while (t < 5) {
+//		if (can_rx_flag) {
+//			can_rx_flag = 0;
+//			*f1 = (float) ((can_receive_buffer[0] << 24) | (can_receive_buffer[1] << 16) | (can_receive_buffer[2] << 8) | can_receive_buffer[3]);
+//			*f2 = (float) ((can_receive_buffer[4] << 24) | (can_receive_buffer[5] << 16) | (can_receive_buffer[6] << 8) | can_receive_buffer[7]);
+//			return;
+//		}
+//		t++;
+//		osal_delay_millisec(2U);
+//	}
+//}
+
+void send_result(void){
+	can_receive_buffer[0] = 0x03;
+	can_receive_buffer[1] = 0x02;
+	can_receive_buffer[2] = 0x00;
+	// can_receive_buffer[4]~can_receive_buffer[7]为float数据
+	// 先传real
+	uint32_t *p = (uint32_t*)&(eis_result.tail->real);
+	can_receive_buffer[4] = *p >> 24;
+	can_receive_buffer[5] = *p >> 16;
+	can_receive_buffer[6] = *p >> 8;
+	can_receive_buffer[7] = *p;
+
+	can_send_frame(can_remote_id, can_receive_buffer);
+	osal_delay_millisec(5U);
+
+	// 传imag
+	can_receive_buffer[2] = 0x01;
+	p = (uint32_t*)&(eis_result.tail->imag);
+	can_receive_buffer[4] = *p >> 24;
+	can_receive_buffer[5] = *p >> 16;
+	can_receive_buffer[6] = *p >> 8;
+	can_receive_buffer[7] = *p;
+
+	can_send_frame(can_remote_id, can_receive_buffer);
+	osal_delay_millisec(10U);
+}
+
 eis_status_t voltage_follow_correct(void){
 	// 这里没有对修正因子的大小做限制
 	// TODO: 加入重试机制
@@ -293,6 +337,8 @@ eis_status_t eis_measure() {
 			failure_cnt++;
 		}
 
+		send_result();
+
 		// 替代
 #ifdef UART_DEBUG
 		printf("%d\t%f\t%f\r\n", (int)eis_result.tail->freq, eis_result.tail->real, eis_result.tail->imag);
@@ -361,6 +407,8 @@ eis_status_t eis_single_measure(uint32_t freq_, uint8_t accuracy_){
 	printf("%d\t%f\t%f\r\n", (int)eis_result.tail->freq, eis_result.tail->real, eis_result.tail->imag);
 	printf("mag=%f\r\n", sqrt(eis_result.tail->real*eis_result.tail->real+eis_result.tail->imag*eis_result.tail->imag));
 #endif
+	send_result();
+
 	return status;
 }
 
@@ -435,6 +483,7 @@ eis_status_t eis_ohmage_measure(float *ohmage, uint32_t *freq){
 		status.error_code = 0x38;
 	}
 	eis_single_end();
+	send_result();
 	return status;
 }
 

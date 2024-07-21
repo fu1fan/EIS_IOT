@@ -167,8 +167,8 @@ void DAC_Test(void)
 
 void SCAN_Test(void)
 {
-	float voltages[4];
-	float ohmages[4];
+	float *voltages = malloc(eb_count * 4 * sizeof(float));
+	float *ohmages = malloc(eb_count * 4 * sizeof(float));
 	eis_single_init();
 	for (;;)
 	{
@@ -363,6 +363,12 @@ void NORMAL_Mode(void)
 				}
 				*q = '\0';
 				uint32_t freq = atoi(p);
+
+				can_receive_buffer[0] = 0x03;
+				can_receive_buffer[1] = 0x01;
+				can_receive_buffer[2] = 0x01;
+				can_send_frame(can_remote_id, can_receive_buffer);
+
 				if (freq == 0)
 				{ // 欧姆阻抗测量
 					float ohmage, voltage;
@@ -436,6 +442,12 @@ void NORMAL_Mode(void)
 					ui_console_printf("invaild cell id");
 					continue;
 				}
+
+				can_receive_buffer[0] = 0x03;
+				can_receive_buffer[1] = 0x01;
+				can_receive_buffer[2] = 0x02;
+				can_send_frame(can_remote_id, can_receive_buffer);
+
 				eis_battery_select(cell_id);
 				status = eis_measure();
 				if (!status.is_success)
@@ -506,6 +518,12 @@ void NORMAL_Mode(void)
 					ui_console_printf("invaild mode");
 					continue;
 				}
+
+				can_receive_buffer[0] = 0x03;
+				can_receive_buffer[1] = 0x01;
+				can_receive_buffer[2] = 0x00;
+				can_send_frame(can_remote_id, can_receive_buffer);
+
 				float *voltages = malloc(eb_count * 4 * sizeof(float));
 				float *ohmages = malloc(eb_count * 4 * sizeof(float));
 				eis_single_init();
@@ -563,6 +581,26 @@ void NORMAL_Mode(void)
 				eis_single_end();
 				if (flag == 1)
 				{
+					// 判断是否能正常供电
+					// 供电条件：没有过压与欠压，且没有电池阻抗超出量程
+					uint8_t power_flag = 1;
+					for (int i = 0; i < eb_count * 4; i++) {
+						if (voltages[i] > 5 || voltages[i] < 3.0 || ohmages[i] == 0) { // || ohmages[i] > 50
+							power_flag = 0;
+							break;
+						}
+					}
+					if(power_flag){
+						can_receive_buffer[0] = 0x04;
+						can_receive_buffer[1] = 0x00;
+						can_send_frame(can_remote_id, can_receive_buffer);
+					}
+					else{
+						can_receive_buffer[0] = 0x04;
+						can_receive_buffer[1] = 0x01;
+						can_send_frame(can_remote_id, can_receive_buffer);
+					}
+
 					// 示例数据"{task_id}|all|volt1,volt2...|ohm1,ohm2..."
 					wpostf("%s|all|", task_id);
 					// 由于每次调用wpostf都会覆盖上一次的内容，所以需要直接对content进行操作
@@ -681,20 +719,30 @@ int main(void)
 	eb_clear();
 	osal_delay_millisec(200U);
 
-	ui_console_mode();
+	ui_console_printf("");
 	ui_console_printf("init done!");
 	ui_console_printf("Embedded 2024 by DOL");
 	ui_console_printf("");
 
 	if (gpio_read_pin(USER_KEY_C10))
 	{
+		can_receive_buffer[0] = 0x03;
+		can_receive_buffer[1] = 0x00;
+		can_receive_buffer[2] = 0x00;
+		can_send_frame(can_remote_id, can_receive_buffer);
 		goto NORMAL;
 	}
 	while (!gpio_read_pin(USER_KEY_C10) || !gpio_read_pin(USER_KEY_C9) || !gpio_read_pin(USER_KEY_C8) || !gpio_read_pin(USER_KEY_C7))
 	{
 		osal_delay_millisec(1U);
 	}
-
+	can_receive_buffer[0] = 0x03;
+	can_receive_buffer[1] = 0x00;
+	can_receive_buffer[2] = 0x01;
+	can_send_frame(can_remote_id, can_receive_buffer);
+	ui_console_mode();
+	ui_console_printf("DEBUG MODE");
+	ui_console_printf("");
 	ui_console_printf("Please Select:");
 	ui_console_printf("C10. Normal Mode");
 	ui_console_printf("C9.  DAC Test");

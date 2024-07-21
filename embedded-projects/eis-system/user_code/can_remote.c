@@ -50,7 +50,7 @@ void ad9959_reset(void){
 	can_receive_buffer[7] = 0x00;
 
 	can_send_frame(can_remote_id, can_receive_buffer);
-	osal_delay_millisec(100U);
+	osal_delay_millisec(20U);
 }
 
 void ad9959_set(uint8_t ch_, uint32_t freq_, uint16_t amp_){
@@ -64,7 +64,7 @@ void ad9959_set(uint8_t ch_, uint32_t freq_, uint16_t amp_){
 	can_receive_buffer[7] = freq_;
 
 	can_send_frame(can_remote_id, can_receive_buffer);
-	osal_delay_millisec(100U);
+	osal_delay_millisec(80U);
  }
 
 uint8_t eb_query() {
@@ -94,7 +94,7 @@ void eb_set(uint8_t board, uint8_t index) {
 	can_receive_buffer[3] = index;
 
 	can_send_frame(can_remote_id, can_receive_buffer);
-	osal_delay_millisec(100U);
+	osal_delay_millisec(50U);
 }
 
 void eb_clear() {
@@ -102,7 +102,7 @@ void eb_clear() {
 	can_receive_buffer[1] = 0x02;
 
 	can_send_frame(can_remote_id, can_receive_buffer);
-	osal_delay_millisec(100U);
+	osal_delay_millisec(20U);
 }
 
 

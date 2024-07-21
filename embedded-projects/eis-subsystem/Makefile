@@ -54,12 +54,8 @@ C_SRCS += \
 	driver_code/motor_exti_config.c \
 	driver_code/zf_common_fifo.c \
 	\
-	device_code/zf_device_wireless_uart.c \
-	device_code/zf_device_ips200.c \
-	device_code/zf_device_imu660ra.c \
-	device_code/zf_device_spi_encoder.c \
-	\
 	user_code/AD9959.c \
+	user_code/screen_uart.c \
 	user_code/ExpansionBoard.c \
 
 # Add entries to the files in user_code, as if they were files above
