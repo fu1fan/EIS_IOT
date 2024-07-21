@@ -494,13 +494,25 @@ eis_status_t eis_get_voltage(float *voltage) {
 
 	vf_relay(1);
 
-	*voltage = ADS1256_ReadPin(ADS1256_GAIN_1, 0);
-	if (*voltage < 2 || *voltage > 4.8) {
-		status.is_success = 0;
-		status.error_code = 0x21;
-		return status;
+//	*voltage = ADS1256_ReadPin(ADS1256_GAIN_1, 0);
+//	if (*voltage < 3.0 || *voltage > 5.0) {
+//		status.is_success = 0;
+//		status.error_code = 0x21;
+//		return status;
+//	}
+	for(int i=0; i<2; i++){
+		*voltage = ADS1256_ReadPin(ADS1256_GAIN_1, 0);
+		if (*voltage < 3.0 || *voltage > 5.0) {
+			status.is_success = 0;
+			status.error_code = 0x21;
+			osal_delay_millisec(20U);
+		}
+		else{
+			status.is_success = 1;
+			status.error_code = 0x00;
+			break;
+		}
 	}
-
 	return status;
 }
 
