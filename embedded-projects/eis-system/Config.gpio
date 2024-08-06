@@ -402,22 +402,22 @@ inout GPIO5_2 -> E7_101 as PIN_GPIO5_2
 		SFS3 = 'Disabled',
 		SFV3 = 'Low'
 	;
+in GPI_PB_7 -> E7_26 as PIN_GPI_PB_7
+	IO
+		MODER7 = 'Input',
+		OT7 = 'PushPull',
+		OSPEEDR7 = 'Low',
+		PUPDR7 = 'Floating',
+		AFRL7 = 0,
+		IHYSTR7 = 'CMOS',
+		TR7 = 'Enable',
+		SFS7 = 'Disabled',
+		SFV7 = 'Low'
+	;
 }
 
 SAR2 {
-    in SAR2_IN1 -> E7_26 as MOTOR1_A_CU_B7
-    IO
-        MODER7 = 'Analog',
-        OT7 = 'PushPull',
-        OSPEEDR7 = 'VeryHigh',
-        PUPDR7 = 'Floating',
-        AFRL7 = 0,
-        IHYSTR7 = 'CMOS',
-        TR7 = 'Disabled',
-        SFS7 = 'Disabled',
-        SFV7 = 'Low'
-    ;
-    in SAR2_IN2 -> E7_27 as MOTOR1_B_CU_B8
+	in SAR2_IN2 -> E7_27 as MOTOR1_B_CU_B8
     IO
         MODER8 = 'Analog',
         OT8 = 'PushPull',

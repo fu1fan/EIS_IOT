@@ -66,7 +66,7 @@ void eis_add_point(uint32_t sample_rate) {
 	float phase_v = atan2(CompxIO[max_index_v].imag, CompxIO[max_index_v].real);
 
 	// 计算阻抗
-	float z_abs = max_mag_v / max_mag_c / FACTOR * 1000;
+	float z_abs = max_mag_v / max_mag_c / FACTOR * 1000 - CONST;
 	float z_phase = phase_v - phase_c;
 	float z_real = z_abs * cos(z_phase);
 	float z_imag = z_abs * sin(z_phase);

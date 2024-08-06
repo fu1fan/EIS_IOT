@@ -1,0 +1,2464 @@
+{
+  "name": "eis-system",
+  "type": "ARM",
+  "dependenceList": [],
+  "srcDirs": [
+    "build",
+    "debug",
+    "device_code",
+    "driver_code",
+    "src",
+    "src-gen",
+    "user_code",
+    "CommonBuild",
+    "Modules"
+  ],
+  "virtualFolder": {
+    "name": "<virtual_root>",
+    "files": [],
+    "folders": [
+      {
+        "name": "CommonBuild",
+        "files": [],
+        "folders": [
+          {
+            "name": "src",
+            "files": [
+              {
+                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Projects/SDKTests/CommonBuild/src/test_env.c"
+              }
+            ],
+            "folders": []
+          },
+          {
+            "name": "include",
+            "files": [
+              {
+                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Projects/SDKTests/CommonBuild/include/test_env.h"
+              }
+            ],
+            "folders": []
+          }
+        ]
+      },
+      {
+        "name": "Modules",
+        "files": [],
+        "folders": [
+          {
+            "name": "Runtime",
+            "files": [],
+            "folders": [
+              {
+                "name": "IO",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "src",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Runtime/IO/src/io.c"
+                      }
+                    ],
+                    "folders": []
+                  },
+                  {
+                    "name": "include",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Runtime/IO/include/io.h"
+                      }
+                    ],
+                    "folders": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Platform",
+            "files": [],
+            "folders": [
+              {
+                "name": "MCU",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "include",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/typedefs.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/toolchain.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/regs.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/platform.h"
+                      }
+                    ],
+                    "folders": [
+                      {
+                        "name": "sr5e1",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_WWDG.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_UART.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_TIM.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_TDM.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_SYSCFG.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_SSCM.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_SPI.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_SMPU.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_SD_ADC.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_RTC.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_RCC.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_PMC_DIG.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_PLLDIG.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_NVM_CTRL.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_MEMU.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_IWDG.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_I2C.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_HSEM.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_HRTIM.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_GPIO.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_FLASH_REG_ITF.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_FDCAN.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_FCCU.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_EXTI.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_DMAMUX.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_DMA.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_DBGMCU.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_DAC.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_CRC.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_CORDIC.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_COMP.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_CMU.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_CEM.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/SR5E1_ADC.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/sr5e1xx.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/platform_dev.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/MCU/include/sr5e1/irq_numbers.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "IRQ",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "src",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "sr5e1",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/IRQ/src/sr5e1/irq.c"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "include",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "sr5e1",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/IRQ/include/sr5e1/irq.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "CMSIS",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "Core_A",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "Source",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Source/irq_ctrl_gic.c"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "Include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Include/irq_ctrl.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Include/core_ca.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Include/cmsis_iccarm.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Include/cmsis_gcc.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Include/cmsis_cp15.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Include/cmsis_compiler.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Include/cmsis_armclang.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core_A/Include/cmsis_armcc.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "Core",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "Include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/tz_context.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/pmu_armv8.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/mpu_armv8.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/mpu_armv7.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_sc300.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_sc000.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm7.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm55.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm4.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm35p.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm33.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm3.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm23.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm1.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm0plus.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_cm0.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_armv8mml.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_armv8mbl.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/core_armv81mml.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/cmsis_version.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/cmsis_iccarm.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/cmsis_gcc.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/cmsis_compiler.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/cmsis_armclang_ltm.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/cmsis_armclang.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/cmsis_armcc.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/CMSIS/Core/Include/cachel1_armv7.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Clock",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "src",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "sr5e1",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/Clock/src/sr5e1/clock.c"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "include",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "sr5e1",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/Clock/include/sr5e1/clock_cfg.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/Clock/include/sr5e1/clock.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Board",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "include",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "sr5e1",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/Board/include/sr5e1/evbe7000s.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/Board/include/sr5e1/evbe7000p.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/Board/include/sr5e1/evbe7000e.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/Board/include/sr5e1/evbe3000p.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Platform/Board/include/sr5e1/evbe3000e.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "OS",
+            "files": [],
+            "folders": [
+              {
+                "name": "OSAL",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "src",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/OSAL/src/osal.c"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/OSAL/src/FreeRTOS_osal.c"
+                      }
+                    ],
+                    "folders": []
+                  },
+                  {
+                    "name": "include",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/OSAL/include/osal_cfg.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/OSAL/include/osal.h"
+                      }
+                    ],
+                    "folders": []
+                  }
+                ]
+              },
+              {
+                "name": "FreeRTOS",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "src",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/src/timers.c"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/src/tasks.c"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/src/stream_buffer.c"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/src/queue.c"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/src/list.c"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/src/event_groups.c"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/src/croutine.c"
+                      }
+                    ],
+                    "folders": []
+                  },
+                  {
+                    "name": "portable",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "MemMang",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/MemMang/heap_5.c"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/MemMang/heap_4.c"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/MemMang/heap_3.c"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/MemMang/heap_2.c"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/MemMang/heap_1.c"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "IAR",
+                        "files": [],
+                        "folders": [
+                          {
+                            "name": "ARM_CM4F",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/IAR/ARM_CM4F/portmacro.h"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/IAR/ARM_CM4F/portasm.s"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/IAR/ARM_CM4F/port.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "GHS",
+                        "files": [],
+                        "folders": [
+                          {
+                            "name": "ARM_CM4F",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/GHS/ARM_CM4F/portmacro.h"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/GHS/ARM_CM4F/portasm.s"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/GHS/ARM_CM4F/port.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "GCC",
+                        "files": [],
+                        "folders": [
+                          {
+                            "name": "ARM_CM4F",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/GCC/ARM_CM4F/portmacro.h"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/portable/GCC/ARM_CM4F/port.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "include",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/timers.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/task.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/stream_buffer.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/stack_macros.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/StackMacros.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/semphr.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/queue.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/projdefs.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/portable.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/mpu_wrappers.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/mpu_prototypes.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/message_buffer.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/list.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/FreeRTOSConfig.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/FreeRTOS.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/event_groups.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/deprecated_definitions.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/croutine.h"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/OS/FreeRTOS/include/atomic.h"
+                      }
+                    ],
+                    "folders": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Drivers",
+            "files": [],
+            "folders": [
+              {
+                "name": "Timers",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "TIM_TS",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM_TS/src/tim_ts.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM_TS/src/sr5e1/tim_ts_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM_TS/src/sr5e1/tim_ts_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM_TS/include/tim_ts_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM_TS/include/tim_ts.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM_TS/include/sr5e1/tim_ts_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "TIM",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM/src/tim.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM/src/sr5e1/tim_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM/src/sr5e1/tim_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM/include/tim_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM/include/tim.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/TIM/include/sr5e1/tim_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SYSTICK",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/SYSTICK/src/systick.c"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/SYSTICK/include/systick.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "RTC",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/RTC/src/rtc.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/RTC/src/sr5e1/rtc_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/RTC/src/sr5e1/rtc_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/RTC/include/rtc_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/RTC/include/rtc.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/RTC/include/sr5e1/rtc_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "HRTIM",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/HRTIM/src/hrtim.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/HRTIM/src/sr5e1/hrtim_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/HRTIM/src/sr5e1/hrtim_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/HRTIM/include/hrtim_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/HRTIM/include/hrtim.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/HRTIM/include/sr5e1/hrtim_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "DWT",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/DWT/src/dwt.c"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Timers/DWT/include/dwt.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "System",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "WWDG",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/WWDG/src/wwdg.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/WWDG/src/sr5e1/wwdg_instances.c"
+                              }
+                            ],
+                            "folders": [
+                              {
+                                "name": "core2",
+                                "files": [
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/WWDG/src/sr5e1/core2/wwdg_dev.c"
+                                  }
+                                ],
+                                "folders": []
+                              },
+                              {
+                                "name": "core1",
+                                "files": [
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/WWDG/src/sr5e1/core1/wwdg_dev.c"
+                                  }
+                                ],
+                                "folders": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/WWDG/include/wwdg_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/WWDG/include/wwdg.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/WWDG/include/sr5e1/wwdg_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SMPU",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/SMPU/src/smpu.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/SMPU/src/sr5e1/smpu_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/SMPU/src/sr5e1/smpu_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/SMPU/include/smpu_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/SMPU/include/smpu.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/SMPU/include/sr5e1/smpu_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "MPU",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/MPU/src/sr5e1/mpu.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/MPU/include/sr5e1/mpu.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "IWDG",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/IWDG/src/iwdg.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/IWDG/src/sr5e1/iwdg_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/IWDG/src/sr5e1/iwdg_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/IWDG/include/iwdg_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/IWDG/include/iwdg.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/IWDG/include/sr5e1/iwdg_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "HSEM",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/HSEM/src/hsem.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/HSEM/src/sr5e1/hsem_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/HSEM/include/hsem_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/HSEM/include/hsem.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "GPIO",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/GPIO/src/gpio.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/GPIO/src/sr5e1/gpio_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/GPIO/include/gpio.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/GPIO/include/sr5e1/gpio_dev.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "EXTI",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/EXTI/src/exti.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/EXTI/src/sr5e1/exti_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/EXTI/include/exti.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/EXTI/include/sr5e1/exti_dev.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "DMA",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/DMA/src/dma.c"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/DMA/include/dmamux.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/DMA/include/dma.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "CRC",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CRC/src/crc.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CRC/src/sr5e1/crc_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CRC/src/sr5e1/crc_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CRC/include/crc_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CRC/include/crc.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CRC/include/sr5e1/crc_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "CORDIC",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CORDIC/src/cordic.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CORDIC/src/sr5e1/cordic_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CORDIC/src/sr5e1/cordic_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CORDIC/include/cordic_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CORDIC/include/cordic.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/System/CORDIC/include/sr5e1/cordic_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Safety",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "FCCU",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/FCCU/src/fccu.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/FCCU/src/sr5e1/fccu_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/FCCU/src/sr5e1/fccu_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/FCCU/include/fccu_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/FCCU/include/fccu.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/FCCU/include/sr5e1/fccu_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "CMU",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CMU/src/cmu.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CMU/src/sr5e1/cmu_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CMU/src/sr5e1/cmu_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CMU/include/cmu_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CMU/include/cmu.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CMU/include/sr5e1/cmu_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "CEM",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CEM/src/cem.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CEM/src/sr5e1/cem_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CEM/src/sr5e1/cem_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CEM/include/cem_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CEM/include/cem.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Safety/CEM/include/sr5e1/cem_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Memories",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "FLASH",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "ssd",
+                        "files": [],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [],
+                            "folders": [
+                              {
+                                "name": "src",
+                                "files": [
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/src/SetLock.c"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/src/ProgramVerify.c"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/src/GetLock.c"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/src/FlashProgram.c"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/src/FlashInit.c"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/src/FlashErase.c"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/src/FlashCheckStatus.c"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/src/BlankCheck.c"
+                                  }
+                                ],
+                                "folders": []
+                              },
+                              {
+                                "name": "inc",
+                                "files": [
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/inc/ssd_types.h"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/inc/ssd_C55_internal.h"
+                                  },
+                                  {
+                                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/ssd/sr5e1/inc/ssd_C55.h"
+                                  }
+                                ],
+                                "folders": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/src/flash.c"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/FLASH/include/flash.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "EED",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/EED/src/eed.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/EED/src/sr5e1/eed_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/EED/src/sr5e1/eed_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/EED/include/eed_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/EED/include/eed.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Memories/EED/include/sr5e1/eed_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Graphics",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "ILI9341",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/src/ili9341_font.c"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/src/ili9341.c"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/include/ili9341.h"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "fonts",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/fonts/ili9341_font.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/fonts/DejaVuSansMono_8pt_7b.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/fonts/DejaVuSansMono_24pt_7b.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/fonts/DejaVuSansMono_20pt_7b.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/fonts/DejaVuSansMono_16pt_7b.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/fonts/DejaVuSansMono_14pt_7b.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/fonts/DejaVuSansMono_12pt_7b.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Graphics/ILI9341/fonts/DejaVuSansMono_10pt_7b.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Comms",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "UART",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/UART/src/uart.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/UART/src/sr5e1/uart_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/UART/src/sr5e1/uart_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/UART/include/uart_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/UART/include/uart.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/UART/include/sr5e1/uart_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SPI",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SPI/src/spi.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SPI/src/sr5e1/spi_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SPI/src/sr5e1/spi_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SPI/include/spi_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SPI/include/spi.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SPI/include/sr5e1/spi_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SENT",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SENT/src/sent.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SENT/src/sr5e1/sent_instances.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SENT/include/sent_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SENT/include/sent.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/SENT/include/sr5e1/sent_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "I2S",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2S/src/i2s.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2S/src/sr5e1/i2s_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2S/src/sr5e1/i2s_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2S/include/i2s_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2S/include/i2s.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2S/include/sr5e1/i2s_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "I2C",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2C/src/i2c.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2C/src/sr5e1/i2c_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2C/src/sr5e1/i2c_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2C/include/i2c_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2C/include/i2c.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/I2C/include/sr5e1/i2c_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "CAN",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/CAN/src/can.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/CAN/src/sr5e1/can_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/CAN/src/sr5e1/can_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/CAN/include/can_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/CAN/include/can.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Comms/CAN/include/sr5e1/can_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "Analog",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "TSENS",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/TSENS/src/tsens.c"
+                          }
+                        ],
+                        "folders": []
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/TSENS/include/tsens.h"
+                          }
+                        ],
+                        "folders": []
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SDADC",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SDADC/src/sdadc.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SDADC/src/sr5e1/sdadc_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SDADC/src/sr5e1/sdadc_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SDADC/include/sdadc_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SDADC/include/sdadc.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SDADC/include/sr5e1/sdadc_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "SARADC",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SARADC/src/saradc.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SARADC/src/sr5e1/saradc_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SARADC/src/sr5e1/saradc_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SARADC/include/saradc_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SARADC/include/saradc.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/SARADC/include/sr5e1/saradc_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "DAC",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/DAC/src/dac.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/DAC/src/sr5e1/dac_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/DAC/src/sr5e1/dac_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/DAC/include/dac_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/DAC/include/dac.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/DAC/include/sr5e1/dac_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "name": "COMP",
+                    "files": [],
+                    "folders": [
+                      {
+                        "name": "src",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/COMP/src/comp.c"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/COMP/src/sr5e1/comp_instances.c"
+                              },
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/COMP/src/sr5e1/comp_dev.c"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      },
+                      {
+                        "name": "include",
+                        "files": [
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/COMP/include/comp_private.h"
+                          },
+                          {
+                            "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/COMP/include/comp.h"
+                          }
+                        ],
+                        "folders": [
+                          {
+                            "name": "sr5e1",
+                            "files": [
+                              {
+                                "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Drivers/Analog/COMP/include/sr5e1/comp_instances.h"
+                              }
+                            ],
+                            "folders": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Common",
+            "files": [],
+            "folders": [
+              {
+                "name": "BuildSystem",
+                "files": [],
+                "folders": [
+                  {
+                    "name": "pclint",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Common/BuildSystem/pclint/co-gcc.h"
+                      }
+                    ],
+                    "folders": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Boot",
+            "files": [],
+            "folders": [
+              {
+                "name": "src",
+                "files": [
+                  {
+                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Boot/src/crt1.c"
+                  }
+                ],
+                "folders": [
+                  {
+                    "name": "IAR",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Boot/src/IAR/vectors.S"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Boot/src/IAR/cstartup.S"
+                      }
+                    ],
+                    "folders": []
+                  },
+                  {
+                    "name": "GCC",
+                    "files": [
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Boot/src/GCC/vectors.S"
+                      },
+                      {
+                        "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Boot/src/GCC/crt0.S"
+                      }
+                    ],
+                    "folders": []
+                  }
+                ]
+              },
+              {
+                "name": "include",
+                "files": [
+                  {
+                    "path": "../../../../../../../../StellarStudio-5.0/SDKS/StellarESDK-1.5.0/Modules/Boot/include/cmparams.h"
+                  }
+                ],
+                "folders": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "outDir": "build",
+  "deviceName": null,
+  "packDir": null,
+  "miscInfo": {
+    "uid": "77ab1c2f410d9505ae28c63af2cf2700"
+  },
+  "targets": {
+    "Debug": {
+      "excludeList": [
+        "tft_ui.c",
+        "Common",
+        "<virtual_root>/Modules",
+        "<virtual_root>/CommonBuild"
+      ],
+      "toolchain": "GCC",
+      "compileConfig": {
+        "cpuType": "Cortex-M3",
+        "floatingPointHardware": "none",
+        "scatterFilePath": "",
+        "useCustomScatterFile": true,
+        "storageLayout": {
+          "RAM": [],
+          "ROM": []
+        },
+        "options": "null"
+      },
+      "uploader": "JLink",
+      "uploadConfig": {
+        "bin": "",
+        "baseAddr": "",
+        "cpuInfo": {
+          "vendor": "null",
+          "cpuName": "null"
+        },
+        "proType": 1,
+        "speed": 8000,
+        "otherCmds": ""
+      },
+      "uploadConfigMap": {},
+      "custom_dep": {
+        "name": "default",
+        "incList": [],
+        "libList": [],
+        "defineList": []
+      }
+    },
+    "Release": {
+      "excludeList": [
+        "tft_ui.c"
+      ],
+      "toolchain": "GCC",
+      "compileConfig": {
+        "cpuType": "Cortex-M3",
+        "floatingPointHardware": "none",
+        "scatterFilePath": "",
+        "useCustomScatterFile": true,
+        "storageLayout": {
+          "RAM": [],
+          "ROM": []
+        },
+        "options": "null"
+      },
+      "uploader": "JLink",
+      "uploadConfig": {
+        "bin": "",
+        "baseAddr": "",
+        "cpuInfo": {
+          "vendor": "null",
+          "cpuName": "null"
+        },
+        "proType": 1,
+        "speed": 8000,
+        "otherCmds": ""
+      },
+      "uploadConfigMap": {},
+      "custom_dep": {
+        "name": "default",
+        "incList": [],
+        "defineList": [],
+        "libList": []
+      }
+    }
+  },
+  "version": "3.4"
+}

@@ -436,20 +436,20 @@
 	 GPIO_MODE_SAFESELR_DISABLED |                  \
 	 GPIO_MODE_SAFEVALR_LOW)
 
-
-/*--------------------- SAR2 pins definitions ---------------------*/
-#define MOTOR1_A_CU_B7 gpio_iopack(GPIO_PORT_B, GPIO_PIN_7) /* PB[7] */
-#define MOTOR1_A_CU_B7_CFG                          \
-	(GPIO_MODE_MODER_ANALOG |                       \
+#define PIN_GPI_PB_7 gpio_iopack(GPIO_PORT_B, GPIO_PIN_7) /* PB[7] */
+#define PIN_GPI_PB_7_CFG                            \
+	(GPIO_MODE_MODER_INPUT |                        \
 	 GPIO_MODE_OTYPER_PUSHPULL |                    \
-	 GPIO_MODE_OSPEEDR_VERYHIGH |                   \
+	 GPIO_MODE_OSPEEDR_LOW |                        \
 	 GPIO_MODE_PUPDR_FLOATING |                     \
 	 GPIO_MODE_AFR(0U) |                            \
 	 GPIO_MODE_IHYSTR_CMOS |                        \
-	 GPIO_MODE_TRIGENR_IN_DISABLED |                \
+	 GPIO_MODE_TRIGENR_IN_ENABLED |                 \
 	 GPIO_MODE_SAFESELR_DISABLED |                  \
 	 GPIO_MODE_SAFEVALR_LOW)
 
+
+/*--------------------- SAR2 pins definitions ---------------------*/
 #define MOTOR1_B_CU_B8 gpio_iopack(GPIO_PORT_B, GPIO_PIN_8) /* PB[8] */
 #define MOTOR1_B_CU_B8_CFG                          \
 	(GPIO_MODE_MODER_ANALOG |                       \
@@ -793,9 +793,9 @@ __STATIC_INLINE void Config_init(void) {
 	gpio_set_pin_mode(PIN_GPIO0_9, PIN_GPIO0_9_CFG);
 	gpio_set_pin_mode(PIN_GPIO5_2, PIN_GPIO5_2_CFG);
 	gpio_set_pin_mode(PIN_GPIO5_3, PIN_GPIO5_3_CFG);
+	gpio_set_pin_mode(PIN_GPI_PB_7, PIN_GPI_PB_7_CFG);
 
 	/* SAR2 */
-	gpio_set_pin_mode(MOTOR1_A_CU_B7, MOTOR1_A_CU_B7_CFG);
 	gpio_set_pin_mode(MOTOR1_B_CU_B8, MOTOR1_B_CU_B8_CFG);
 	gpio_set_pin_mode(MOTOR1_C_CU_B9, MOTOR1_C_CU_B9_CFG);
 

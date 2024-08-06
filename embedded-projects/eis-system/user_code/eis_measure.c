@@ -14,6 +14,7 @@
 #define BATTERY_CH 2
 #define e 2.718281828459045
 
+
 //uint32_t EIS_ALL_FREQ_POINTS[] = {2000, 1611, 1298, 1046, 843, 679, 547, 441, 355, 286, 230, 186, 150, 121, 97, 78, 63, 50, 40, 32, 25, 20, 16, 13, 10, 8, 6, 5, 4, 3, 2};
 
 static float voltage_correction;

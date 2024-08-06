@@ -235,10 +235,14 @@ eis_status_t lte_celluar_init(void){
 	return status;
 }
 
-eis_status_t _lte_http_get(const char *url, http_response_t *response, uint16_t timeout){
+eis_status_t _lte_http_get(const char *url, http_response_t *response, uint32_t timeout){
 	eis_status_t status;
 	status.is_success = 1;
 	status.error_code = 0x00;
+
+	if(timeout<10000){
+		timeout = 10000;
+	}
 
 	lte_uart_printf("AT+HTTPSET=\"URL\",\"%s\"\r\n", url);
 	status = lte_uart_receive(RECEIVE_TIMEOUT);
@@ -253,10 +257,10 @@ eis_status_t _lte_http_get(const char *url, http_response_t *response, uint16_t 
 #endif
 		return status;
 	}
-	lte_uart_printf("AT+HTTPACT=0\r\n", url);
+	lte_uart_printf("AT+HTTPACT=0,%d\r\n", timeout/1000);
 	status = lte_uart_receive(RECEIVE_TIMEOUT);
 	// 如果+HTTP: 存在，说明已经完成请求
-	char *p = strstr((const char*) uart_buffer, "AT+HTTPACT=0\r\r\n");
+	char *p = strstr((const char*) uart_buffer, "AT+HTTPACT=0");
 	if (p == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
@@ -350,10 +354,14 @@ eis_status_t _lte_http_get(const char *url, http_response_t *response, uint16_t 
 	return status;
 }
 
-eis_status_t _lte_http_post(const char *url, const uint8_t *content, uint32_t content_size, http_response_t *response, uint16_t timeout){
+eis_status_t _lte_http_post(const char *url, const uint8_t *content, uint32_t content_size, http_response_t *response, uint32_t timeout){
 	eis_status_t status;
 	status.is_success = 1;
 	status.error_code = 0x00;
+
+	if(timeout<10000){
+		timeout = 10000;
+	}
 
 	lte_uart_printf("AT+HTTPSET=\"URL\",\"%s\"\r\n", url);
 	status = lte_uart_receive(RECEIVE_TIMEOUT);
@@ -391,13 +399,13 @@ eis_status_t _lte_http_post(const char *url, const uint8_t *content, uint32_t co
 	osal_delay_millisec(100U);
 	lte_uart_clear();
 
-	lte_uart_printf("AT+HTTPACT=1,30\r\n", url); // TODO: 优化等待时间
+	lte_uart_printf("AT+HTTPACT=1,%d\r\n", timeout/1000); // TODO: 优化等待时间
 	status = lte_uart_receive(RECEIVE_TIMEOUT);
 	if (!status.is_success) {
 		return status;
 	}
 	// 如果+HTTP: 存在，说明已经完成请求
-	char *p = strstr((const char*) uart_buffer, "AT+HTTPACT=1,30\r\r\n");
+	char *p = strstr((const char*) uart_buffer, "AT+HTTPACT=1");
 	if (p == NULL) {
 		status.is_success = 0;
 		status.error_code = 0x60;
@@ -406,7 +414,7 @@ eis_status_t _lte_http_post(const char *url, const uint8_t *content, uint32_t co
 #endif
 		return status;
 	}
-	p += 18;
+	p += 15;
 	if (strstr(p, "+HTTP") == NULL) {
 		if (strstr(p, "OK") == NULL) {
 			status.is_success = 0;
@@ -491,7 +499,7 @@ eis_status_t _lte_http_post(const char *url, const uint8_t *content, uint32_t co
 	return status;
 }
 
-eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t timeout, uint8_t retry){
+eis_status_t lte_http_get(const char *url, http_response_t *response, uint32_t timeout, uint8_t retry){
 	eis_status_t status;
 	uint8_t self_cnt96 = 0;
 	for (uint8_t i = 0; i < retry; i++) {
@@ -527,7 +535,7 @@ eis_status_t lte_http_get(const char *url, http_response_t *response, uint16_t t
 	return status;
 }
 
-eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t content_size, http_response_t *response, uint16_t timeout, uint8_t retry){
+eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t content_size, http_response_t *response, uint32_t timeout, uint8_t retry){
 	eis_status_t status;
 	uint8_t self_cnt96 = 0;
 
@@ -559,6 +567,8 @@ eis_status_t lte_http_post(const char *url, const uint8_t *content, uint32_t con
 				i -= self_cnt96;
 				self_cnt96 = 255;
 			}
+		} else {
+			osal_delay_millisec(500);
 		}
 	}
 	return status;

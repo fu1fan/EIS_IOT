@@ -23,10 +23,11 @@
 #include "stdio.h"
 #include "stdarg.h"
 
+#define HTTP_TIMEOUT 10000
 #define HTTP_RETRY 5
 #define MEASURE_RETRY 3
 
-const char API_ADDRESS[] = "https://eis.zzzing.cn/api/";
+const char API_ADDRESS[] = "http://118.24.77.218:1001/api/";
 char content[2048]; // http_content
 char task_content[128];
 char task_id[32];
@@ -266,7 +267,7 @@ void NORMAL_Mode(void)
 
 	for (;;)
 	{
-		status = lte_http_get(API_ADDRESS, &response, 5000, 1);
+		status = lte_http_get(API_ADDRESS, &response, HTTP_TIMEOUT, 1);
 		if (status.is_success)
 		{
 			response_purify(&response);
@@ -283,7 +284,7 @@ void NORMAL_Mode(void)
 
 	for(;;){
 		wpostf("%d", eb_count * 4);
-		status = lte_http_post("https://eis.zzzing.cn/api/h/init", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+		status = lte_http_post("http://118.24.77.218:1001/api/h/init", (const uint8_t *)content, post_size, &response, HTTP_TIMEOUT, HTTP_RETRY);
 		if (!status.is_success)
 		{
 			ui_console_printf("init error!");
@@ -305,7 +306,7 @@ void NORMAL_Mode(void)
 	char *p, *q;
 	for (;;)
 	{
-		status = lte_http_get("https://eis.zzzing.cn/api/h/get_task", &response, 5000, HTTP_RETRY);
+		status = lte_http_get("http://118.24.77.218:1001/api/h/get_task", &response, HTTP_TIMEOUT, HTTP_RETRY);
 		if (!status.is_success)
 		{
 			ui_console_printf("get task error!");
@@ -333,7 +334,7 @@ void NORMAL_Mode(void)
 			ui_console_printf("id: %s", task_id);
 
 			wpostf(task_id);
-			status = lte_http_post("https://eis.zzzing.cn/api/h/confirm_task", (const uint8_t *)content, post_size, &response, 20000, 1);
+			status = lte_http_post("http://118.24.77.218:1001/api/h/confirm_task", (const uint8_t *)content, post_size, &response, HTTP_TIMEOUT, 1);
 			if (!status.is_success)
 			{
 				ui_console_printf("confirm task failed!");
@@ -402,7 +403,7 @@ void NORMAL_Mode(void)
 						wpostf("%s|single|%d|%.4f|%f|%f",
 							   task_id, freq, voltage, eis_result.tail->real, eis_result.tail->imag);
 					}
-					status = lte_http_post("https://eis.zzzing.cn/api/h/submit_result", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+					status = lte_http_post("http://118.24.77.218:1001/api/h/submit_result", (const uint8_t *)content, post_size, &response, HTTP_TIMEOUT, HTTP_RETRY);
 					if (!status.is_success)
 					{
 						ui_console_printf("submit result failed!");
@@ -430,7 +431,7 @@ void NORMAL_Mode(void)
 						wpostf("%s|single|%d|%.4f|%f|%f",
 							   task_id, freq, voltage, eis_result.tail->real, eis_result.tail->imag);
 					}
-					status = lte_http_post("https://eis.zzzing.cn/api/h/submit_result", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+					status = lte_http_post("http://118.24.77.218:1001/api/h/submit_result", (const uint8_t *)content, post_size, &response, HTTP_TIMEOUT, HTTP_RETRY);
 					if (!status.is_success)
 					{
 						ui_console_printf("submit result failed!");
@@ -504,7 +505,7 @@ void NORMAL_Mode(void)
 					content[strlen(content) - 1] = '\0';
 					post_size = strlen(content);
 				}
-				status = lte_http_post("https://eis.zzzing.cn/api/h/submit_result", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+				status = lte_http_post("http://118.24.77.218:1001/api/h/submit_result", (const uint8_t *)content, post_size, &response, HTTP_TIMEOUT, HTTP_RETRY);
 				if (!status.is_success)
 				{
 					ui_console_printf("submit result failed!");
@@ -637,7 +638,7 @@ void NORMAL_Mode(void)
 						content[strlen(content) - 1] = '\0';
 					}
 					post_size = strlen(content);
-					status = lte_http_post("https://eis.zzzing.cn/api/h/submit_result", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+					status = lte_http_post("http://118.24.77.218:1001/api/h/submit_result", (const uint8_t *)content, post_size, &response, HTTP_TIMEOUT, HTTP_RETRY);
 					if (!status.is_success)
 					{
 						ui_console_printf("submit result failed!");
@@ -651,7 +652,7 @@ void NORMAL_Mode(void)
 				else
 				{
 					ui_console_printf("measure failed: %#02x", status.error_code);
-					status = lte_http_post("https://eis.zzzing.cn/api/h/submit_result", (const uint8_t *)content, post_size, &response, 5000, HTTP_RETRY);
+					status = lte_http_post("http://118.24.77.218:1001/api/h/submit_result", (const uint8_t *)content, post_size, &response, HTTP_TIMEOUT, HTTP_RETRY);
 					if (!status.is_success)
 					{
 						ui_console_printf("submit result failed!");
@@ -670,8 +671,15 @@ void NORMAL_Mode(void)
 				ui_console_printf("invaild task type");
 			}
 		}
-		osal_delay_millisec(50U);
+		osal_delay_millisec(500U);
 	}
+}
+
+void LOCAL_Mode(void)
+{
+	ui_console_mode();
+	ui_console_printf("Local Mode");
+	ui_console_printf("");
 }
 
 //-------------------------------------------------------------------------------------------------------------------

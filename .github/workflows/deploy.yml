@@ -56,4 +56,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Sync
-        run: curl https://eis.zzzing.cn/update?token=${{ secrets.SYNC_TOKEN }}
+        run: curl http://118.24.77.218:1001/update?token=${{ secrets.SYNC_TOKEN }}
