@@ -262,13 +262,13 @@ eis_status_t eis_battery_select(uint8_t battery_) {
 	status.is_success = 1;
 	status.error_code = 0x00;
 
-	vf_relay(0);
+	vf_relay(1);
 
 	eb_set(battery_ / 4, battery_ % 4);
 	voltage_correction = 0;
 
-	float battery_voltage = 5.0*g_tAD_single_buffer[BATTERY_CH]/32768;
-	if (battery_voltage < 2 || battery_voltage > 5) {
+	float battery_voltage = ADS1256_ReadPin(ADS1256_GAIN_1, 0);
+	if (battery_voltage < 2 || battery_voltage > 4.8) {
 		status.is_success = 0;
 		status.error_code = 0x21;
 		return status;

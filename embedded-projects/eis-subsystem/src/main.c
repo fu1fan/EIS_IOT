@@ -84,6 +84,9 @@ int main (void)
     gpio_write_pin(PIN_GPIO0_9, 1);
     gpio_write_pin(PIN_GPIO3_9, 1);
 
+	uint8_t cur_mode = 0;	// 0-正常模式 1-线下模式
+    gpio_write_pin(PIN_GPIO4_8, cur_mode);
+
     debug_uart_init();                                                          // 以默认配置初始化调试输出串口
     system_rgb_pwm_init();                                                      // 初始化 RGB 灯配置
     can_module_init();
@@ -188,6 +191,9 @@ int main (void)
 					case 0x01:
 						screen_uart_printf("mode.txt=\"DEBUG\"""\xff\xff\xff");
 						break;
+					case 0x02:
+						screen_uart_printf("mode.txt=\"LOCAL\"""\xff\xff\xff");
+						break;
             		}
             		break;
 				case 0x01:	// 任务状态
@@ -232,6 +238,19 @@ int main (void)
 				else{
 					EB_PowerOff();
 					screen_uart_printf("relay.txt=\"true\"\xff\xff\xff");
+				}
+			}
+			else if(can_receive_buffer[0] == 0x05){
+				if (can_receive_buffer[1] != cur_mode){
+					screen_uart_printf("page 1\xff\xff\xff");
+					cur_mode = can_receive_buffer[1];
+					gpio_write_pin(PIN_GPIO4_8, cur_mode);
+					// 执行软重启
+					AD9959_Init();
+					EB_Clear();
+					gpio_write_pin(PIN_GPIO3_9, 0);
+					osal_delay_millisec(500U);
+					gpio_write_pin(PIN_GPIO3_9, 1);
 				}
 			}
 		}

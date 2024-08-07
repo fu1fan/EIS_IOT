@@ -27,6 +27,8 @@
 #define HTTP_RETRY 5
 #define MEASURE_RETRY 3
 
+#define UPPER_ID 0x7F1
+
 const char API_ADDRESS[] = "http://118.24.77.218:1001/api/";
 char content[2048]; // http_content
 char task_content[128];
@@ -680,6 +682,195 @@ void LOCAL_Mode(void)
 	ui_console_mode();
 	ui_console_printf("Local Mode");
 	ui_console_printf("");
+
+	for(;;){
+		osal_delay_millisec(2U);
+		if(can_rx_flag)
+		{
+			can_rx_flag = 0;
+			if (can_receive_buffer[0] == 0x10){		// 应答，方便确认是否在线
+				can_receive_buffer[1] = 0xFF;
+				can_send_frame(UPPER_ID, can_receive_buffer);
+			}
+			else if (can_receive_buffer[0] == 0x11)	// 电压读取
+			{
+				uint8_t cell_id = can_receive_buffer[1];
+				float voltage;
+				eis_battery_select(cell_id);
+				status = eis_get_voltage(&voltage);
+				can_receive_buffer[0] = 0x21;	// 电压读取结果
+				can_receive_buffer[1] = cell_id;
+				can_receive_buffer[2] = status.is_success;
+				can_receive_buffer[3] = status.error_code;
+				// 浮点型数据存入4-7字节
+				memcpy(&can_receive_buffer[4], &voltage, sizeof(float));
+				can_send_frame(UPPER_ID, can_receive_buffer);
+				eis_battery_clear();
+			}
+			else if (can_receive_buffer[0] == 0x12)		// 单点测量准备
+			{
+				if(can_receive_buffer[1]){
+					ui_console_printf("single_init");
+					eis_single_init();
+				}
+				else{
+					ui_console_printf("single_end");
+					eis_single_end();
+					eis_battery_clear();
+				}
+				can_receive_buffer[0] = 0x22;	// 单点测量准备结果
+				can_receive_buffer[1] = 0x00;
+				can_receive_buffer[2] = 0x01;
+				can_receive_buffer[3] = 0x00;
+				can_send_frame(UPPER_ID, can_receive_buffer);
+			}
+			else if (can_receive_buffer[0] == 0x13){		// 单点测量
+				uint8_t cell_id = can_receive_buffer[1];
+				uint8_t accuracy = can_receive_buffer[2];
+				uint32_t freq = can_receive_buffer[4] << 24 | can_receive_buffer[5] << 16 | can_receive_buffer[6] << 8 | can_receive_buffer[7];
+				ui_console_printf("task_reveive: single");
+				ui_console_printf("cell_id: %d", cell_id);
+				ui_console_printf("freq: %d", freq);
+				eis_battery_select(cell_id);
+				status = eis_single_measure(freq, accuracy);
+				eis_battery_clear();
+				can_receive_buffer[0] = 0x23;	// 单点测量结果
+				can_receive_buffer[1] = cell_id;
+				can_receive_buffer[2] = status.is_success;
+				can_receive_buffer[3] = status.error_code;
+				can_receive_buffer[4] = 01;		// 接下来第一个类型为float
+				can_receive_buffer[5] = 01;		// 接下来第二个类型为float
+				can_receive_buffer[6] = 00;
+				can_receive_buffer[7] = 01;		// 总共一帧数据
+				
+				can_send_frame(UPPER_ID, can_receive_buffer);
+				// 实部写入0-3字节
+				memcpy(&can_receive_buffer, &eis_result.tail->real, sizeof(float));
+				// 虚部写入4-7字节
+				memcpy(&can_receive_buffer[4], &eis_result.tail->imag, sizeof(float));
+				can_send_frame(UPPER_ID, can_receive_buffer);
+			}
+			else if (can_receive_buffer[1] == 0x14)			// 欧姆阻抗测量
+			{
+				uint8_t cell_id = can_receive_buffer[1];
+				uint32_t freq;
+				float ohmage;
+				ui_console_printf("task_reveive: ohmage");
+				ui_console_printf("cell_id: %d", cell_id);
+				eis_battery_select(cell_id);
+				status = eis_ohmage_measure(&ohmage, &freq);
+				eis_battery_clear();
+				can_receive_buffer[0] = 0x24;	// 欧姆阻抗测量结果
+				can_receive_buffer[1] = cell_id;
+				can_receive_buffer[2] = status.is_success;
+				can_receive_buffer[3] = status.error_code;
+				can_receive_buffer[4] = 01;		// 接下来第一个类型为float
+				can_receive_buffer[5] = 01;		// 接下来第二个类型为float
+				can_receive_buffer[6] = 00;
+				can_receive_buffer[7] = 01;		// 总共一帧数据
+				can_send_frame(UPPER_ID, can_receive_buffer);
+				// 频率写入0-3字节
+				memcpy(&can_receive_buffer, &freq, sizeof(uint32_t));
+				// 阻抗写入4-7字节
+				memcpy(&can_receive_buffer[4], &ohmage, sizeof(float));
+				can_send_frame(UPPER_ID, can_receive_buffer);
+			}
+			else if (can_receive_buffer[0] == 0x15)		// 扫描测试
+			{
+				// uint8_t mode = can_receive_buffer[1];
+				uint32_t freq = can_receive_buffer[4] << 24 | can_receive_buffer[5] << 16 | can_receive_buffer[6] << 8 | can_receive_buffer[7];
+				float *voltages = malloc(eb_count * 4 * sizeof(float));
+				float *ohmages = malloc(eb_count * 4 * sizeof(float));
+				eis_single_init();
+				uint8_t flag = 1;
+				uint8_t i;
+				for (i = 0; i < eb_count * 4; i++)
+				{
+					eis_battery_select(i);
+					eis_get_voltage(&voltages[i]);
+					status = eis_single_measure(freq, 1);
+					if (status.is_success)
+					{
+						ohmages[i] = sqrt(pow(eis_result.tail->real, 2) + pow(eis_result.tail->imag, 2));
+					}
+					else if (status.error_code == 0x31)
+					{
+						ohmages[i] = 0;
+					}
+					else
+					{
+						flag = 0;
+					}
+					if (flag == 0)
+					{
+						break;
+					}
+				}
+				eis_single_end();
+				if (flag == 0)
+				{
+					// 测量失败
+					can_receive_buffer[0] = 0x25;	// 扫描测试结果
+					can_receive_buffer[1] = i-1;
+					can_receive_buffer[2] = status.is_success;
+					can_receive_buffer[3] = status.error_code;
+					can_receive_buffer[4] = 01;		// 接下来第一个类型为float
+					can_receive_buffer[5] = 01;		// 接下来第二个类型为float
+					can_receive_buffer[6] = 00;
+					can_receive_buffer[7] = 00;		// 总共无数据
+					can_send_frame(UPPER_ID, can_receive_buffer);
+				}
+				else
+				{
+					// 测量成功
+					uint8_t power_flag = 1;
+					for (int i = 0; i < eb_count * 4; i++) {
+						if (voltages[i] > 5 || voltages[i] < 3.0 || ohmages[i] == 0) { // || ohmages[i] > 50
+							power_flag = 0;
+							break;
+						}
+					}
+					if(power_flag){
+						can_receive_buffer[0] = 0x04;
+						can_receive_buffer[1] = 0x00;
+						can_send_frame(can_remote_id, can_receive_buffer);
+					}
+					else{
+						can_receive_buffer[0] = 0x04;
+						can_receive_buffer[1] = 0x01;
+						can_send_frame(can_remote_id, can_receive_buffer);
+					}
+					osal_delay_millisec(5U); // 防止can发送过快
+
+					can_receive_buffer[0] = 0x25;	// 扫描测试结果
+					can_receive_buffer[1] = 0;
+					can_receive_buffer[2] = status.is_success;
+					can_receive_buffer[3] = status.error_code;
+					can_receive_buffer[4] = 01;		// 接下来第一个类型为float
+					can_receive_buffer[5] = 01;		// 接下来第二个类型为float
+					can_receive_buffer[6] = 00;
+					can_receive_buffer[7] = eb_count * 4;		// 总共有eb_count * 4个数据
+					can_send_frame(UPPER_ID, can_receive_buffer);
+					osal_delay_millisec(5U);
+					for (uint8_t i = 0; i < eb_count * 4; i++)
+					{
+						// 电压写入0-3字节
+						memcpy(&can_receive_buffer, &voltages[i], sizeof(float));
+						// 阻抗写入4-7字节
+						memcpy(&can_receive_buffer[4], &ohmages[i], sizeof(float));
+						can_send_frame(UPPER_ID, can_receive_buffer);
+						osal_delay_millisec(5U);
+					}
+				}
+				free(voltages);
+				free(ohmages);
+			}
+			else if (can_receive_buffer[0] == 0x16)		// eis测试
+			{
+				// 暂无
+			}
+		}
+	}
 }
 
 //-------------------------------------------------------------------------------------------------------------------
@@ -749,6 +940,15 @@ int main(void)
 	ui_console_printf("Embedded 2024 by DOL");
 	ui_console_printf("");
 
+	if (gpio_read_pin(PIN_GPI_PB_7))
+	{
+		can_receive_buffer[0] = 0x03;
+		can_receive_buffer[1] = 0x00;
+		can_receive_buffer[2] = 0x02;
+		can_send_frame(can_remote_id, can_receive_buffer);
+		goto LOCAL;
+	}
+
 	if (gpio_read_pin(USER_KEY_C10))
 	{
 		can_receive_buffer[0] = 0x03;
@@ -810,4 +1010,6 @@ int main(void)
 	}
 NORMAL:
 	NORMAL_Mode();
+LOCAL:
+	LOCAL_Mode();
 }
